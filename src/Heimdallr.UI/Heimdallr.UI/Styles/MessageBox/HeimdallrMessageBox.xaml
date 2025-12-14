@@ -1,0 +1,113 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ctrls="clr-namespace:Heimdallr.UI.Controls">
+
+  <Style x:Key="BAR.DRAGGABLE" TargetType="{x:Type ctrls:DraggableBar}">
+    <Setter Property="Grid.ColumnSpan" Value="4" />
+    <Setter Property="Background" Value="Transparent" />
+  </Style>
+
+  <!-- MessageBox Window Style -->
+  <Style TargetType="{x:Type ctrls:HeimdallrMessageBox}">
+    <Setter Property="WindowStyle" Value="None"/>
+    <Setter Property="ResizeMode" Value="NoResize"/>
+    <Setter Property="SizeToContent" Value="WidthAndHeight"/>
+    <Setter Property="Background" Value="Transparent"/>
+    <Setter Property="AllowsTransparency" Value="True"/>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type ctrls:HeimdallrMessageBox}">
+          <Border SnapsToDevicePixels="True"
+                  UseLayoutRounding="True"
+                  CornerRadius="8"
+                  Background="#FF577B8D">
+
+            <Grid>
+
+              <!-- 3개의 Row 정의 -->
+              <Grid.RowDefinitions>
+                <RowDefinition Height="42"/>
+                <!-- 타이틀 -->
+                <RowDefinition Height="Auto"/>
+                <!-- 메시지 -->
+                <RowDefinition Height="Auto"/>
+                <!-- 버튼 -->
+              </Grid.RowDefinitions>
+
+              <!-- ★ 타이틀 영역 + CornerRadius 적용 ★ -->
+              <Border Grid.Row="0"
+                      Background="#FF4B70F5"
+                      CornerRadius="8,8,0,0">
+
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="42"/>
+                  </Grid.ColumnDefinitions>
+
+                  <!--#region DragBar 영역 Row 0 전체 -->
+                  <ctrls:DraggableBar x:Name="PART_DragBar"
+                                      Grid.Column="0"
+                                      Grid.ColumnSpan="1"
+                                      Style="{StaticResource BAR.DRAGGABLE}" />
+                  <!--#endregion-->
+
+                  <!-- Title -->
+                  <TextBlock Text="{TemplateBinding Title}"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Center"
+                             Foreground="White"
+                             Margin="10 0 0 0"
+                             FontSize="20"
+                             FontWeight="Bold"/>
+
+                  <!-- Close -->
+                  <ctrls:HeimdallrCloseButton Grid.Column="1"
+                                              Fill="#FFFFCC00"
+                                              Margin="0 -5 0 0"
+                                              BorderThickness="0"
+                                              IconSize="30"
+                                              Cursor="Hand"
+                                              Command="{Binding CloseCommand, RelativeSource={RelativeSource TemplatedParent}}"/>
+                </Grid>
+              </Border>
+
+              <!-- 내용 영역 -->
+              <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- 아이콘 -->
+                <Viewbox Grid.Column="0" Width="48" Height="48" Margin="10"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Center">
+                  <ctrls:HeimdallrIcon Icon="{TemplateBinding Icon}"
+                                       Fill="{TemplateBinding IconFill}"/>
+                </Viewbox>
+
+                <TextBlock Grid.Column="1"
+                           VerticalAlignment="Center"
+                           TextWrapping="Wrap"
+                           Foreground="#FFE2DFD0"
+                           FontSize="16"
+                           Text="{TemplateBinding Message}"/>
+              </Grid>
+
+              <!-- 버튼 영역 -->
+              <StackPanel x:Name="PART_ButtonPanel"
+                          Grid.Row="2"
+                          Background="Transparent"
+                          Orientation="Horizontal"
+                          HorizontalAlignment="Center"
+                          Margin="10"/>
+
+            </Grid>
+
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+</ResourceDictionary>

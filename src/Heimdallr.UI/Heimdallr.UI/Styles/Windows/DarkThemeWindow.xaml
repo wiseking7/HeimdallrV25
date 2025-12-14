@@ -1,0 +1,146 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ctrls="clr-namespace:Heimdallr.UI.Controls">
+
+  <!-- DraggableBar 스타일 -->
+  <Style x:Key="BAR.DRAGGABLE" TargetType="{x:Type ctrls:DraggableBar}">
+    <Setter Property="Grid.ColumnSpan" Value="4" />
+    <Setter Property="Background" Value="Transparent" />
+  </Style>
+
+  <!-- DarkThemeWindow 스타일 -->
+  <Style TargetType="{x:Type ctrls:DarkThemeWindow}">
+
+    <!--#region 윈도우 기본속성 -->
+    <Setter Property="Background" Value="#FF344C64" />
+    <Setter Property="AllowsTransparency" Value="True" />
+    <Setter Property="WindowStyle" Value="None" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="MinWidth" Value="200" />
+    <Setter Property="MinHeight" Value="200" />
+    <Setter Property="Foreground" Value="#FFFFFF" />
+    <Setter Property="DimmingColor" Value="Bisque" />
+    <Setter Property="BorderBrush" Value="#FF2B373D" />
+    <Setter Property="SnapsToDevicePixels" Value="True" />
+    <Setter Property="UseLayoutRounding" Value="True" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="MinWidth" Value="200" />
+    <Setter Property="MinHeight" Value="200" />
+    <Setter Property="CornerRadius" Value="9" />
+    <Setter Property="DimmingOpacity" Value="4" />
+    <!--#endregion-->
+
+    <!-- WindowChrome -->
+    <Setter Property="WindowChrome.WindowChrome">
+      <Setter.Value>
+        <WindowChrome CaptionHeight="0"
+                      CornerRadius="9 9 0 0"
+                      GlassFrameThickness="0"
+                      NonClientFrameEdges="None"
+                      ResizeBorderThickness="5"
+                      UseAeroCaptionButtons="False" />
+      </Setter.Value>
+    </Setter>
+
+    <!-- ControlTemplate -->
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type ctrls:DarkThemeWindow}">
+          <Border Padding="5"
+                  Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}"
+                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                  CornerRadius="{TemplateBinding CornerRadius}"
+                  UseLayoutRounding="{TemplateBinding UseLayoutRounding}">
+            
+            <!--#region Row 2, Column 2-->
+            <ctrls:HeimdallrGrid Columns="*" Rows="Auto, *">
+
+              <!--#region Row 0, Column 6 -->
+              <ctrls:HeimdallrGrid Grid.Row="0"
+                                   Background="{Binding TitleHeaderBackground, RelativeSource={RelativeSource TemplatedParent}}"
+                                   Columns="Auto, Auto, *, Auto"
+                                   Rows="Auto">
+
+                <!--#region DragBar 영역 Row 0 전체 -->
+                <ctrls:DraggableBar x:Name="PART_DragBar"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="4"
+                                    Style="{StaticResource BAR.DRAGGABLE}" />
+                <!--#endregion-->
+
+                <!--#region Row 0, Column 0 Heimdallr 아이콘 -->
+                <Viewbox Grid.Column="0">
+                  <ctrls:HeimdallrIcon x:Name="PART_Heimdallr"
+                                       Image="Heimdallr"
+                                       Margin="15 5 0 0 "
+                                       Cursor="Hand"/>
+                </Viewbox>
+                <!--#endregion-->
+
+                <!-- 타이틀 텍스트 -->
+                <TextBlock Grid.Column="1"
+                           Text="{TemplateBinding Title}"
+                           VerticalAlignment="Center"
+                           Foreground="White"
+                           Margin="10,0"/>
+
+
+                <!-- 여기에 추가 UI 넣기용 ContentPresenter -->
+                <ContentPresenter Grid.Column="2"
+                                  x:Name="PART_TitleContent"
+                                  Content="{TemplateBinding TitleContent}" 
+                                  VerticalAlignment="Center"/>
+
+                <!--#region 윈도우 버튼 영역(작게,크게,닫기) -->
+                <Grid Grid.Column="3" Margin="3">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                  </Grid.ColumnDefinitions>
+                  <ctrls:HeimdallrMinimizeButton Grid.Column="0"
+                                                 x:Name="PART_MinButton" />
+                  <ctrls:HeimdallrMaximizeButton Grid.Column="1"
+                                                 x:Name="PART_MaxButton" />
+                  <ctrls:HeimdallrCloseButton Grid.Column="2"
+                                              x:Name="PART_CloseButton" />
+                </Grid>
+                <!--#endregion-->
+              </ctrls:HeimdallrGrid>
+              <!--#endregion-->
+
+              <!--#region Content 영역 -->
+              <!-- ClipToBounds="False" 콘텐츠가 영역을 넘어도 잘리지 않음.  -->
+              <ContentPresenter
+                              x:Name="content"
+                              Grid.Row="1"
+                              ClipToBounds="False"
+                              ContentSource="Content"
+                              ContentTemplate="{TemplateBinding ContentTemplate}" />
+              <Grid
+                    x:Name="PART_Dimming"
+                    Grid.Row="1"
+                    Background="{TemplateBinding DimmingColor}"
+                    Opacity="{TemplateBinding DimmingOpacity}"
+                    Visibility="Collapsed" />
+              <!--#endregion-->
+            </ctrls:HeimdallrGrid>
+
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="Dimming" Value="true">
+              <Setter TargetName="PART_Dimming" Property="Visibility" Value="Visible" />
+              <Setter Property="Effect">
+                <Setter.Value>
+                  <BlurEffect Radius="5" />
+                </Setter.Value>
+              </Setter>
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+</ResourceDictionary>

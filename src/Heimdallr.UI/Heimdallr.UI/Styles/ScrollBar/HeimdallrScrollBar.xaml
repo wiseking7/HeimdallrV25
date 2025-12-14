@@ -1,0 +1,74 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ctrls="clr-namespace:Heimdallr.UI.Controls">
+
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Colors/Color.xaml"/>
+  </ResourceDictionary.MergedDictionaries>
+
+  <!-- HeimdallrScrollBar Style -->
+  <Style TargetType="{x:Type ctrls:HeimdallrScrollBar}">
+    <Setter Property="Width" Value="16"/>
+    <Setter Property="Height" Value="16"/>
+    <Setter Property="Background" Value="{StaticResource ControlDarkBrush}"/>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type ctrls:HeimdallrScrollBar}">
+          <Grid>
+            <!-- 가로/세로 분기 -->
+            <Grid>
+              <Track x:Name="PART_Track"
+                     IsDirectionReversed="False"
+                     Focusable="False"
+                     Height="{TemplateBinding Height}"
+                     Width="{TemplateBinding Width}">
+
+                <!-- 감소 버튼 -->
+                <Track.DecreaseRepeatButton>
+                  <ctrls:HeimdallrRepeatButton
+                                               Content="◀" Width="16" Height="16"/>
+                </Track.DecreaseRepeatButton>
+
+                <!-- Thumb -->
+                <Track.Thumb>
+                  <ctrls:HeimdallrThumb 
+                                        Width="16" Height="16"/>
+                </Track.Thumb>
+
+                <!-- 증가 버튼 -->
+                <Track.IncreaseRepeatButton>
+                  <ctrls:HeimdallrRepeatButton 
+                                               Content="▶" Width="16" Height="16"/>
+                </Track.IncreaseRepeatButton>
+
+              </Track>
+            </Grid>
+          </Grid>
+
+          <!-- Orientation에 따른 트리거 -->
+          <ControlTemplate.Triggers>
+            <Trigger Property="Orientation" Value="Horizontal">
+              <Setter TargetName="PART_Track" Property="LayoutTransform">
+                <Setter.Value>
+                  <RotateTransform Angle="0"/>
+                </Setter.Value>
+              </Setter>
+            </Trigger>
+            <Trigger Property="Orientation" Value="Vertical">
+              <Setter TargetName="PART_Track" Property="LayoutTransform">
+                <Setter.Value>
+                  <RotateTransform Angle="90"/>
+                </Setter.Value>
+              </Setter>
+            </Trigger>
+          </ControlTemplate.Triggers>
+
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+</ResourceDictionary>
+
+
+
+

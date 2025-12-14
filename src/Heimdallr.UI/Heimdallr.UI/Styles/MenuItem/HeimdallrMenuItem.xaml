@@ -1,0 +1,124 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ctrls="clr-namespace:Heimdallr.UI.Controls"
+                    xmlns:cnvts="clr-namespace:Heimdallr.UI.Converters">
+
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Colors/Color.xaml" />
+  </ResourceDictionary.MergedDictionaries>
+
+  <!--#region HeimdallrMenuItem Style -->
+  <Style TargetType="{x:Type ctrls:HeimdallrMenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="#FFFFFFFF" />
+    <Setter Property="BorderBrush" Value="Transparent" />
+    <Setter Property="MenuItemPressedBrush" Value="{StaticResource DarkBlueGray}" />
+    <Setter Property="MenuItemCheckedBrush" Value="{StaticResource DarkBronze}" />
+    <Setter Property="MenuItemDisabledForegroundBrush" Value="{StaticResource DarkBurgundyRed}" />
+    <Setter Property="MenuItemIsMouseOver" Value="{StaticResource DarkDeepSea}" />
+    <Setter Property="MenuItemIsMouseOverBrush" Value="{StaticResource DarkYellowOchre}" />
+    <Setter Property="FontSize" Value="16" />
+    <Setter Property="IconSize" Value="30" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Padding" Value="10,5" />
+
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type ctrls:HeimdallrMenuItem}">
+          <Border x:Name="Border"
+                  Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}"
+                  SnapsToDevicePixels="True"
+                  UseLayoutRounding="True">
+
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+
+              <!-- Icon -->
+              <Viewbox Grid.Column="0" 
+                       Width="{TemplateBinding IconSize}" 
+                       Height="{TemplateBinding IconSize}" 
+                       Stretch="Uniform"
+                       StretchDirection="Both">
+                <ctrls:HeimdallrIcon x:Name="Icon"
+                                     Margin="10"
+                                     VerticalAlignment="Center"
+                                     Fill="{TemplateBinding IconFill}"
+                                     Icon="{TemplateBinding Icon}"
+                                     Opacity="{Binding IsEnabled, RelativeSource={RelativeSource TemplatedParent}, Converter={cnvts:BoolToOpacityConverter}}"
+                                     Visibility="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}, Converter={cnvts:IconToVisibilityConverter}}" />
+              </Viewbox>
+
+              <!-- Header -->
+              <ContentPresenter x:Name="HeaderContent"
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                RecognizesAccessKey="True"
+                                ContentSource="Header"
+                                Margin="10,0,10,0" 
+                                TextBlock.Foreground="{TemplateBinding Foreground}"/>
+
+              <!-- Submenu Indicator -->
+              <Viewbox Grid.Column="2" 
+                       Width="{TemplateBinding IconSize}" 
+                       Height="{TemplateBinding IconSize}" 
+                       Stretch="Uniform"
+                       StretchDirection="Both"
+                       Visibility="{Binding HasItems, RelativeSource={RelativeSource TemplatedParent}, Converter={cnvts:BooleanToVisibilityConverter}}" >
+                <ctrls:HeimdallrIcon Fill="{TemplateBinding IconFill}"
+                                     Icon="Arrow_Triangle_Right"
+                                     Opacity="{Binding IsEnabled, RelativeSource={RelativeSource TemplatedParent}, Converter={cnvts:BoolToOpacityConverter}}" />
+              </Viewbox>
+
+              <!-- ShortcutKeyText -->
+              <TextBlock Grid.Column="3"
+                         VerticalAlignment="Center"
+                         Margin="0,0,10,0"
+                         Foreground="{TemplateBinding Foreground}"
+                         Text="{TemplateBinding ShortcutKeyText}"
+                         FontSize="14"
+                         Opacity="0.7"
+                         TextTrimming="CharacterEllipsis"
+                         HorizontalAlignment="Right"
+                         Visibility="{Binding ShortcutKeyText, RelativeSource={RelativeSource TemplatedParent}, Converter={cnvts:StringToVisibilityConverter}}" />
+            </Grid>
+          </Border>
+
+          <ControlTemplate.Triggers>
+            <!-- MouseOver -->
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="Border" Property="Background" Value="{Binding MenuItemIsMouseOver, RelativeSource={RelativeSource TemplatedParent}}" />
+              <Setter TargetName="HeaderContent" Property="TextBlock.Foreground" Value="{Binding MenuItemIsMouseOverBrush, RelativeSource={RelativeSource TemplatedParent}}" />
+            </Trigger>
+
+            <!-- Pressed -->
+            <Trigger Property="IsPressed" Value="True">
+              <Setter TargetName="Border" Property="Background" Value="{Binding MenuItemPressedBrush, RelativeSource={RelativeSource TemplatedParent}}" />
+            </Trigger>
+
+            <!-- Checked -->
+            <Trigger Property="IsChecked" Value="True">
+              <Setter TargetName="Border" Property="Background" Value="{Binding MenuItemCheckedBrush, RelativeSource={RelativeSource TemplatedParent}}" />
+            </Trigger>
+
+            <!-- Disabled -->
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter TargetName="HeaderContent" Property="TextBlock.Foreground" Value="{Binding MenuItemDisabledForegroundBrush, RelativeSource={RelativeSource TemplatedParent}}" />
+              <Setter TargetName="Icon" Property="Opacity" Value="0.3" />
+              <Setter TargetName="Border" Property="Opacity" Value="0.5" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <!--#endregion-->
+</ResourceDictionary>
+

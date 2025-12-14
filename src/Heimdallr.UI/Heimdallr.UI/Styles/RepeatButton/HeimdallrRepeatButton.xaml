@@ -1,0 +1,76 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ctrls="clr-namespace:Heimdallr.UI.Controls">
+
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Colors/Color.xaml" />
+  </ResourceDictionary.MergedDictionaries>
+
+  <Style TargetType="{x:Type ctrls:HeimdallrRepeatButton}">
+    <Setter Property="Focusable" Value="False"/>
+    <Setter Property="IsTabStop" Value="False"/>
+    <Setter Property="Width" Value="120"/>
+    <Setter Property="Height" Value="40"/>
+    <Setter Property="IconSize" Value="30" />
+    <Setter Property="Background" Value="{StaticResource DarkGranite}"/>
+    <Setter Property="BorderBrush" Value="{StaticResource DarkGranite}"/>
+    <Setter Property="BorderThickness" Value="1"/>
+
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type ctrls:HeimdallrRepeatButton}">
+          <Border x:Name="border"
+                  Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  CornerRadius="{TemplateBinding CornerRadius}"
+                  BorderThickness="{TemplateBinding BorderThickness}">
+
+            <!-- 아이콘 + Content + 텍스트  -->
+            <Grid Margin="3" Panel.ZIndex="5" VerticalAlignment="Center">
+              <Grid.ColumnDefinitions>
+                <!-- 아이콘 -->
+                <ColumnDefinition Width="Auto"/>
+                <!-- ContentPresenter -->
+                <ColumnDefinition Width="*"/>
+              </Grid.ColumnDefinitions>
+
+              <!-- 아이콘 -->
+              <Viewbox Grid.Column="0"  
+                       Stretch="Uniform"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       MaxWidth="{TemplateBinding IconSize}"
+                       MaxHeight="{TemplateBinding IconSize}">
+                <ctrls:HeimdallrIcon x:Name="icon"
+                                     Padding="2"
+                                     Icon="{TemplateBinding Icon}"
+                                     Fill="{TemplateBinding IconFill}" />
+              </Viewbox>
+              
+              <ContentPresenter Grid.Column="1"
+                                Content="{TemplateBinding Content}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+            </Grid>
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="icon" Property="Fill" Value="{Binding MouserOverIconFill, RelativeSource={RelativeSource TemplatedParent}}" />
+              <Setter TargetName="border" Property="Background" Value="{StaticResource DarkCrimson}"/>
+              <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource DarkCrimson}"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+              <Setter TargetName="border" Property="Background" Value="{StaticResource DarkBlue}"/>
+              <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource DarkBlue}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter TargetName="border" Property="Background" Value="{StaticResource DarkAmber}"/>
+              <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource DarkAmber}"/>
+              <Setter TargetName="border" Property="Opacity" Value="0.5"/>
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+</ResourceDictionary>

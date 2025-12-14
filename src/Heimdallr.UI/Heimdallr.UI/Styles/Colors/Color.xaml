@@ -1,0 +1,119 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+  <!-- #region Gray / Black 계열 -->
+  <SolidColorBrush x:Key="DarkBlack" Color="#000000" />
+  <SolidColorBrush x:Key="DarkAnthracite" Color="#1C1C1C" />
+  <SolidColorBrush x:Key="DarkGraphite" Color="#2D2D2D" />
+  <SolidColorBrush x:Key="DarkRaisinBlack" Color="#242124" />
+  <SolidColorBrush x:Key="DarkOnyx" Color="#353839" />
+  <SolidColorBrush x:Key="DarkCharcoal" Color="#2C3E50" />
+  <SolidColorBrush x:Key="DarkCharcoalGray" Color="#36454F" />
+  <SolidColorBrush x:Key="DarkGunmetal" Color="#22313F" />
+  <SolidColorBrush x:Key="DarkGunmetal2" Color="#2A3439" />
+  <SolidColorBrush x:Key="DarkGunmetalGray" Color="#39434D" />
+  <SolidColorBrush x:Key="DarkGunmetalBlue2" Color="#223344" />
+  <SolidColorBrush x:Key="DarkJet" Color="#343434" />
+  <SolidColorBrush x:Key="DarkLicorice" Color="#1A1110" />
+  <SolidColorBrush x:Key="DarkGranite" Color="#676767" />
+  <SolidColorBrush x:Key="DarkShadow" Color="#4A4A4A" />
+  <SolidColorBrush x:Key="DarkSlateGray" Color="#34495E" />
+  <SolidColorBrush x:Key="DarkSlateGray2" Color="#2F4F4F" />
+  <SolidColorBrush x:Key="DarkSlateGray3" Color="#1E272C" />
+  <SolidColorBrush x:Key="DarkCoolGray" Color="#2C3539" />
+  <SolidColorBrush x:Key="DarkEbony" Color="#555D50" />
+  <SolidColorBrush x:Key="DarkStormCloud" Color="#4A6D8C" />
+  <SolidColorBrush x:Key="DarkSteelGray" Color="#262F4F" />
+  <SolidColorBrush x:Key="DarkSteelBlue" Color="#4682B4" />
+  <!-- #endregion -->
+
+  <!-- #region Blue / Navy / Teal 계열 -->
+  <SolidColorBrush x:Key="DarkSlateBlue" Color="#2C3E50" />
+  <SolidColorBrush x:Key="DarkSlateBlue2" Color="#374785" />
+  <SolidColorBrush x:Key="DarkGunmetalBlue" Color="#2B3856" />
+  <SolidColorBrush x:Key="DarkPrussianBlue" Color="#003153" />
+  <SolidColorBrush x:Key="DarkPrussianBlue2" Color="#001F3F" />
+  <SolidColorBrush x:Key="DarkSpaceCadet" Color="#2B3D53" />
+  <SolidColorBrush x:Key="DarkIndigo" Color="#264348" />
+  <SolidColorBrush x:Key="DarkIndigo2" Color="#281E5D" />
+  <SolidColorBrush x:Key="DarkCharcoalBlue" Color="#283845" />
+  <SolidColorBrush x:Key="DarkBlueGray" Color="#526D82" />
+  <SolidColorBrush x:Key="DarkBlue" Color="#0A2F50" />
+  <SolidColorBrush x:Key="DarkTeal" Color="#004B49" />
+  <SolidColorBrush x:Key="DarkTeal2" Color="#003B46" />
+  <SolidColorBrush x:Key="DarkCobaltBlue" Color="#0047AB" />
+  <SolidColorBrush x:Key="DarkRoyalBlue" Color="#4169E1" />
+  <SolidColorBrush x:Key="DarkDarkBlue" Color="#00008B" />
+  <SolidColorBrush x:Key="DarkDeepSea" Color="#014F86" />
+  <SolidColorBrush x:Key="DarkMidnightBlue" Color="#191970" />
+  <SolidColorBrush x:Key="DarkOuterSpace" Color="#2B3A42" />
+  <SolidColorBrush x:Key="DarkSeaweed" Color="#354F52" />
+  <!-- #endregion -->
+
+  <!-- #region Green / Olive 계열 -->
+  <SolidColorBrush x:Key="DarkDarkJungleGreen" Color="#1A2421" />
+  <SolidColorBrush x:Key="DarkDarkSlateGray" Color="#222D2D" />
+  <SolidColorBrush x:Key="DarkMidnightGreen" Color="#004953" />
+  <SolidColorBrush x:Key="DarkOlive" Color="#556B2F" />
+  <SolidColorBrush x:Key="DarkForestGreen" Color="#228B22" />
+  <SolidColorBrush x:Key="DarkSeaGreen" Color="#2E8B57" />
+  <SolidColorBrush x:Key="DarkMediumSeaGreen" Color="#3CB371" />
+  <SolidColorBrush x:Key="DarkLightSeaGreen" Color="#20B2AA" />
+  <SolidColorBrush x:Key="DarkPineGreen" Color="#01796F" />
+  <SolidColorBrush x:Key="DarkTealGreen" Color="#014D4D" />
+  <SolidColorBrush x:Key="DarkPersianGreen" Color="#006A4E" />
+  <SolidColorBrush x:Key="DarkOliveDrab" Color="#3B5323" />
+  <SolidColorBrush x:Key="DarkMossGreen" Color="#4A5D23" />
+  <SolidColorBrush x:Key="DarkFernGreen" Color="#4F7942" />
+  <SolidColorBrush x:Key="DarkHunterGreen" Color="#355E3B" />
+  <!-- #endregion -->
+
+  <!-- #region Purple / Violet 계열 -->
+  <SolidColorBrush x:Key="DarkMaroon" Color="#3B0A45" />
+  <SolidColorBrush x:Key="DarkPurple" Color="#5E2A79" />
+  <SolidColorBrush x:Key="DarkPlum" Color="#6A0DAD" />
+  <SolidColorBrush x:Key="DarkViolet" Color="#9400D3" />
+  <SolidColorBrush x:Key="DarkMagenta" Color="#8B008B" />
+  <SolidColorBrush x:Key="DarkMulberry" Color="#70193D" />
+  <SolidColorBrush x:Key="DarkRoyalPurple" Color="#4B0082" />
+  <SolidColorBrush x:Key="DarkEggplant" Color="#311432" />
+  <SolidColorBrush x:Key="DarkWine" Color="#4B0C29" />
+  <SolidColorBrush x:Key="DarkBurgundy" Color="#581845" />
+  <!-- #endregion -->
+
+  <!-- #region Red 계열 -->
+  <SolidColorBrush x:Key="DarkCrimson" Color="#58101A" />
+  <SolidColorBrush x:Key="DarkScarlet" Color="#560319" />
+  <SolidColorBrush x:Key="DarkBurgundyRed" Color="#4A0E23" />
+  <SolidColorBrush x:Key="DarkRubyRed" Color="#73172D" />
+  <SolidColorBrush x:Key="DarkFirebrick" Color="#B22222" />
+  <SolidColorBrush x:Key="DarkBloodRed" Color="#660000" />
+  <SolidColorBrush x:Key="DarkCherryRed" Color="#4E1E27" />
+  <SolidColorBrush x:Key="DarkMaroonRed" Color="#800000" />
+  <!-- #endregion -->
+
+  <!-- #region Yellow / Gold 계열 -->
+  <SolidColorBrush x:Key="DarkGoldenrod" Color="#B8860B" />
+  <SolidColorBrush x:Key="DarkKhaki" Color="#BDB76B" />
+  <SolidColorBrush x:Key="DarkAmber" Color="#886511" />
+  <SolidColorBrush x:Key="DarkMustard" Color="#7E5924" />
+  <SolidColorBrush x:Key="DarkBronze" Color="#4F3A1C" />
+  <SolidColorBrush x:Key="DarkGold" Color="#A67C00" />
+  <SolidColorBrush x:Key="DarkYellowOchre" Color="#CCAA33" />
+  <SolidColorBrush x:Key="DarkOliveYellow" Color="#6B5B2B" />
+  <!-- #endregion -->
+
+  <!-- #region Orange 계열 -->
+  <SolidColorBrush x:Key="DarkOrangeRed" Color="#8B2500" />
+  <SolidColorBrush x:Key="DarkBurntOrange" Color="#CC5500" />
+  <SolidColorBrush x:Key="DarkRust" Color="#8B3A2F" />
+  <SolidColorBrush x:Key="DarkSienna" Color="#A0522D" />
+  <SolidColorBrush x:Key="DarkCopper" Color="#B87333" />
+  <SolidColorBrush x:Key="DarkTangerine" Color="#FF7F32" />
+  <!-- #endregion -->
+
+  <SolidColorBrush x:Key="DarkWhite" Color="#FFFFFFFF" />
+
+</ResourceDictionary>
+

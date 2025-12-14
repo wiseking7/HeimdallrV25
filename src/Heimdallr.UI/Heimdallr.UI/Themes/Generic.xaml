@@ -1,0 +1,74 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <ResourceDictionary.MergedDictionaries>
+ 
+    <!--CARD -->
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Card/FlipAnimationCard.xaml" />
+
+    <!-- Button -->
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Button/HeimdallrCloseButton.xaml" />
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Button/HeimdallrMaximizeButton.xaml" />
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Button/HeimdallrMinimizeButton.xaml" />
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Button/HeimdallrHoldSubmitButton.xaml" />
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Button/HeimdallrFlatButton.xaml" />
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Button/HeimdallrPulseEllipseButton.xaml" />
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Button/HeimdallrPulseButton.xaml"/>
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Button/HeimdallrHoldIconButton.xaml" />
+
+    <!-- LoadingOverlay-->
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Indicator/LoadingOverlay.xaml" />
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Indicator/Indicator.xaml" />
+    
+    <!-- ContentMenu-->
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/ContextMenu/HeimdallrContextMenu.xaml" />
+    <!-- MenuItem-->
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/MenuItem/HeimdallrMenuItem.xaml" />
+    
+    <!-- TextBox -->
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/TextBox/HeimdallrIPlaceholderTextBox.xaml" />
+
+    <!-- PasswordBox-->
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/PasswordBox/HeimdallrPlaceholderPasswordBox.xaml" />
+    <!-- ComboBox -->
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/ComboBox/HeimdallrComboBox.xaml" />
+
+    <!-- ToolTip -->
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/ToolTip/HeimdallrToolTip.xaml" />
+
+    <!-- CheckBox -->
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/CheckBox/HeimdallrSwitchCheckBox.xaml" />
+
+    <!-- ToggleButton -->
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/ToggleButton/HeimdallrIconToggleButton.xaml" />
+
+    <!-- Heimdallr Icon -->
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Assets/HeimdallrIcon.xaml" />
+
+    <!-- ScrollBar, ScrollViewer -->
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/ScrollViewer/HeimdallrScrollViewer.xaml"/>
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/ScrollBar/HeimdallrScrollBar.xaml" />
+
+    <!-- RadioButton-->
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/RadioButtn/HeimdallrRadioButton.xaml" />
+
+    <!-- RepeatButton-->
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/RepeatButton/HeimdallrRepeatButton.xaml" />
+
+    <!-- MessageBox-->
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/MessageBox/HeimdallrMessageBox.xaml" />
+
+    <!-- Thumb-->
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Thumb/HeimdallrThumb.xaml" />
+
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/ContentControl/AnimatedContentMenu.xaml" />
+    <!--Colors-->
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Colors/Color.xaml" />
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Colors/DarkColors.xaml" />
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Colors/LightColors.xaml" />
+
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Windows/DarkThemeWindow.xaml" />
+  </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

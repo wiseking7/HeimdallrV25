@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Controls\Assets\Geomerties\geometries.json" />
+    <None Remove="Controls\Assets\Images\images.yaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Controls\Assets\Geomerties\geometries.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Assets\Images\images.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Heimdallr.Domain\Heimdallr.Domain\Heimdallr.Domain.csproj" />
+    <ProjectReference Include="..\..\Heimdallr.Utility\Heimdallr.Utility\Heimdallr.Utility.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controls\DataGrid\" />
+    <Folder Include="Controls\ContextMenu\" />
+    <Folder Include="Controls\NewFolder\" />
+    <Folder Include="Behaviors\" />
+    <Folder Include="AttachedProperties\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="WpfAutoGrid.Core" Version="1.5.1" />
+    <PackageReference Include="YamlDotNet.NetCore" Version="1.0.0" />
+  </ItemGroup>
+
+</Project>
