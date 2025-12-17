@@ -15,7 +15,7 @@
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Button/HeimdallrFlatButton.xaml" />
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Button/HeimdallrPulseEllipseButton.xaml" />
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Button/HeimdallrPulseButton.xaml"/>
-    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Button/HeimdallrHoldIconButton.xaml" />
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Button/HeimdallrHoldButton.xaml" />
 
     <!-- LoadingOverlay-->
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Indicator/LoadingOverlay.xaml" />
@@ -23,14 +23,19 @@
     
     <!-- ContentMenu-->
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/ContextMenu/HeimdallrContextMenu.xaml" />
+    
     <!-- MenuItem-->
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/MenuItem/HeimdallrMenuItem.xaml" />
     
     <!-- TextBox -->
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/TextBox/HeimdallrIPlaceholderTextBox.xaml" />
 
+    <!-- Progressbar -->
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/ProgressBar/HeimdallrProgressBar.xaml" />
+
     <!-- PasswordBox-->
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/PasswordBox/HeimdallrPlaceholderPasswordBox.xaml" />
+    
     <!-- ComboBox -->
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/ComboBox/HeimdallrComboBox.xaml" />
 
@@ -62,13 +67,16 @@
     <!-- Thumb-->
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Thumb/HeimdallrThumb.xaml" />
 
+    <!-- MenuContent -->
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/ContentControl/AnimatedContentMenu.xaml" />
+    
     <!--Colors-->
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Colors/Color.xaml" />
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Colors/DarkColors.xaml" />
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Colors/LightColors.xaml" />
 
-    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Windows/DarkThemeWindow.xaml" />
+    <!-- Window -->
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Windows/BaseThemeWindow.xaml" />
   </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

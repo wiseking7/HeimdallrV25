@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 
-namespace Heimdallr.Utility.Helpers;
+namespace Heimdallr.Utility;
 
 /// <summary>
 /// 열거형 Enum을 HeimdallrComboBox에서 사용하기 위해

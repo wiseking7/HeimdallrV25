@@ -212,6 +212,9 @@ public class ImageData
   /// <summary>PowerBlue 변환</summary>
   public static string PowerBlue => ImageConverter.GetData();
 
+  /// <summary>PowerBlue 변환</summary>
+  public static string PowerRed => ImageConverter.GetData();
+
   /// <summary>왕초연</summary>
   public static string Wangchuran => ImageConverter.GetData();
 
@@ -277,5 +280,10 @@ public class ImageData
   /// <summary>알프스</summary>
   public static string Alps => ImageConverter.GetData();
 
+  /// <summary>알프스</summary>
+  public static string WindowMaximize => ImageConverter.GetData();
+
+  /// <summary>알프스</summary>
+  public static string WindowMaximizeRestore => ImageConverter.GetData();
 }
 

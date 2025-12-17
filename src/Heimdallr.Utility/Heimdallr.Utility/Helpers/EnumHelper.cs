@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Reflection;
 
-namespace Heimdallr.Utility.Helpers;
+namespace Heimdallr.Utility;
 
 /// <summary>
 /// Enum 타입에 대해 공통적으로 사용 가능한 헬퍼 메서드를 제공하는 클래스입니다.

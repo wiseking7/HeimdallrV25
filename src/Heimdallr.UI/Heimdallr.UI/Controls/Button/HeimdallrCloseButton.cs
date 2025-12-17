@@ -62,4 +62,38 @@ public class HeimdallrCloseButton : Button
   public static readonly DependencyProperty StretchProperty = DependencyProperty.Register(nameof(Stretch),
     typeof(Stretch), typeof(HeimdallrCloseButton), new PropertyMetadata(Stretch.Uniform));
   #endregion
+
+  #region MouseOverBackground
+  /// <summary>
+  /// 마우스오버시 백그라운드 색상 지정 
+  /// </summary>
+  public Brush MouseOverBackground
+  {
+    get => (Brush)GetValue(MouseOverBackgroundProperty);
+    set => SetValue(MouseOverBackgroundProperty, value);
+  }
+  /// <summary>
+  /// 종속성 속성
+  /// </summary>
+  public static readonly DependencyProperty MouseOverBackgroundProperty =
+      DependencyProperty.Register(nameof(MouseOverBackground), typeof(Brush),
+          typeof(HeimdallrCloseButton), new PropertyMetadata(new SolidColorBrush(Color.FromRgb(0x39, 0x3E, 0x46))));
+  #endregion
+
+  #region PressedBackground
+  /// <summary>
+  /// 버튼클릭시 백그라운드 색상지정
+  /// </summary>
+  public Brush PressedBackground
+  {
+    get => (Brush)GetValue(PressedBackgroundProperty);
+    set => SetValue(PressedBackgroundProperty, value);
+  }
+  /// <summary>
+  /// 종속성 속성
+  /// </summary>
+  public static readonly DependencyProperty PressedBackgroundProperty =
+      DependencyProperty.Register(nameof(PressedBackground), typeof(Brush),
+          typeof(HeimdallrCloseButton), new PropertyMetadata(new SolidColorBrush(Color.FromRgb(0xAD, 0x49, 0xE1))));
+  #endregion
 }

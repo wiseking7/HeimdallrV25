@@ -12,20 +12,24 @@
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="Foreground" Value="#FFFFFFFF" />
     <Setter Property="BorderBrush" Value="Transparent" />
+
     <Setter Property="MenuItemPressedBrush" Value="{StaticResource DarkBlueGray}" />
-    <Setter Property="MenuItemCheckedBrush" Value="{StaticResource DarkBronze}" />
     <Setter Property="MenuItemDisabledForegroundBrush" Value="{StaticResource DarkBurgundyRed}" />
-    <Setter Property="MenuItemIsMouseOver" Value="{StaticResource DarkDeepSea}" />
+    <Setter Property="MenuItemIsMouseOver" Value="{StaticResource DarkRoyalPurple}" />
     <Setter Property="MenuItemIsMouseOverBrush" Value="{StaticResource DarkYellowOchre}" />
+    
     <Setter Property="FontSize" Value="16" />
     <Setter Property="IconSize" Value="30" />
     <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="CornerRadius" Value="0" />
     <Setter Property="Padding" Value="10,5" />
 
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ctrls:HeimdallrMenuItem}">
           <Border x:Name="Border"
+                  Opacity="1"
+                  CornerRadius="{TemplateBinding CornerRadius}"
                   Background="{TemplateBinding Background}"
                   BorderBrush="{TemplateBinding BorderBrush}"
                   BorderThickness="{TemplateBinding BorderThickness}"
@@ -34,26 +38,24 @@
 
             <Grid>
               <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />  <!-- Icon 컬럼 -->
+                <ColumnDefinition Width="*" />     <!-- Header 컬럼-->
+                <ColumnDefinition Width="Auto" />  <!-- Submenu Indicator 컬럼-->
+                <ColumnDefinition Width="*" />     <!-- ShortcutkeyText 컬럼 -->
               </Grid.ColumnDefinitions>
 
-              <!-- Icon -->
-              <Viewbox Grid.Column="0" 
-                       Width="{TemplateBinding IconSize}" 
-                       Height="{TemplateBinding IconSize}" 
-                       Stretch="Uniform"
-                       StretchDirection="Both">
-                <ctrls:HeimdallrIcon x:Name="Icon"
-                                     Margin="10"
-                                     VerticalAlignment="Center"
-                                     Fill="{TemplateBinding IconFill}"
-                                     Icon="{TemplateBinding Icon}"
-                                     Opacity="{Binding IsEnabled, RelativeSource={RelativeSource TemplatedParent}, Converter={cnvts:BoolToOpacityConverter}}"
-                                     Visibility="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}, Converter={cnvts:IconToVisibilityConverter}}" />
-              </Viewbox>
+              <!-- Icon (항상 자리 유지) -->
+              <ctrls:HeimdallrIcon x:Name="Icon"
+                                   Grid.Column="0"
+                                   IconSize="20"
+                                   Margin="5,10"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   Fill="{TemplateBinding IconFill}"
+                                   Icon="{TemplateBinding Icon}"
+                                   Opacity="{Binding Icon,
+                                             RelativeSource={RelativeSource TemplatedParent},
+                                             Converter={cnvts:IconToOpacityConverter}}" />
 
               <!-- Header -->
               <ContentPresenter x:Name="HeaderContent"
@@ -61,60 +63,74 @@
                                 VerticalAlignment="Center"
                                 RecognizesAccessKey="True"
                                 ContentSource="Header"
-                                Margin="10,0,10,0" 
+                                Margin="10" 
                                 TextBlock.Foreground="{TemplateBinding Foreground}"/>
 
-              <!-- Submenu Indicator -->
-              <Viewbox Grid.Column="2" 
-                       Width="{TemplateBinding IconSize}" 
-                       Height="{TemplateBinding IconSize}" 
-                       Stretch="Uniform"
-                       StretchDirection="Both"
-                       Visibility="{Binding HasItems, RelativeSource={RelativeSource TemplatedParent}, Converter={cnvts:BooleanToVisibilityConverter}}" >
-                <ctrls:HeimdallrIcon Fill="{TemplateBinding IconFill}"
-                                     Icon="Arrow_Triangle_Right"
-                                     Opacity="{Binding IsEnabled, RelativeSource={RelativeSource TemplatedParent}, Converter={cnvts:BoolToOpacityConverter}}" />
-              </Viewbox>
 
-              <!-- ShortcutKeyText -->
+              <!-- SubHeaderText -->
               <TextBlock Grid.Column="3"
                          VerticalAlignment="Center"
-                         Margin="0,0,10,0"
+                         Margin="10,10"
                          Foreground="{TemplateBinding Foreground}"
-                         Text="{TemplateBinding ShortcutKeyText}"
+                         Text="{TemplateBinding SubHeaderText}"
                          FontSize="14"
                          Opacity="0.7"
                          TextTrimming="CharacterEllipsis"
                          HorizontalAlignment="Right"
-                         Visibility="{Binding ShortcutKeyText, RelativeSource={RelativeSource TemplatedParent}, Converter={cnvts:StringToVisibilityConverter}}" />
+                         Visibility="{Binding SubHeaderText, RelativeSource={RelativeSource TemplatedParent}, Converter={cnvts:StringToVisibilityConverter}}" />
             </Grid>
           </Border>
 
           <ControlTemplate.Triggers>
-            <!-- MouseOver -->
-            <Trigger Property="IsMouseOver" Value="True">
-              <Setter TargetName="Border" Property="Background" Value="{Binding MenuItemIsMouseOver, RelativeSource={RelativeSource TemplatedParent}}" />
-              <Setter TargetName="HeaderContent" Property="TextBlock.Foreground" Value="{Binding MenuItemIsMouseOverBrush, RelativeSource={RelativeSource TemplatedParent}}" />
-            </Trigger>
+            <!-- ContextMenu VisualState 연동 -->
+            <DataTrigger Value="Normal">
+              <DataTrigger.Binding>
+                <Binding Path="VisualState"
+                         RelativeSource="{RelativeSource AncestorType={x:Type ctrls:HeimdallrContextMenu}}" />
+              </DataTrigger.Binding>
+
+              <Setter TargetName="Border" Property="Opacity" Value="1" />
+              <Setter TargetName="Border" Property="Background" Value="Transparent" />
+              <Setter TargetName="HeaderContent" Property="TextBlock.Foreground" 
+                      Value="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}}"/>
+            </DataTrigger>
+            <!-- Hover -->
+            <DataTrigger Value="Hover">
+              <DataTrigger.Binding>
+                <Binding Path="VisualState"
+                         RelativeSource="{RelativeSource AncestorType={x:Type ctrls:HeimdallrContextMenu}}" />
+              </DataTrigger.Binding>
+
+              <Setter TargetName="Border" Property="Background"
+                      Value="{Binding MenuItemIsMouseOver, RelativeSource={RelativeSource TemplatedParent}}" />
+
+              <Setter TargetName="HeaderContent"  Property="TextBlock.Foreground"
+                      Value="{Binding MenuItemIsMouseOverBrush, RelativeSource={RelativeSource TemplatedParent}}" />
+            </DataTrigger>
 
             <!-- Pressed -->
-            <Trigger Property="IsPressed" Value="True">
-              <Setter TargetName="Border" Property="Background" Value="{Binding MenuItemPressedBrush, RelativeSource={RelativeSource TemplatedParent}}" />
-            </Trigger>
+            <DataTrigger Value="Pressed">
+              <DataTrigger.Binding>
+                <Binding Path="VisualState"
+                         RelativeSource="{RelativeSource AncestorType={x:Type ctrls:HeimdallrContextMenu}}" />
+              </DataTrigger.Binding>
 
-            <!-- Checked -->
-            <Trigger Property="IsChecked" Value="True">
-              <Setter TargetName="Border" Property="Background" Value="{Binding MenuItemCheckedBrush, RelativeSource={RelativeSource TemplatedParent}}" />
-            </Trigger>
+              <Setter TargetName="Border" Property="Background"
+                      Value="{Binding MenuItemPressedBrush, RelativeSource={RelativeSource TemplatedParent}}" />
+            </DataTrigger>
 
             <!-- Disabled -->
-            <Trigger Property="IsEnabled" Value="False">
-              <Setter TargetName="HeaderContent" Property="TextBlock.Foreground" Value="{Binding MenuItemDisabledForegroundBrush, RelativeSource={RelativeSource TemplatedParent}}" />
-              <Setter TargetName="Icon" Property="Opacity" Value="0.3" />
-              <Setter TargetName="Border" Property="Opacity" Value="0.5" />
-            </Trigger>
-          </ControlTemplate.Triggers>
+            <DataTrigger Value="Disabled">
+              <DataTrigger.Binding>
+                <Binding Path="VisualState"
+                         RelativeSource="{RelativeSource AncestorType={x:Type ctrls:HeimdallrContextMenu}}" />
+              </DataTrigger.Binding>
 
+              <Setter TargetName="HeaderContent" Property="TextBlock.Foreground"
+                      Value="{Binding MenuItemDisabledForegroundBrush, RelativeSource={RelativeSource TemplatedParent}}" />
+              <Setter TargetName="Border" Property="Opacity" Value="0.5" />
+            </DataTrigger>
+          </ControlTemplate.Triggers>
         </ControlTemplate>
       </Setter.Value>
     </Setter>

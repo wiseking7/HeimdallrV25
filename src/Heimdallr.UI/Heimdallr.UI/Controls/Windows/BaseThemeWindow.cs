@@ -1,5 +1,4 @@
-﻿using Heimdallr.UI.Views;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
@@ -7,12 +6,12 @@ using System.Windows.Media.Effects;
 namespace Heimdallr.UI.Controls;
 
 /// <summary>
-/// DarkThemeWindow 클래스는 WPF 기반의 커스텀 창을 정의하며,
+/// BaseThemeWindow 클래스는 WPF 기반의 커스텀 창을 정의하며,
 /// 기본 윈도우 기능(닫기, 최소화, 최대화, 드래그 이동)뿐 아니라
 /// 다크 테마, 디밍(어두워짐) 처리, 태스크바 표시 여부 제어 기능을 포함합니다.
 /// HeimdallrWindow를 상속하여 커스텀 스타일과 동작을 확장한 윈도우입니다.
 /// </summary>
-public class DarkThemeWindow : HeimdallrWindow
+public class BaseThemeWindow : HeimdallrWindow
 {
   #region 의존성 속성(DependencyProperty) 선언
   // WPF의 바인딩과 스타일, 트리거에 활용할 수 있는 의존성 속성 선언 부분입니다.
@@ -146,12 +145,12 @@ public class DarkThemeWindow : HeimdallrWindow
   }
   #endregion
 
+  #region CornerRadius
   /// <summary>
   /// 창 모서리의 둥근 정도를 설정하는 속성입니다.
   /// </summary>
-  #region CornerRadius
   public static readonly DependencyProperty CornerRadiusProperty =
-       DependencyProperty.Register(nameof(CornerRadius), typeof(CornerRadius), typeof(DarkThemeWindow),
+       DependencyProperty.Register(nameof(CornerRadius), typeof(CornerRadius), typeof(BaseThemeWindow),
            new PropertyMetadata(new CornerRadius(0)));
   /// <summary>
   /// 창 모서리의 둥근 정도를 설정하는 속성입니다.
@@ -163,9 +162,9 @@ public class DarkThemeWindow : HeimdallrWindow
   }
   #endregion
 
-  #region Title 에 추가 속성 
+  #region Title 에 Content 추가 속성 
   public static readonly DependencyProperty TitleContentProperty =
-    DependencyProperty.Register(nameof(TitleContent), typeof(object), typeof(DarkThemeWindow));
+    DependencyProperty.Register(nameof(TitleContent), typeof(object), typeof(BaseThemeWindow));
 
   public object TitleContent
   {
@@ -174,52 +173,51 @@ public class DarkThemeWindow : HeimdallrWindow
   }
   #endregion
 
-  // 최대화 버튼 참조 (템플릿에서 찾음)
-  private HeimdallrMaximizeButton? maximBtn;
-
+  #region 정적 생성자
   /// <summary>
   /// 정적 생성자: 의존성 속성 등록, 기본 스타일 키 설정
   /// AllowsTransparency와 WindowStyle을 조합해 투명하고 커스텀 타이틀 바를 구현
   /// </summary>
-  static DarkThemeWindow()
+  static BaseThemeWindow()
   {
     // 이 타입에 대한 기본 스타일 키를 설정하여 Themes/Generic.xaml에서 스타일을 찾게 함
-    DefaultStyleKeyProperty.OverrideMetadata(typeof(DarkThemeWindow),
-      new FrameworkPropertyMetadata(typeof(DarkThemeWindow)));
+    DefaultStyleKeyProperty.OverrideMetadata(typeof(BaseThemeWindow),
+      new FrameworkPropertyMetadata(typeof(BaseThemeWindow)));
 
     // 의존성 속성 등록
-    CloseCommandProperty = DependencyProperty.Register(nameof(CloseCommand), typeof(ICommand), typeof(DarkThemeWindow),
+    CloseCommandProperty = DependencyProperty.Register(nameof(CloseCommand), typeof(ICommand), typeof(BaseThemeWindow),
       new PropertyMetadata(null));
 
-    TitleProperty = DependencyProperty.Register(nameof(Title), typeof(object), typeof(DarkThemeWindow),
+    TitleProperty = DependencyProperty.Register(nameof(Title), typeof(object), typeof(BaseThemeWindow),
       new UIPropertyMetadata(null));
 
-    TitleHeaderBackgroundProperty = DependencyProperty.Register(nameof(TitleHeaderBackground), typeof(Brush), typeof(DarkThemeWindow),
+    TitleHeaderBackgroundProperty = DependencyProperty.Register(nameof(TitleHeaderBackground), typeof(Brush), typeof(BaseThemeWindow),
       new PropertyMetadata(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF344C64"))));
 
-    DimmingProperty = DependencyProperty.Register(nameof(Dimming), typeof(bool), typeof(DarkThemeWindow),
-      new PropertyMetadata(false, (d, e) =>
-      {
-        // 디밍 활성화 상태 변경 시 필요한 동작을 넣을 수 있음
-      }));
-
-    DimmingColorProperty = DependencyProperty.Register(nameof(DimmingColor), typeof(Brush), typeof(DarkThemeWindow),
+    DimmingColorProperty = DependencyProperty.Register(nameof(DimmingColor), typeof(Brush), typeof(BaseThemeWindow),
       new PropertyMetadata(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#141414"))));
 
-    DimmingOpacityProperty = DependencyProperty.Register(nameof(DimmingOpacity), typeof(double), typeof(DarkThemeWindow),
+    DimmingOpacityProperty = DependencyProperty.Register(nameof(DimmingOpacity), typeof(double), typeof(BaseThemeWindow),
       new PropertyMetadata(0.8, OnDimmingOpacityChanged));
 
-    IsShowTaskBarProperty = DependencyProperty.Register(nameof(IsShowTaskBar), typeof(bool), typeof(DarkThemeWindow),
+    IsShowTaskBarProperty = DependencyProperty.Register(nameof(IsShowTaskBar), typeof(bool), typeof(BaseThemeWindow),
       new PropertyMetadata(true, (d, e) =>
       {
-        var win = (DarkThemeWindow)d;
+        var win = (BaseThemeWindow)d;
         win.MaxHeightSet(); // 값 변경 시 최대 높이 재설정
       }));
 
-    PopupOpenProperty = DependencyProperty.Register(nameof(PopupOpen), typeof(bool), typeof(DarkThemeWindow),
-      new PropertyMetadata(false, OnPopupOpenChanged));
+    DimmingProperty = DependencyProperty.Register(nameof(Dimming), typeof(bool), typeof(BaseThemeWindow),
+    new PropertyMetadata(false, OnDimmingChanged)); // 기존 콜백 대신
 
+    PopupOpenProperty = DependencyProperty.Register(nameof(PopupOpen), typeof(bool), typeof(BaseThemeWindow),
+      new PropertyMetadata(false, OnPopupOpenChanged));
   }
+  #endregion
+
+  #region Dimming 수정 부분
+  private BlurEffect? _dimmingEffect;
+  private const double MaxBlurRadius = 15.0; // 최대 블러 정도 (픽셀 단위)
 
   /// <summary>
   /// 디밍 투명도 변경시 호출되는 콜백
@@ -227,19 +225,47 @@ public class DarkThemeWindow : HeimdallrWindow
   /// </summary>
   private static void OnDimmingOpacityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
   {
-    if (d is DarkThemeWindow window && window._dimmingEffect != null)
+    if (d is BaseThemeWindow window && window._dimmingEffect != null)
     {
-      window._dimmingEffect.Radius = (double)e.NewValue;
+      // 기존: window._dimmingEffect.Radius = (double)e.NewValue;
+      double opacity = (double)e.NewValue;   // 0.0 ~ 1.0
+
+      window._dimmingEffect.Radius = opacity * MaxBlurRadius;
     }
   }
 
+  // #region Dimming Visibility 처리
+  /// <summary>
+  /// Dimming 속성 변경 시 호출되어 PART_Dimming 요소의 Visibility를 갱신
+  /// </summary>
+  private void UpdateDimmingVisibility()
+  {
+    if (this.Template.FindName("PART_Dimming", this) is UIElement dimmingElement)
+    {
+      dimmingElement.Visibility = Dimming ? Visibility.Visible : Visibility.Collapsed;
+    }
+  }
+
+  /// <summary>
+  /// Dimming 속성이 변경될 때 호출되는 콜백
+  /// </summary>
+  private static void OnDimmingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+  {
+    if (d is BaseThemeWindow window)
+    {
+      window.UpdateDimmingVisibility();
+    }
+  }
+  #endregion
+
+  #region PopupOpen 변경 처리
   /// <summary>
   /// 팝업 열림 상태 변경 시 호출되는 콜백
   /// 실제 팝업 열기/닫기 동작을 여기서 구현 가능
   /// </summary>
   private static void OnPopupOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
   {
-    if (d is DarkThemeWindow window)
+    if (d is BaseThemeWindow window)
     {
       bool isOpen = (bool)e.NewValue;
       if (isOpen)
@@ -252,11 +278,13 @@ public class DarkThemeWindow : HeimdallrWindow
       }
     }
   }
+  #endregion
 
+  #region 생성자
   /// <summary>
   /// 생성자: 창의 기본 특성 설정 및 이벤트 핸들러 등록
   /// </summary>
-  public DarkThemeWindow()
+  public BaseThemeWindow()
   {
     // 최대 높이를 태스크바 포함 여부에 따라 설정
     MaxHeightSet();
@@ -271,6 +299,11 @@ public class DarkThemeWindow : HeimdallrWindow
     // 창 상태 변화 이벤트 등록 (최대화 버튼 상태 동기화용)
     this.StateChanged += DarkThemeWindow_StateChanged;
   }
+  #endregion
+
+  #region 창(최대) 상태 변경 처리 메서드
+  // 최대화 버튼 참조 (템플릿에서 찾음)
+  private HeimdallrMaximizeButton? maximBtn;
 
   /// <summary>
   /// 창 상태가 변경될 때마다 최대화 버튼 상태(IsMaximize)를 변경해 UI 동기화
@@ -282,9 +315,9 @@ public class DarkThemeWindow : HeimdallrWindow
       maximBtn.IsMaximize = this.WindowState == WindowState.Maximized;
     }
   }
+  #endregion
 
-  private BlurEffect? _dimmingEffect;
-
+  #region OnApplyTemplate 재정의
   /// <summary>
   /// ControlTemplate이 적용된 후 템플릿 내부 요소를 찾아 이벤트 및 효과 바인딩 처리
   /// PART_ 접두어가 붙은 이름은 템플릿 파트 규칙에 따라 XAML에서 정의된 요소 이름
@@ -341,14 +374,19 @@ public class DarkThemeWindow : HeimdallrWindow
     {
       _dimmingEffect = new BlurEffect
       {
-        Radius = this.DimmingOpacity,
+        Radius = this.DimmingOpacity * MaxBlurRadius,
         KernelType = KernelType.Gaussian
       };
 
       dimmingElement.Effect = _dimmingEffect;
+
+      // Dimming 활성화 상태에 따라 Visibility 초기화
+      UpdateDimmingVisibility();
     }
   }
+  #endregion
 
+  #region 창 닫기 처리 메서드
   /// <summary>
   /// 닫기 버튼 클릭 시 호출, CloseCommand가 있으면 실행, 없으면 기본 Close 호출
   /// </summary>
@@ -363,7 +401,9 @@ public class DarkThemeWindow : HeimdallrWindow
       CloseCommand.Execute(this);
     }
   }
+  #endregion
 
+  #region 창 드래그 이동 처리 메서드
   /// <summary>
   /// 드래그바 클릭 후 마우스 왼쪽 버튼을 누른 상태에서 창 이동(DragMove)
   /// </summary>
@@ -374,7 +414,9 @@ public class DarkThemeWindow : HeimdallrWindow
       GetWindow(this).DragMove();
     }
   }
+  #endregion
 
+  #region 최대 높이 설정 메서드
   /// <summary>
   /// 최대화 시 창 최대 높이를 태스크바 영역 포함 여부에 따라 설정
   /// true면 최대화 시 태스크바 위로 창이 올라가지 않고, false면 무한 확장
@@ -383,7 +425,9 @@ public class DarkThemeWindow : HeimdallrWindow
   {
     this.MaxHeight = IsShowTaskBar ? SystemParameters.MaximizedPrimaryScreenHeight : Double.PositiveInfinity;
   }
+  #endregion
 
+  #region 창 상태 변경 처리 메서드
   /// <summary>
   /// 창 상태가 변경될 때마다 호출되는 이벤트 핸들러
   /// </summary>
@@ -401,4 +445,5 @@ public class DarkThemeWindow : HeimdallrWindow
       Padding = new Thickness(10); // 일반 상태에서는 패딩 적용
     }
   }
+  #endregion
 }

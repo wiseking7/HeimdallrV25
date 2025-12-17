@@ -26,7 +26,7 @@ public class HeimdallrMaximizeButton : Button
   /// 템플릿 내부에서 사용하는 아이콘 컨트롤입니다.
   /// 템플릿의 PART_IMG 파트로 연결되며, IsMaximize 상태에 따라 아이콘이 변경됩니다.
   /// </summary>
-  private HeimdallrIcon? img;
+  private HeimdallrIcon? icon;
   #endregion
 
   #region DependencyProperty - IsMaximize
@@ -63,9 +63,9 @@ public class HeimdallrMaximizeButton : Button
     var btn = (HeimdallrMaximizeButton)d;
 
     // 템플릿 내부의 아이콘 컨트롤이 존재할 경우 아이콘을 갱신
-    if (btn.img != null)
+    if (btn.icon != null)
     {
-      btn.img.Icon = btn.IsMaximize ? IconType.Restore : IconType.Maximize;
+      btn.icon.Icon = btn.IsMaximize ? IconType.Restore : IconType.Maximize;
     }
   }
   #endregion
@@ -81,12 +81,12 @@ public class HeimdallrMaximizeButton : Button
     base.OnApplyTemplate();
 
     // 컨트롤 템플릿 내의 PART_IMG 요소(HeimdallrIcon 타입)를 찾아 img 필드에 저장
-    if (GetTemplateChild("PART_IMG") is HeimdallrIcon maxbtn)
+    if (GetTemplateChild("PART_Icon") is HeimdallrIcon maxbtn)
     {
-      img = maxbtn;
+      icon = maxbtn;
 
       // 초기 상태에서도 아이콘을 반영
-      img.Icon = IsMaximize ? IconType.Restore : IconType.Maximize;
+      icon.Icon = IsMaximize ? IconType.Restore : IconType.Maximize;
     }
   }
 
@@ -125,20 +125,37 @@ public class HeimdallrMaximizeButton : Button
           typeof(HeimdallrMaximizeButton), new PropertyMetadata(25.0));
   #endregion
 
-  #region Stretch
-  // <summary>
-  /// Viewbox 또는 Path 렌더링에 사용할 Stretch 모드
-  /// </summary>
-  public Stretch Stretch
-  {
-    get => (Stretch)GetValue(StretchProperty);
-    set => SetValue(StretchProperty, value);
-  }
-
+  #region MouseOverBackground
   /// <summary>
-  /// 기본값 Uniform으로 설정된 Stretch 속성
+  /// 마우스오버시 백그라운드 색상 지정 
   /// </summary>
-  public static readonly DependencyProperty StretchProperty = DependencyProperty.Register(nameof(Stretch),
-    typeof(Stretch), typeof(HeimdallrMaximizeButton), new PropertyMetadata(Stretch.Uniform));
+  public Brush MouseOverBackground
+  {
+    get => (Brush)GetValue(MouseOverBackgroundProperty);
+    set => SetValue(MouseOverBackgroundProperty, value);
+  }
+  /// <summary>
+  /// 종속성 속성
+  /// </summary>
+  public static readonly DependencyProperty MouseOverBackgroundProperty =
+      DependencyProperty.Register(nameof(MouseOverBackground), typeof(Brush),
+          typeof(HeimdallrMaximizeButton), new PropertyMetadata(new SolidColorBrush(Color.FromRgb(0x39, 0x3E, 0x46))));
+  #endregion
+
+  #region PressedBackground
+  /// <summary>
+  /// 버튼클릭시 백그라운드 색상지정
+  /// </summary>
+  public Brush PressedBackground
+  {
+    get => (Brush)GetValue(PressedBackgroundProperty);
+    set => SetValue(PressedBackgroundProperty, value);
+  }
+  /// <summary>
+  /// 종속성 속성
+  /// </summary>
+  public static readonly DependencyProperty PressedBackgroundProperty =
+      DependencyProperty.Register(nameof(PressedBackground), typeof(Brush),
+          typeof(HeimdallrMaximizeButton), new PropertyMetadata(new SolidColorBrush(Color.FromRgb(0xAD, 0x49, 0xE1))));
   #endregion
 }

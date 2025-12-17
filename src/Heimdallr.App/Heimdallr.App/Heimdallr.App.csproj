@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Heimdallr.UI\Heimdallr.UI\Heimdallr.UI.csproj" />
+    <ProjectReference Include="..\..\Heimdallr.Utility\Heimdallr.Utility\Heimdallr.Utility.csproj" />
   </ItemGroup>
 
 </Project>

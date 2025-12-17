@@ -1,6 +1,8 @@
 ﻿using Heimdallr.UI.Enums;
+using Heimdallr.UI.Extensions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace Heimdallr.UI.Controls;
@@ -10,12 +12,22 @@ namespace Heimdallr.UI.Controls;
 /// </summary>
 public class HeimdallrMenuItem : MenuItem
 {
+  #region 생성자
+  // 종속성 생성자
   static HeimdallrMenuItem()
   {
     DefaultStyleKeyProperty.OverrideMetadata(typeof(HeimdallrMenuItem),
         new FrameworkPropertyMetadata(typeof(HeimdallrMenuItem)));
   }
 
+  // 생성자
+  public HeimdallrMenuItem()
+  {
+    IsEnabledChanged += OnIsEnabledChanged;
+  }
+  #endregion
+
+  #region Icon
   /// <summary>
   /// HeimdallrIcon에 표시될 PathGeometry 아이콘 타입
   /// </summary>
@@ -30,7 +42,9 @@ public class HeimdallrMenuItem : MenuItem
   public new static readonly DependencyProperty IconProperty =
       DependencyProperty.Register(nameof(Icon), typeof(IconType), typeof(HeimdallrMenuItem),
           new PropertyMetadata(IconType.None));
+  #endregion
 
+  #region IconFill
   /// <summary>
   /// 아이콘 색상 (HeimdallrIcon의 Fill과 바인딩됨)
   /// </summary>
@@ -45,7 +59,9 @@ public class HeimdallrMenuItem : MenuItem
   public static readonly DependencyProperty IconFillProperty =
       DependencyProperty.Register(nameof(IconFill), typeof(Brush), typeof(HeimdallrMenuItem),
         new PropertyMetadata(Brushes.Gray));
+  #endregion
 
+  #region IconSize
   /// <summary>
   /// 아이콘 사이즈크기조정
   /// </summary>
@@ -60,22 +76,22 @@ public class HeimdallrMenuItem : MenuItem
   /// </summary>
   public static readonly DependencyProperty IconSizeProperty =
     DependencyProperty.Register(nameof(IconSize), typeof(double), typeof(HeimdallrMenuItem), new PropertyMetadata(24.0));
+  #endregion
 
+  #region SubHeaderText
   /// ShortcutKeyText (단축키 텍스트)
-  public string ShortcutKeyText
+  public string SubHeaderText
   {
-    get => (string)GetValue(ShortcutKeyTextProperty);
-    set => SetValue(ShortcutKeyTextProperty, value);
+    get => (string)GetValue(SubHeaderTextProperty);
+    set => SetValue(SubHeaderTextProperty, value);
   }
 
   /// <summary>
   /// 
   /// </summary>
-  public static readonly DependencyProperty ShortcutKeyTextProperty =
-      DependencyProperty.Register(nameof(ShortcutKeyText), typeof(string), typeof(HeimdallrMenuItem), new PropertyMetadata(string.Empty));
-
-  // CommandParameter 기본값 자동 설정 (PlacementTarget.DataContext 등에서)
-  // 이 기능은 ContextMenu 쪽에서 자동 처리하는 경우가 많지만, 필요시 여기에 구현 가능
+  public static readonly DependencyProperty SubHeaderTextProperty =
+      DependencyProperty.Register(nameof(SubHeaderText), typeof(string), typeof(HeimdallrMenuItem), new PropertyMetadata(string.Empty));
+  #endregion
 
   #region CornerRadius 
   /// <summary>
@@ -94,6 +110,73 @@ public class HeimdallrMenuItem : MenuItem
      DependencyProperty.Register(nameof(CornerRadius), typeof(CornerRadius),
          typeof(HeimdallrMenuItem),
          new FrameworkPropertyMetadata(new CornerRadius(0)));
+  #endregion
+
+  #region ContextMenu 상태 전파 로직 
+  protected override void OnMouseEnter(MouseEventArgs e)
+  {
+    base.OnMouseEnter(e);
+    SetContextMenuState(ContextMenuVisualState.Hover);
+  }
+
+  protected override void OnMouseLeave(MouseEventArgs e)
+  {
+    base.OnMouseLeave(e);
+    SetContextMenuState(ContextMenuVisualState.Normal);
+  }
+
+  protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
+  {
+    base.OnPreviewMouseLeftButtonDown(e);
+    SetContextMenuState(ContextMenuVisualState.Pressed);
+  }
+
+  protected override void OnSubmenuOpened(RoutedEventArgs e)
+  {
+    base.OnSubmenuOpened(e);
+    SetContextMenuState(ContextMenuVisualState.Hover);
+  }
+
+  protected override void OnSubmenuClosed(RoutedEventArgs e)
+  {
+    base.OnSubmenuClosed(e);
+    SetContextMenuState(ContextMenuVisualState.Normal);
+  }
+
+  private void OnIsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+  {
+    if (!(bool)e.NewValue)
+      SetContextMenuState(ContextMenuVisualState.Disabled);
+  }
+
+  private void SetContextMenuState(ContextMenuVisualState state)
+  {
+    if (ItemsControl.ItemsControlFromItemContainer(this) is HeimdallrContextMenu contextMenu)
+    {
+      contextMenu.VisualState = state;
+
+      // 배경 Brush 결정
+      Brush targetBackground = state switch
+      {
+        ContextMenuVisualState.Hover => MenuItemIsMouseOver,
+        ContextMenuVisualState.Pressed => MenuItemPressedBrush,
+        ContextMenuVisualState.Disabled => MenuItemDisabledForegroundBrush,
+        _ => Background
+      };
+
+      // 전경 Brush 결정
+      Brush targetForeground = state switch
+      {
+        ContextMenuVisualState.Hover => MenuItemIsMouseOverBrush,
+        ContextMenuVisualState.Pressed => Foreground,
+        ContextMenuVisualState.Disabled => MenuItemDisabledForegroundBrush,
+        _ => Foreground
+      };
+
+      AnimationExtensions.SetAnimatedBackground(contextMenu, targetBackground);
+      AnimationExtensions.SetAnimatedForeground(contextMenu, targetForeground);
+    }
+  }
   #endregion
 
   #region 사용자 정의 상태 속성들
@@ -120,14 +203,6 @@ public class HeimdallrMenuItem : MenuItem
   }
   public static readonly DependencyProperty MenuItemPressedBrushProperty =
       DependencyProperty.Register(nameof(MenuItemPressedBrush), typeof(Brush), typeof(HeimdallrMenuItem), new PropertyMetadata(Brushes.DarkBlue));
-
-  public Brush MenuItemCheckedBrush
-  {
-    get => (Brush)GetValue(MenuItemCheckedBrushProperty);
-    set => SetValue(MenuItemCheckedBrushProperty, value);
-  }
-  public static readonly DependencyProperty MenuItemCheckedBrushProperty =
-      DependencyProperty.Register(nameof(MenuItemCheckedBrush), typeof(Brush), typeof(HeimdallrMenuItem), new PropertyMetadata(Brushes.LightBlue));
 
   public Brush MenuItemDisabledForegroundBrush
   {

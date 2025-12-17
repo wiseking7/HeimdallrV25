@@ -13,7 +13,7 @@ namespace Heimdallr.UI.Controls;
 /// Heimdallr 스타일의 Hold 버튼입니다.
 /// 마우스를 일정 시간 누르면 Hold 이벤트가 발생하며, 진행 상태를 시각적으로 표시합니다.
 /// </summary>
-public class HeimdallrHoldIconButton : Button
+public class HeimdallrHoldButton : Button
 {
   // Hold 동작 취소를 위한 CancellationTokenSource
   private CancellationTokenSource? _cts;
@@ -35,7 +35,7 @@ public class HeimdallrHoldIconButton : Button
   /// 기본값 0.5
   /// </summary>
   public static readonly DependencyProperty HoldDurationProperty =
-      DependencyProperty.Register(nameof(HoldDuration), typeof(Duration), typeof(HeimdallrHoldIconButton),
+      DependencyProperty.Register(nameof(HoldDuration), typeof(Duration), typeof(HeimdallrHoldButton),
           new PropertyMetadata(new Duration(TimeSpan.FromSeconds(0.5))));
   #endregion
 
@@ -52,7 +52,7 @@ public class HeimdallrHoldIconButton : Button
   /// 기본값 0
   /// </summary>
   public static readonly DependencyProperty CornerRadiusProperty =
-      DependencyProperty.Register(nameof(CornerRadius), typeof(CornerRadius), typeof(HeimdallrHoldIconButton),
+      DependencyProperty.Register(nameof(CornerRadius), typeof(CornerRadius), typeof(HeimdallrHoldButton),
           new PropertyMetadata(new CornerRadius(0)));
   #endregion
 
@@ -69,7 +69,7 @@ public class HeimdallrHoldIconButton : Button
   /// 기본값 없음
   /// </summary>
   public static readonly DependencyProperty IconProperty =
-      DependencyProperty.Register(nameof(Icon), typeof(IconType), typeof(HeimdallrHoldIconButton),
+      DependencyProperty.Register(nameof(Icon), typeof(IconType), typeof(HeimdallrHoldButton),
           new PropertyMetadata(IconType.None));
   #endregion
 
@@ -88,7 +88,7 @@ public class HeimdallrHoldIconButton : Button
   /// </summary>
   public static readonly DependencyProperty IconSizeProperty =
       DependencyProperty.Register(nameof(IconSize), typeof(double),
-          typeof(HeimdallrHoldIconButton), new PropertyMetadata(24.0));
+          typeof(HeimdallrHoldButton), new PropertyMetadata(24.0));
   #endregion
 
   #region IconFill
@@ -104,7 +104,7 @@ public class HeimdallrHoldIconButton : Button
   /// 기본값 그레이
   /// </summary>
   public static readonly DependencyProperty IconFillProperty =
-      DependencyProperty.Register(nameof(IconFill), typeof(Brush), typeof(HeimdallrHoldIconButton),
+      DependencyProperty.Register(nameof(IconFill), typeof(Brush), typeof(HeimdallrHoldButton),
           new PropertyMetadata(Brushes.Gray));
   #endregion
 
@@ -121,7 +121,7 @@ public class HeimdallrHoldIconButton : Button
   /// 버튼 우측에 표시할 문자열을 설정하는 속성
   /// </summary>
   public static readonly DependencyProperty ButtonTextProperty = DependencyProperty.Register(nameof(ButtonText), typeof(string),
-        typeof(HeimdallrHoldIconButton), new PropertyMetadata(string.Empty));
+        typeof(HeimdallrHoldButton), new PropertyMetadata(string.Empty));
   #endregion
 
   #region BackgroundRectangleFill
@@ -137,7 +137,7 @@ public class HeimdallrHoldIconButton : Button
   /// 기본값 검정
   /// </summary>
   public static readonly DependencyProperty BackgroundRectangleFillProperty =
-      DependencyProperty.Register(nameof(BackgroundRectangleFill), typeof(Brush), typeof(HeimdallrHoldIconButton),
+      DependencyProperty.Register(nameof(BackgroundRectangleFill), typeof(Brush), typeof(HeimdallrHoldButton),
           new PropertyMetadata(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF456882")))); // 기본값
   #endregion
 
@@ -154,7 +154,7 @@ public class HeimdallrHoldIconButton : Button
   /// 기본값 오렌지
   /// </summary>
   public static readonly DependencyProperty OneHoldFillProperty =
-      DependencyProperty.Register(nameof(OneHoldFill), typeof(Brush), typeof(HeimdallrHoldIconButton),
+      DependencyProperty.Register(nameof(OneHoldFill), typeof(Brush), typeof(HeimdallrHoldButton),
           new PropertyMetadata(Brushes.Orange));
   #endregion
 
@@ -171,7 +171,7 @@ public class HeimdallrHoldIconButton : Button
   /// 기본값 노란
   /// </summary>
   public static readonly DependencyProperty TwoHoldFillProperty =
-      DependencyProperty.Register(nameof(TwoHoldFill), typeof(Brush), typeof(HeimdallrHoldIconButton),
+      DependencyProperty.Register(nameof(TwoHoldFill), typeof(Brush), typeof(HeimdallrHoldButton),
           new PropertyMetadata(Brushes.Yellow));
   #endregion
 
@@ -188,7 +188,7 @@ public class HeimdallrHoldIconButton : Button
   /// 기본값 그린
   /// </summary>
   public static readonly DependencyProperty ThreeHoldFillProperty =
-      DependencyProperty.Register(nameof(ThreeHoldFill), typeof(Brush), typeof(HeimdallrHoldIconButton),
+      DependencyProperty.Register(nameof(ThreeHoldFill), typeof(Brush), typeof(HeimdallrHoldButton),
           new PropertyMetadata(Brushes.Green));
   #endregion
 
@@ -205,7 +205,7 @@ public class HeimdallrHoldIconButton : Button
   /// 기본값 그레이
   /// </summary>
   public static readonly DependencyProperty MouseOverBackgroundProperty =
-      DependencyProperty.Register(nameof(MouseOverBackground), typeof(Brush), typeof(HeimdallrHoldIconButton),
+      DependencyProperty.Register(nameof(MouseOverBackground), typeof(Brush), typeof(HeimdallrHoldButton),
           new PropertyMetadata(Brushes.LightGray));
   #endregion
 
@@ -222,7 +222,7 @@ public class HeimdallrHoldIconButton : Button
   /// 기본값 다크그레이
   /// </summary>
   public static readonly DependencyProperty PressedBackgroundProperty =
-      DependencyProperty.Register(nameof(PressedBackground), typeof(Brush), typeof(HeimdallrHoldIconButton),
+      DependencyProperty.Register(nameof(PressedBackground), typeof(Brush), typeof(HeimdallrHoldButton),
           new PropertyMetadata(Brushes.DarkGray));
   #endregion
 
@@ -239,7 +239,7 @@ public class HeimdallrHoldIconButton : Button
   /// 기본값 블루
   /// </summary>
   public static readonly DependencyProperty KeyboardFocusBorderBrushProperty =
-      DependencyProperty.Register(nameof(KeyboardFocusBorderBrush), typeof(Brush), typeof(HeimdallrHoldIconButton),
+      DependencyProperty.Register(nameof(KeyboardFocusBorderBrush), typeof(Brush), typeof(HeimdallrHoldButton),
           new PropertyMetadata(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF0C134F")))); // 기본값
   #endregion
 
@@ -256,7 +256,7 @@ public class HeimdallrHoldIconButton : Button
   /// 기본값 2
   /// </summary>
   public static readonly DependencyProperty KeyboardFocusBorderThicknessProperty =
-      DependencyProperty.Register(nameof(KeyboardFocusBorderThickness), typeof(Thickness), typeof(HeimdallrHoldIconButton),
+      DependencyProperty.Register(nameof(KeyboardFocusBorderThickness), typeof(Thickness), typeof(HeimdallrHoldButton),
           new PropertyMetadata(new Thickness(2)));
   #endregion
 
@@ -266,7 +266,7 @@ public class HeimdallrHoldIconButton : Button
   /// </summary>
   public static readonly RoutedEvent HoldCompletedEvent =
       EventManager.RegisterRoutedEvent(nameof(HoldCompleted), RoutingStrategy.Bubble,
-          typeof(RoutedEventHandler), typeof(HeimdallrHoldIconButton));
+          typeof(RoutedEventHandler), typeof(HeimdallrHoldButton));
 
   /// <summary>
   /// Hold 진행 이벤트
@@ -284,7 +284,7 @@ public class HeimdallrHoldIconButton : Button
   /// </summary>
   public static readonly RoutedEvent HoldCancelledEvent =
       EventManager.RegisterRoutedEvent(nameof(HoldCancelled), RoutingStrategy.Bubble,
-          typeof(RoutedEventHandler), typeof(HeimdallrHoldIconButton));
+          typeof(RoutedEventHandler), typeof(HeimdallrHoldButton));
 
   /// <summary>
   /// 홀드 취소
@@ -504,15 +504,30 @@ public class HeimdallrHoldIconButton : Button
   }
   #endregion
 
+  #region AnimatedFillDuration
+  public TimeSpan AnimatedFillDuration
+  {
+    get => (TimeSpan)GetValue(AnimatedFillDurationProperty);
+    set => SetValue(AnimatedFillDurationProperty, value);
+  }
+
+  public static readonly DependencyProperty AnimatedFillDurationProperty =
+    DependencyProperty.Register(
+        nameof(AnimatedFillDuration),
+        typeof(TimeSpan),
+        typeof(HeimdallrHoldButton),
+        new PropertyMetadata(TimeSpan.FromSeconds(0.3))); // 기본 0.3초
+  #endregion
+
   #region 정적생성자, 생성자
   // 기본 스타일 키 설정
-  static HeimdallrHoldIconButton()
+  static HeimdallrHoldButton()
   {
-    DefaultStyleKeyProperty.OverrideMetadata(typeof(HeimdallrHoldIconButton),
-        new FrameworkPropertyMetadata(typeof(HeimdallrHoldIconButton)));
+    DefaultStyleKeyProperty.OverrideMetadata(typeof(HeimdallrHoldButton),
+        new FrameworkPropertyMetadata(typeof(HeimdallrHoldButton)));
   }
   /// 생성자
-  public HeimdallrHoldIconButton()
+  public HeimdallrHoldButton()
   {
     // 컨트롤 로드 완료시 크기가 0인 경우를 대비해 한번만 등록 (실행시 바로 홀드표기)
     // Loaded += HeimdallrHoldIconButton_Loaded;

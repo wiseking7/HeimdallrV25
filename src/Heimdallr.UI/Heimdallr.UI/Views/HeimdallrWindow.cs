@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Media;
 
-namespace Heimdallr.UI.Views;
+namespace Heimdallr.UI.Controls;
 
 /// <summary>
 /// HeimdallrWindow 클래스는 WPF의 기본 Window를 상속하여,

@@ -1,4 +1,4 @@
-﻿namespace Heimdallr.Utility.Helpers;
+﻿namespace Heimdallr.Utility;
 
 public class HeimdallrComboBoxItem
 {

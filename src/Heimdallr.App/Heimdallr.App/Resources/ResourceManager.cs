@@ -14,6 +14,6 @@ public class ResourceManager : IResourceManager
 
   public void SetTitleBarBackground(Color color)
   {
-    Application.Current.Resources["TitleBarBackgroundColor"] = new SolidColorBrush(color);
+    Application.Current.Resources["TitleHeaderBackground"] = new SolidColorBrush(color);
   }
 }

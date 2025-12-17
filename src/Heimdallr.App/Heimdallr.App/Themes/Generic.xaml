@@ -6,7 +6,4 @@
     <ResourceDictionary Source="Heimdallr.App;component/Themes/Views/PrismMainView.xaml"/>
   </ResourceDictionary.MergedDictionaries>
 
-  <SolidColorBrush x:Key="WindowBackgroundColor" Color="#FF9F73AB" />
-  <SolidColorBrush x:Key="TitleBarBackgroundColor" Color="#FF3F0071" />
-
 </ResourceDictionary>

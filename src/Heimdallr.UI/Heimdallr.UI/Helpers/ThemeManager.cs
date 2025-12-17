@@ -26,7 +26,7 @@ public static class ThemeManager
   /// 지정된 테마 이름에 따라 리소스 딕셔너리(XAML 파일)를 교체하여 색상 테마를 변경합니다.
   /// </summary>
   /// <param name="themeName">적용할 테마 이름 (예: "Dark", "Light")</param>
-  public static void ChangedTehme(string themeName)
+  public static void ChangedTheme(string themeName)
   {
     // 현재 애플리케이션의 리소스 딕셔너리 목록 (App.xaml에 정의된 ResourceDictionary들)
     var appResources = Application.Current.Resources.MergedDictionaries;
@@ -41,12 +41,14 @@ public static class ThemeManager
 
     // 기존 테마가 존재하면 제거
     if (existingTheme != null)
+    {
       appResources.Remove(existingTheme);
+    }
 
     // 새 테마 리소스 딕셔너리를 생성하고 해당 XAML 경로를 Source로 설정
     var newTheme = new ResourceDictionary
     {
-      Source = new Uri(themePath, UriKind.Relative) // 상대 경로 사용
+      Source = new Uri(themePath, UriKind.Absolute) // 상대 경로 사용
     };
 
     // 새 테마를 가장 앞에 삽입하여 우선순위를 높임

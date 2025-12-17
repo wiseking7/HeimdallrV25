@@ -1,0 +1,88 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ctrls="clr-namespace:Heimdallr.UI.Controls"
+                    xmlns:cnvts="clr-namespace:Heimdallr.UI.Converters">
+
+  <Style TargetType="{x:Type ctrls:HeimdallrProgressBar}">
+    <!-- 기본 크기 설정 -->
+    <Setter Property="Height" Value="32"/>
+    <Setter Property="Width" Value="150" />
+    <Setter Property="FontSize" Value="16" />
+
+    <!-- 텍스트 및 색상 설정 -->
+    <Setter Property="ProgressTextForeground" Value="#FFFFFFFF" />
+    <Setter Property="IsProgressTextVisible" Value="True" />
+    <Setter Property="Background" Value="Transparent"/>
+    <Setter Property="BorderBrush" Value="Transparent"/>
+    <Setter Property="BorderThickness" Value="0"/>
+
+    <!-- 진행률 색상 -->
+    <Setter Property="Fill" Value="#FF219897"/>
+
+    <!-- 템플릿 설정 -->
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type ctrls:HeimdallrProgressBar}">
+          <Border x:Name="MainBorder"
+                  Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}"
+                  SnapsToDevicePixels="True"
+                  UseLayoutRounding="True">
+
+            <!-- 진행률 영역 -->
+            <Grid ClipToBounds="True" Margin="2">
+              <!-- Radius로 둥근 모서리 적용 -->
+              <Border x:Name="PART_ProgressBar"
+                      Background="{TemplateBinding Fill}"
+                      HorizontalAlignment="Left"
+                      SnapsToDevicePixels="True" 
+                      UseLayoutRounding="True">
+
+                <!-- RenderTransform 추가 -->
+                <Border.RenderTransform>
+                  <TranslateTransform x:Name="ProgressTranslateTransform"/>
+                </Border.RenderTransform>
+
+                <Border.Width>
+                  <MultiBinding Converter="{cnvts:ProgressConverter}">
+                    <Binding RelativeSource="{RelativeSource Mode=TemplatedParent}" Path="ActualWidth"/>
+                    <Binding RelativeSource="{RelativeSource Mode=TemplatedParent}" Path="Value"/>
+                    <Binding RelativeSource="{RelativeSource Mode=TemplatedParent}" Path="Maximum"/>
+                  </MultiBinding>
+                </Border.Width>
+              </Border>
+
+              <!-- 진행률 텍스트 StringFormat={}{0:0}%} 사용자 정의로 변경 가능-->
+              <TextBlock Text="{Binding Value, RelativeSource={RelativeSource TemplatedParent}, StringFormat={}{0:0}%}"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"
+                         Foreground="{TemplateBinding ProgressTextForeground}" 
+                         FontWeight="Bold" 
+                         IsHitTestVisible="False"
+                         Visibility="{Binding IsProgressTextVisible, RelativeSource={RelativeSource TemplatedParent},
+                                      Converter={cnvts:BooleanToVisibilityConverter}}"/>
+
+              <!-- 인디터미넌트 상태 애니메이션 -->
+              <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="ProgressStates">
+                  <VisualState x:Name="Determinate"/>
+                  <VisualState x:Name="Indeterminate">
+                    <Storyboard RepeatBehavior="Forever">
+                      <DoubleAnimation Storyboard.TargetName="PART_ProgressBar"
+                                       Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                       From="-50" 
+                                       To="50"
+                                       Duration="0:0:1" 
+                                       AutoReverse="False"/>
+                    </Storyboard>
+                  </VisualState>
+                </VisualStateGroup>
+              </VisualStateManager.VisualStateGroups>
+            </Grid>
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+</ResourceDictionary>

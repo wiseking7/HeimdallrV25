@@ -163,7 +163,7 @@ public class HeimdallrHoldSubmitButton : Button
   /// </summary>
   public static readonly DependencyProperty EllipseFillProperty =
        DependencyProperty.Register(nameof(EllipseFill), typeof(Brush), typeof(HeimdallrHoldSubmitButton),
-         new PropertyMetadata(Brushes.DarkRed));
+         new PropertyMetadata(new SolidColorBrush(Colors.DarkRed)));
 
 
   /// <summary>
@@ -180,7 +180,7 @@ public class HeimdallrHoldSubmitButton : Button
   /// </summary>
   public static readonly DependencyProperty HoldEllipseFillProperty =
       DependencyProperty.Register(nameof(HoldEllipseFill), typeof(Brush), typeof(HeimdallrHoldSubmitButton),
-        new PropertyMetadata(Brushes.DarkRed));
+        new PropertyMetadata(new SolidColorBrush(Colors.DarkRed)));
 
 
   /// <summary>
@@ -197,7 +197,8 @@ public class HeimdallrHoldSubmitButton : Button
   /// </summary>
   public static readonly DependencyProperty BackgrounEllipseFillProperty =
       DependencyProperty.Register(nameof(BackgrounEllipseFill), typeof(Brush), typeof(HeimdallrHoldSubmitButton),
-        new PropertyMetadata(Brushes.Goldenrod));
+        new PropertyMetadata(new SolidColorBrush(Colors.Goldenrod)));
+
 
   #endregion
 
@@ -215,7 +216,7 @@ public class HeimdallrHoldSubmitButton : Button
   /// </summary>
   public static readonly DependencyProperty MouseOverBackgroundProperty =
       DependencyProperty.Register(nameof(MouseOverBackground), typeof(Brush), typeof(HeimdallrHoldSubmitButton),
-          new PropertyMetadata(Brushes.LightGray));
+          new PropertyMetadata(new SolidColorBrush(Color.FromRgb(224, 217, 217))));
   #endregion
 
   #region Press(클릭상태) 배경 색상
@@ -249,24 +250,7 @@ public class HeimdallrHoldSubmitButton : Button
   /// </summary>
   public static readonly DependencyProperty KeyboardFocusBorderBrushProperty =
       DependencyProperty.Register(nameof(KeyboardFocusBorderBrush), typeof(Brush), typeof(HeimdallrHoldSubmitButton),
-          new PropertyMetadata(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF0C134F")))); // 기본값
-  #endregion
-
-  #region 키보드 포터스시 테두리 두께
-  /// <summary>
-  /// 키보드 포커스 시 테두리 두께
-  /// </summary>
-  public Thickness KeyboardFocusBorderThickness
-  {
-    get => (Thickness)GetValue(KeyboardFocusBorderThicknessProperty);
-    set => SetValue(KeyboardFocusBorderThicknessProperty, value);
-  }
-  /// <summary>
-  /// 기본값 2
-  /// </summary>
-  public static readonly DependencyProperty KeyboardFocusBorderThicknessProperty =
-      DependencyProperty.Register(nameof(KeyboardFocusBorderThickness), typeof(Thickness), typeof(HeimdallrHoldSubmitButton),
-          new PropertyMetadata(new Thickness(2)));
+          new PropertyMetadata(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF0C134F"))));
   #endregion
 
   #region Command Handling

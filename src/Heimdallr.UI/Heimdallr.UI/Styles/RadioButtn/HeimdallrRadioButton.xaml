@@ -4,10 +4,13 @@
 
   <Style TargetType="{x:Type ctrls:HeimdallrRadioButton}">
     <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="Width" Value="120" />
+    <Setter Property="Height" Value="40" />
     <Setter Property="Foreground" Value="#FFFFFFFF" />
+    <Setter Property="IconSize" Value="28" />
     <Setter Property="FontSize" Value="16" />
-    <Setter Property="CheckedForeground" Value="#FFFFCC00" />
-    <Setter Property="MouseOverForeground" Value="#FF3B9797" />
+    <Setter Property="CheckedForeground" Value="#FFB9B4C7" />
+    <Setter Property="MouseOverForeground" Value="#FFE19898" />
     
     <Setter Property="Template">
       <Setter.Value>
@@ -31,6 +34,8 @@
               <Viewbox Grid.Column="0"
                        Width="{TemplateBinding IconSize}"
                        Height="{TemplateBinding IconSize}"
+                       Stretch="Uniform"
+                       StretchDirection="Both"
                        VerticalAlignment="Center">
                 <ctrls:HeimdallrIcon x:Name="icon"
                                      Padding="2"

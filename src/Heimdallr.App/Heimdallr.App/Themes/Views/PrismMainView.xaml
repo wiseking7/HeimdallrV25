@@ -5,7 +5,7 @@
                     xmlns:convt="clr-namespace:Heimdallr.UI.Converters;assembly=Heimdallr.UI">
 
   <Style TargetType="{x:Type ui:PrismMainView}"
-         BasedOn="{StaticResource {x:Type ctrls:DarkThemeWindow}}">
+         BasedOn="{StaticResource {x:Type ctrls:BaseThemeWindow}}">
 
     <Setter Property="Background" Value="{DynamicResource WindowBackgroundColor}" />
 
@@ -13,35 +13,79 @@
     <Setter Property="TitleContent">
       <Setter.Value>
         <StackPanel Orientation="Horizontal">
-          <ctrls:HeimdallrFlatButton x:Name="FlatButton" Content="설정" Margin="5,0" CornerRadius="7">
+          <ctrls:HeimdallrFlatButton x:Name="FlatButton" Content="설정" Margin="5,0" CornerRadius="7" Background="Transparent">
             <ctrls:HeimdallrFlatButton.ContextMenu>
-              <ctrls:HeimdallrContextMenu BackgroundColor="#FF535C91" CornerRadius="7" >
-                <ctrls:HeimdallrMenuItem Header="설정" 
-                                         Icon="Setting"
-                                         IconFill="Black"
-                                         Command="{Binding MessageCommand}" >
-                  <!-- 서브 메뉴 -->
-                  <ctrls:HeimdallrMenuItem Header="사용자 관리" Background="Transparent"
-                               Icon="User"
-                               IconFill="DarkGreen"
-                               Command="{Binding MessageCommand}" />
-                  <ctrls:HeimdallrMenuItem Header="환경 설정" Background="Transparent"
-                               Icon="Google"
-                               IconFill="Orange"
-                               Command="{Binding MessageCommand}" />
-                </ctrls:HeimdallrMenuItem>
-                <ctrls:HeimdallrMenuItem Header="정보" 
-                                         Icon="Information"
-                                         IconFill="Blue"
-                                         Command="{Binding MessageCommand}" />
-                <ctrls:HeimdallrMenuItem Header="종료" 
-                                         Icon="Excel"
-                                         IconFill="Red"
-                                         Command="{Binding MessageCommand}" />
+              <ctrls:HeimdallrContextMenu >
+
+                <ctrls:HeimdallrMenuItem
+                                          Header="일반 설정"
+                                          Icon="Setting"
+                                          IconFill="#FFFFFFFF"
+                                          Command="{Binding MessageCommand}" />
+
+                <ctrls:HeimdallrMenuItem
+                                          Header="고급 설정"
+                                          Icon="Broadcast"
+                                          IconFill="#FFFFFFFF"
+                                          Command="{Binding MessageCommand}"
+                                          CommandParameter="Advanced" />
+
+                <ctrls:HeimdallrMenuItem Header="비활성 메뉴"
+                                         IconFill="#FFFFFFFF"
+                                         Icon="Lock"
+                                         IsEnabled="False"
+                                         Command="{Binding MessageCommand}"/>
               </ctrls:HeimdallrContextMenu>
             </ctrls:HeimdallrFlatButton.ContextMenu>
           </ctrls:HeimdallrFlatButton>
-          <Button Content="도움말" Margin="5,0"/>
+
+          <ctrls:HeimdallrFlatButton x:Name="DimmingButton" Content="다이밍설정" Margin="5,0" CornerRadius="7" Background="Transparent">
+            <ctrls:HeimdallrFlatButton.ContextMenu>
+              <ctrls:HeimdallrContextMenu >
+                <!-- 다이밍 색상 선택 메뉴 -->
+                <ctrls:HeimdallrMenuItem Header="다크" Icon="Setting" IconFill="#FF000000"
+                                     Command="{Binding ChangeDimmingColorCommand}"
+                                     CommandParameter="#FF141414"/>
+                <ctrls:HeimdallrMenuItem Header="라이트" Icon="Broadcast" IconFill="#FFFFFFFF"
+                                     Command="{Binding ChangeDimmingColorCommand}"
+                                     CommandParameter="#FFF5F5F5"/>
+                <ctrls:HeimdallrMenuItem Header="커스텀" Icon="Lock" IconFill="#FFFFA500"
+                                     Command="{Binding ChangeDimmingColorCommand}"
+                                     CommandParameter="#FFFFA500"/>
+
+                <!-- 다이밍 ON/OFF 토글 -->
+                <Separator/>
+                <ctrls:HeimdallrMenuItem Header="다이밍 토글"
+                                     Icon="Power"
+                                     IconFill="#FFFFFFFF"
+                                     Command="{Binding ToggleDimmingCommand}"/>
+              </ctrls:HeimdallrContextMenu>
+            </ctrls:HeimdallrFlatButton.ContextMenu>
+          </ctrls:HeimdallrFlatButton>
+
+          <!-- 테마 설정 버튼 -->
+          <ctrls:HeimdallrFlatButton x:Name="ThemeButton" Content="테마설정" Margin="5,0" CornerRadius="7" Background="Transparent">
+            <ctrls:HeimdallrFlatButton.ContextMenu>
+              <ctrls:HeimdallrContextMenu>
+                <ctrls:HeimdallrMenuItem Header="라이트 테마" Icon="Date" IconFill="#FFFFA500"
+                                 Command="{Binding ChangeThemeCommand}" CommandParameter="Light"/>
+                <ctrls:HeimdallrMenuItem Header="다크 테마" Icon="Magnify" IconFill="#FF555555"
+                                 Command="{Binding ChangeThemeCommand}" CommandParameter="Dark"/>
+              </ctrls:HeimdallrContextMenu>
+            </ctrls:HeimdallrFlatButton.ContextMenu>
+          </ctrls:HeimdallrFlatButton>
+
+          <!-- 글자색 바인딩 -->
+          <TextBlock Text="Hello, Theme!" 
+                     Foreground="{DynamicResource FontColor}" 
+                      FontSize="18" Margin="0,0,0,10"/>
+
+          <!-- ProgressBar 바인딩 -->
+          <ProgressBar Minimum="0" Maximum="100" Value="50" 
+                 Height="20" Width="200"
+                 Background="{DynamicResource BackgroundColor}"
+                 Foreground="{DynamicResource SliderBrush}"/>
+
         </StackPanel>
       </Setter.Value>
     </Setter>
@@ -102,8 +146,18 @@
                 <!--13 -->
                 <ColumnDefinition Width="Auto" />
                 <!--14 -->
+                <ColumnDefinition Width="Auto" />
+                <!--15 -->
+                <ColumnDefinition Width="Auto" />
+                <!--16 -->
+                <ColumnDefinition Width="Auto" />
+                <!--17 -->
+                <ColumnDefinition Width="Auto" />
+                <!--18 -->
+                <ColumnDefinition Width="Auto" />
+                <!--19 -->
                 <ColumnDefinition Width="*"    />
-                <!--13 -->
+   
               </Grid.ColumnDefinitions>
               <ctrls:HeimdallrCloseButton Grid.Column="0" IconSize="25" Fill="AliceBlue"
                                           Command="{Binding MessageCommand}"/>
@@ -111,18 +165,18 @@
                                           Command="{Binding MessageCommand}"/>
               <ctrls:HeimdallrMinimizeButton Grid.Column="2" IconSize="25"  Fill="Chocolate"
                                           Command="{Binding MessageCommand}"/>
-              <ctrls:HeimdallrHoldSubmitButton Grid.Column="3" Content="HoldSubmit"
+              <ctrls:HeimdallrHoldSubmitButton Grid.Column="3" Content="HoldSubmit" BorderThickness="2"
                                           Command="{Binding MessageCommand}"/>
               <ctrls:HeimdallrFlatButton Grid.Column="4"  Content="FlatButton" 
                                          Command="{Binding MessageCommand}" CornerRadius="7"/>
               <ctrls:HeimdallrPulseEllipseButton Grid.Column="5" Icon="Arrow_Triangle_Right" Content="PulesEllipseButon"
                                                  Command="{Binding MessageCommand}" />
               <ctrls:HeimdallrPulseButton Grid.Column="6" Icon="AcitveA" Background="#FF50577A"
-                                          ButtonText="PulseButton" Height="40" Width="120"
-                                          Command="{Binding MessageCommand}" CornerRadius="7" />
-              <ctrls:HeimdallrHoldIconButton Grid.Column="7" Icon="AcitveA" ButtonText="HoldIconButton"
-                                             BackgroundRectangleFill="Beige" HoldDuration="0:0:0.8"
-                                             Command="{Binding MessageCommand}"/>
+                                          ButtonText="PulseButton Rset"  Width="120"
+                                          Command="{Binding ResetCommand}" CornerRadius="7" />
+              <ctrls:HeimdallrHoldButton Grid.Column="7" Icon="AcitveA" ButtonText="Start HeimdallrProgressBar"
+                                             BackgroundRectangleFill="Beige" HoldDuration="0:0:1" AnimatedFillDuration="0:0:0.1"
+                                             Command="{Binding StartCommand}"/>
               <ctrls:HeimdallrSwitchCheckBox Grid.Column="8" Icon="Ghost1" Width="120" 
                                              OnLabel="ON할아버지" OffLabel="OFF할아버지" OnLebelForeground="#FFFFFFFF"
                                              OffLebelForeground="#FF8C3061"/>
@@ -148,6 +202,8 @@
               <ctrls:HeimdallrPlaceholderTextBox Grid.Column="13" 
                                                  MaxLength="10"
                                                  Icon="AcitveB"
+                                                 BorderBrush="AliceBlue"
+                                                 Foreground="#FFFFFFFF"
                                                  UseFloatingLabel="True"
                                                  PlaceholderText="이름을 입력하세요"
                                                  PlaceholderForeground="AliceBlue"
@@ -156,6 +212,12 @@
                                                  RightCommand="{Binding MessageCommand}"
                                                  RightIconToolTipContent="자동코드생성"
                                                  Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+
+              <ctrls:HeimdallrRadioButton Grid.Column="14" Icon="WindowMaximize" IconFill="AliceBlue" 
+                                          MouseOverForeground="AliceBlue" />
+
+              <ctrls:HeimdallrProgressBar Grid.Column="15" Value="{Binding Value}" Maximum="{Binding Maximum}"  Width="100"
+                                          Minimum="{Binding Minimum}"  Background="{DynamicResource DarkPlum}"/>
 
             </Grid>
             <Grid Grid.Row="3" >
@@ -340,16 +402,46 @@
                         IsEnabled="{Binding HasErrorsBindable, Converter={convt:InverseBooleanConverter}}" Width="100"/>
               </StackPanel>
 
-              <ctrls:HeimdallrPlaceholderPasswordBox Grid.Column="1" 
-                                        Icon="Address"
-                                        EyeIcon="Key"
-                                        PlaceholderText="비밀번호를 입력하세요"
-                                        PlaceholderForeground="AliceBlue"
-                                        Password="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+              <ctrls:HeimdallrPlaceholderPasswordBox Grid.Column="1"  Foreground="#FFFFFFFF"
+                                                    Icon="Address"
+                                                    EyeIcon="Key"
+                                                    PlaceholderText="비밀번호를 입력하세요"
+                                                    PlaceholderForeground="AliceBlue"
+                                                    Password="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
 
-            <TextBlock Grid.Row="5" Text="{Binding BusyMessage, UpdateSourceTrigger=PropertyChanged}" FontSize="20"
+           
+            <!-- ViewModelBase 메서드 테스트-->
+            <Grid Grid.Row="5" Margin="5" >
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+
+              <ctrls:HeimdallrPlaceholderTextBox Grid.Column="0" 
+                                                 MaxLength="10"
+                                                 Icon="AcitveB"
+                                                 BorderBrush="AliceBlue"
+                                                 Foreground="#FFFFFFFF"
+                                                 UseFloatingLabel="True"
+                                                 PlaceholderText="테스트입니다."
+                                                 PlaceholderForeground="AliceBlue"
+                                                 RightIcon="AcitveB"
+                                                 RightIconFill="Azure"
+                                                 RightCommand="{Binding MessageCommand}"
+                                                 RightIconToolTipContent="ViewModelBase 테스트"
+                                                 Text="{Binding ViewModel, UpdateSourceTrigger=PropertyChanged}"/>
+
+              <Label Grid.Column="1" Name="ErrorLabel" Foreground="Red" Content="{Binding NameErrorsText}" />
+
+            </Grid>
+            
+            
+            <TextBlock Grid.Row="6" Text="{Binding BusyMessage, UpdateSourceTrigger=PropertyChanged}" FontSize="20"
                Foreground="Red" />
+            
+            
           </Grid>
         </ScrollViewer>
       </Setter.Value>

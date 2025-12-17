@@ -14,8 +14,8 @@ public class HeimdallrGrid : AutoGrid
 #else
 // .NET Core, NET 5/6/7/8 등 최신 .NET 인경우
 using WpfAutoGrid;
-namespace Heimdallr.UI.Controls;
 
+namespace Heimdallr.UI.Controls;
 /// <summary>
 /// AutoGird 
 /// </summary>

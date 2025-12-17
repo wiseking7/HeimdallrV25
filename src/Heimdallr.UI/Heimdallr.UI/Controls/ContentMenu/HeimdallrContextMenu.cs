@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Heimdallr.UI.Enums;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -10,53 +11,78 @@ namespace Heimdallr.UI.Controls;
 /// </summary>
 public class HeimdallrContextMenu : ContextMenu
 {
+  #region 생성자
   static HeimdallrContextMenu()
   {
     DefaultStyleKeyProperty.OverrideMetadata(typeof(HeimdallrContextMenu),
         new FrameworkPropertyMetadata(typeof(HeimdallrContextMenu)));
   }
+  #endregion
 
+  #region ContextMenu 열거형 (Normal, Hover, Pressed, Disabled)
+  public ContextMenuVisualState VisualState
+  {
+    get => (ContextMenuVisualState)GetValue(VisualStateProperty);
+    set => SetValue(VisualStateProperty, value);
+  }
+
+  public static readonly DependencyProperty VisualStateProperty =
+    DependencyProperty.Register(
+      nameof(VisualState),
+      typeof(ContextMenuVisualState),
+      typeof(HeimdallrContextMenu),
+      new PropertyMetadata(ContextMenuVisualState.Normal));
+  #endregion
+
+  #region Constructor
   /// <summary>
   /// 생성자
   /// </summary>
   public HeimdallrContextMenu()
   {
-    // DataContext 자동 바인딩
-    this.Opened += (s, e) =>
-    {
-      if (PlacementTarget is FrameworkElement target)
-      {
-        this.DataContext = target.DataContext;
+    // ContextMenu가 열릴 때 PlacementTarget의 DataContext를 상속
+    Opened += OnOpened;
 
-        // CommandParameter 자동 설정
-        foreach (var item in Items.OfType<MenuItem>())
-        {
-          if (item.CommandParameter == null)
-            item.CommandParameter = target.DataContext;
-        }
-      }
-    };
+    // 닫힐 때 DataContext 정리
+    Closed += OnClosed;
 
-    // 닫힐 때 리소스 해제 또는 상태 초기화
-    this.Closed += (s, e) =>
-    {
-      this.DataContext = null;
-    };
+    // ESC 키로 닫기 지원
+    PreviewKeyDown += OnPreviewKeyDown;
 
-    // 키보드 ESC 닫기 지원
-    this.PreviewKeyDown += (s, e) =>
-    {
-      if (e.Key == Key.Escape)
-      {
-        this.IsOpen = false;
-        e.Handled = true;
-      }
-    };
-
-    // 기본 위치를 마우스 포인트로 설정
-    this.Placement = System.Windows.Controls.Primitives.PlacementMode.MousePoint;
+    // 기본 위치: 마우스 포인트
+    Placement = System.Windows.Controls.Primitives.PlacementMode.MousePoint;
   }
+  #endregion
 
+  #region Event Handlers
+  private void OnOpened(object sender, RoutedEventArgs e)
+  {
+    if (PlacementTarget is FrameworkElement target)
+    {
+      // DataContext 자동 상속
+      DataContext = target.DataContext;
+    }
+  }
+  private void OnClosed(object sender, RoutedEventArgs e)
+  {
+    // ⭐ ContextMenu 닫히면 상태 초기화
+    //if (DataContext is ContextMenuViewModel vm)
+    //  vm.ContextMenuState = ContextMenuVisualState.Normal;
+
+    // Popup 메모리 유지 방지
+    ClearValue(DataContextProperty);
+  }
+  private void OnPreviewKeyDown(object sender, KeyEventArgs e)
+  {
+    if (e.Key == Key.Escape)
+    {
+      IsOpen = false;
+      e.Handled = true;
+    }
+  }
+  #endregion
+
+  #region BackgroundColor 
   /// <summary>
   /// 배경색 사용자 지정 속성 (테마 연동)
   /// </summary>
@@ -72,6 +98,7 @@ public class HeimdallrContextMenu : ContextMenu
   public static readonly DependencyProperty BackgroundColorProperty =
       DependencyProperty.Register(nameof(BackgroundColor), typeof(Brush), typeof(HeimdallrContextMenu),
          new PropertyMetadata(null));
+  #endregion
 
   #region CornerRadius 
   /// <summary>

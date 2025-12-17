@@ -3,28 +3,34 @@
                     xmlns:ctrls="clr-namespace:Heimdallr.UI.Controls">
 
   <Style TargetType="{x:Type ctrls:HeimdallrCloseButton }" >
+    <Setter Property="MouseOverBackground" Value="#FFF25912" />
+    <Setter Property="PressedBackground" Value="#FF4B70F5" />
+    <Setter Property="Fill" Value="#FF576CBC" />
+    <Setter Property="IconSize" Value="20" />
     <Setter Property="Margin" Value="2" />
     <Setter Property="Cursor" Value="Hand" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ctrls:HeimdallrCloseButton}">
-          <Border Background="{TemplateBinding Background}"
-                  Width="{TemplateBinding IconSize}"
-                  Height="{TemplateBinding IconSize}" >
-            <Viewbox Stretch="{TemplateBinding Stretch}"
-                     StretchDirection="Both">
-              <ctrls:HeimdallrIcon x:Name="icon"
-                                   Fill="{TemplateBinding Fill}"
-                                   Icon="Power" >
-              </ctrls:HeimdallrIcon>
-            </Viewbox>
+          <Border Background="{TemplateBinding Background}" 
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}"
+                  SnapsToDevicePixels="True"
+                  UseLayoutRounding="True">
+
+            <ctrls:HeimdallrIcon x:Name="PART_Icon"
+                                 Fill="{TemplateBinding Fill}"
+                                 Padding="{TemplateBinding Margin}"
+                                 Stretch="Uniform"
+                                 RenderOptions.EdgeMode="Aliased"
+                                 Icon="PowerA" />
           </Border>
           <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-              <Setter TargetName="icon" Property="Fill" Value="#FFE5B8F4" />
+              <Setter TargetName="PART_Icon" Property="Fill" Value="{Binding MouseOverBackground, RelativeSource={RelativeSource TemplatedParent}}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-              <Setter TargetName="icon" Property="Fill" Value="#FFFF204E" />
+              <Setter TargetName="PART_Icon" Property="Fill" Value="{Binding PressedBackground, RelativeSource={RelativeSource TemplatedParent}}" />
             </Trigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>

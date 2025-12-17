@@ -107,6 +107,9 @@ public enum ImageType
   /// <summary>파워 블루(Power Blue) 아이콘 이미지</summary>
   PowerBlue,
 
+  /// <summary>파워 블루(Power Blue) 아이콘 이미지</summary>
+  PowerRed,
+
   /// <summary>프린스(Prince) 브랜드 이미지</summary>
   Prince,
 
@@ -267,5 +270,11 @@ public enum ImageType
   Alps,
 
   /// <summary>장원영</summary>
-  Jangwonyoung
+  Jangwonyoung,
+
+  /// <summary>장원영</summary>
+  WindowMaximize,
+
+  /// <summary>장원영</summary>
+  WindowMaximizeRestore
 }

@@ -45,20 +45,37 @@ public class HeimdallrMinimizeButton : Button
           typeof(HeimdallrMinimizeButton), new PropertyMetadata(25.0));
   #endregion
 
-  #region Stretch
-  // <summary>
-  /// Viewbox 또는 Path 렌더링에 사용할 Stretch 모드
-  /// </summary>
-  public Stretch Stretch
-  {
-    get => (Stretch)GetValue(StretchProperty);
-    set => SetValue(StretchProperty, value);
-  }
-
+  #region MouseOverBackground
   /// <summary>
-  /// 기본값 Uniform으로 설정된 Stretch 속성
+  /// 마우스오버시 백그라운드 색상 지정 
   /// </summary>
-  public static readonly DependencyProperty StretchProperty = DependencyProperty.Register(nameof(Stretch),
-    typeof(Stretch), typeof(HeimdallrMinimizeButton), new PropertyMetadata(Stretch.Uniform));
+  public Brush MouseOverBackground
+  {
+    get => (Brush)GetValue(MouseOverBackgroundProperty);
+    set => SetValue(MouseOverBackgroundProperty, value);
+  }
+  /// <summary>
+  /// 종속성 속성
+  /// </summary>
+  public static readonly DependencyProperty MouseOverBackgroundProperty =
+      DependencyProperty.Register(nameof(MouseOverBackground), typeof(Brush),
+          typeof(HeimdallrMinimizeButton), new PropertyMetadata(new SolidColorBrush(Color.FromRgb(0x39, 0x3E, 0x46))));
+  #endregion
+
+  #region PressedBackground
+  /// <summary>
+  /// 버튼클릭시 백그라운드 색상지정
+  /// </summary>
+  public Brush PressedBackground
+  {
+    get => (Brush)GetValue(PressedBackgroundProperty);
+    set => SetValue(PressedBackgroundProperty, value);
+  }
+  /// <summary>
+  /// 종속성 속성
+  /// </summary>
+  public static readonly DependencyProperty PressedBackgroundProperty =
+      DependencyProperty.Register(nameof(PressedBackground), typeof(Brush),
+          typeof(HeimdallrMinimizeButton), new PropertyMetadata(new SolidColorBrush(Color.FromRgb(0xAD, 0x49, 0xE1))));
   #endregion
 }
