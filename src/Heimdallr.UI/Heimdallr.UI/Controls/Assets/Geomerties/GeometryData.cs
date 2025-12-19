@@ -93,6 +93,7 @@ public class GeometryData
   /// ArrowUpBold 변환
   /// </summary>
   public static string ArrowUpBold => GeometryConverter.GetData();
+  public static string ArrowDownBold => GeometryConverter.GetData();
   public static string ArrowUp => GeometryConverter.GetData();
   public static string Arrow_Triangle_Right => GeometryConverter.GetData();
   public static string Arrow_Triangle_Up => GeometryConverter.GetData();

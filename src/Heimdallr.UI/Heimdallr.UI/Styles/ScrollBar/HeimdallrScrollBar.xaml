@@ -6,66 +6,307 @@
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Colors/Color.xaml"/>
   </ResourceDictionary.MergedDictionaries>
 
-  <!-- HeimdallrScrollBar Style -->
-  <Style TargetType="{x:Type ctrls:HeimdallrScrollBar}">
-    <Setter Property="Width" Value="16"/>
-    <Setter Property="Height" Value="16"/>
-    <Setter Property="Background" Value="{StaticResource ControlDarkBrush}"/>
+  <!-- Styles 토글 바(Track) Border 적용 배경과 테두리 브러시도 지정되어 기본 상태로 사용됩니다. -->
+  <Style x:Key="ScrollTrackStyle" TargetType="Border">
+    <Setter Property="Background" Value="#FF2E4558"/>
+    <Setter Property="BorderBrush" Value="#FFD6C7B2"/>
+    <Setter Property="BorderThickness" Value="2"/>
+    <Setter Property="UseLayoutRounding" Value="True"/>
+    <Setter Property="SnapsToDevicePixels" Value="True" />
+  </Style>
+
+  <!-- Horizontal Thumb Style -->
+  <Style x:Key="ScrollBarThumbHorizontal" TargetType="{x:Type ctrls:HeimdallrThumb}">
+    <Setter Property="IsTabStop" Value="False"/>
+    <Setter Property="Background" Value="#FFC29A5B" />
+    <Setter Property="MouseOverBrush" Value="#FF4FB3B3" />
+    <Setter Property="IsDraggingBrush" Value="#FF6A5ACD" />
     <Setter Property="Template">
       <Setter.Value>
-        <ControlTemplate TargetType="{x:Type ctrls:HeimdallrScrollBar}">
-          <Grid>
-            <!-- 가로/세로 분기 -->
-            <Grid>
-              <Track x:Name="PART_Track"
-                     IsDirectionReversed="False"
-                     Focusable="False"
-                     Height="{TemplateBinding Height}"
-                     Width="{TemplateBinding Width}">
-
-                <!-- 감소 버튼 -->
-                <Track.DecreaseRepeatButton>
-                  <ctrls:HeimdallrRepeatButton
-                                               Content="◀" Width="16" Height="16"/>
-                </Track.DecreaseRepeatButton>
-
-                <!-- Thumb -->
-                <Track.Thumb>
-                  <ctrls:HeimdallrThumb 
-                                        Width="16" Height="16"/>
-                </Track.Thumb>
-
-                <!-- 증가 버튼 -->
-                <Track.IncreaseRepeatButton>
-                  <ctrls:HeimdallrRepeatButton 
-                                               Content="▶" Width="16" Height="16"/>
-                </Track.IncreaseRepeatButton>
-
-              </Track>
-            </Grid>
-          </Grid>
-
-          <!-- Orientation에 따른 트리거 -->
+        <ControlTemplate TargetType="{x:Type ctrls:HeimdallrThumb}">
+          <Border x:Name="border"
+                  Background="{TemplateBinding Background}"
+                  BorderBrush="Transparent"
+                  BorderThickness="0"
+                  Height="{TemplateBinding Height}"
+                  HorizontalAlignment="Stretch"
+                  CornerRadius="0"
+                  SnapsToDevicePixels="True"/>
           <ControlTemplate.Triggers>
-            <Trigger Property="Orientation" Value="Horizontal">
-              <Setter TargetName="PART_Track" Property="LayoutTransform">
-                <Setter.Value>
-                  <RotateTransform Angle="0"/>
-                </Setter.Value>
-              </Setter>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="border" Property="Background"  Value="{Binding MouseOverBrush, RelativeSource={RelativeSource TemplatedParent}}"/>
             </Trigger>
-            <Trigger Property="Orientation" Value="Vertical">
-              <Setter TargetName="PART_Track" Property="LayoutTransform">
-                <Setter.Value>
-                  <RotateTransform Angle="90"/>
-                </Setter.Value>
-              </Setter>
+            <Trigger Property="IsDragging" Value="True">
+              <Setter TargetName="border" Property="Background" Value="{Binding IsDraggingBrush, RelativeSource={RelativeSource TemplatedParent}}"/>
             </Trigger>
           </ControlTemplate.Triggers>
-
         </ControlTemplate>
       </Setter.Value>
     </Setter>
+  </Style>
+
+  <!-- Vertical Thumb Style -->
+  <Style x:Key="ScrollBarThumbVertical" TargetType="{x:Type ctrls:HeimdallrThumb}">
+    <Setter Property="IsTabStop" Value="False"/>
+    <Setter Property="Background" Value="#FF9F8449" />
+    <Setter Property="MouseOverBrush" Value="#FF3B9797" />
+    <Setter Property="IsDraggingBrush" Value="#FF5C3E94" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type ctrls:HeimdallrThumb}">
+          <Border x:Name="border"
+                  Background="{TemplateBinding Background}"
+                  BorderBrush="Transparent"
+                  BorderThickness="0"
+                  Width="{TemplateBinding Width}"
+                  VerticalAlignment="Stretch"
+                  CornerRadius="0"
+                  SnapsToDevicePixels="True"/>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="border" Property="Background"  Value="{Binding MouseOverBrush, RelativeSource={RelativeSource TemplatedParent}}"/>
+            </Trigger>
+            <Trigger Property="IsDragging" Value="True">
+              <Setter TargetName="border" Property="Background" Value="{Binding IsDraggingBrush, RelativeSource={RelativeSource TemplatedParent}}"/>
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- HeimdallrScrollBar 템플릿 -->
+  <Style TargetType="{x:Type ctrls:HeimdallrScrollBar}" >
+    <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
+    <Setter Property="Stylus.IsFlicksEnabled" Value="false"/>
+    <Setter Property="Background" Value="Transparent"/>
+    <Setter Property="BorderBrush" Value="Transparent"/>
+    <Setter Property="IconFill" Value="#FFB6B09F" />
+    <Setter Property="Foreground" 
+              Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+    <Setter Property="BorderThickness" Value="1,0"/>
+
+    <!-- 기본 (세로형) 설정 -->
+    <Setter Property="Width"
+               Value="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"/>
+    <Setter Property="MinWidth" 
+              Value="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"/>
+    
+    <Setter Property="Template">
+      <Setter.Value>
+        
+        <!-- 세로 ScrollBar 템플릿 (HeimdallrScrollBar용) -->
+        <ControlTemplate TargetType="{x:Type ctrls:HeimdallrScrollBar}">
+          <Grid x:Name="Bg" SnapsToDevicePixels="true">
+            <Grid.RowDefinitions>
+              <RowDefinition MaxHeight="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"/>
+              <RowDefinition Height="*"/>
+              <RowDefinition MaxHeight="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"/>
+            </Grid.RowDefinitions>
+            
+            <ctrls:HeimdallrRepeatButton x:Name="PART_LineUpButton"
+                                         Grid.Row="0"
+                                         Icon="ArrowUpBold"
+                                         IconFill="{Binding IconFill, RelativeSource={RelativeSource TemplatedParent}, FallbackValue=Transparent}"
+                                         IconSize="{TemplateBinding IconSize}"
+                                         Command="{x:Static ScrollBar.LineUpCommand}" 
+                                         CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" />
+
+            <Border Grid.Row="1" 
+                    CornerRadius="0"
+                    Width="{TemplateBinding Width}" Style="{StaticResource ScrollTrackStyle}">
+
+              <Track x:Name="PART_Track" IsDirectionReversed="true" 
+                      IsEnabled="{TemplateBinding IsEnabled}" Grid.Row="1">
+                <Track.DecreaseRepeatButton>
+                  <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}" Background="Transparent"/>
+                </Track.DecreaseRepeatButton>
+                <Track.IncreaseRepeatButton>
+                  <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Background="Transparent"/>
+                </Track.IncreaseRepeatButton>
+                <Track.Thumb>
+                  <ctrls:HeimdallrThumb Style="{StaticResource ScrollBarThumbVertical}"/>
+                </Track.Thumb>
+              </Track>
+            </Border>
+
+            <ctrls:HeimdallrRepeatButton x:Name="PART_LineDownButton" 
+                                         Grid.Row="2" 
+                                         Icon="ArrowDownBold"
+                                         IconFill="{TemplateBinding IconFill}"
+                                         IconSize="{TemplateBinding IconSize}"
+                                         Command="{x:Static ScrollBar.LineDownCommand}" 
+                                         CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" />
+          </Grid>
+          
+          <ControlTemplate.Triggers>
+            <MultiDataTrigger>
+              <MultiDataTrigger.Conditions>
+                <Condition Binding="{Binding IsMouseOver, ElementName=PART_LineDownButton}" 
+                           Value="true"/>
+                <Condition Binding="{Binding IsPressed, ElementName=PART_LineDownButton}" 
+                           Value="true"/>
+              </MultiDataTrigger.Conditions>
+              <Setter Property="IconFill" TargetName="PART_LineDownButton" 
+                      Value="{Binding IconFill, RelativeSource={RelativeSource TemplatedParent}}"/>
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+              <MultiDataTrigger.Conditions>
+                <Condition Binding="{Binding IsMouseOver, ElementName=PART_LineUpButton}" 
+                               Value="true"/>
+                <Condition Binding="{Binding IsPressed, ElementName=PART_LineUpButton}" 
+                               Value="true"/>
+              </MultiDataTrigger.Conditions>
+              <Setter Property="IconFill" TargetName="PART_LineUpButton" 
+                      Value="{Binding IconFill, RelativeSource={RelativeSource TemplatedParent}}"/>
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+              <MultiDataTrigger.Conditions>
+                <Condition Binding="{Binding IsMouseOver, ElementName=PART_LineDownButton}" 
+                               Value="true"/>
+                <Condition Binding="{Binding IsPressed, ElementName=PART_LineDownButton}" 
+                               Value="false"/>
+              </MultiDataTrigger.Conditions>
+              <Setter Property="IconFill" TargetName="PART_LineDownButton" 
+                      Value="{Binding IconFill, RelativeSource={RelativeSource TemplatedParent}}"/>
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+              <MultiDataTrigger.Conditions>
+                <Condition Binding="{Binding IsMouseOver, ElementName=PART_LineUpButton}" 
+                               Value="true"/>
+                <Condition Binding="{Binding IsPressed, ElementName=PART_LineUpButton}" 
+                               Value="false"/>
+              </MultiDataTrigger.Conditions>
+              <Setter Property="IconFill" TargetName="PART_LineUpButton" 
+                      Value="{Binding IconFill, RelativeSource={RelativeSource TemplatedParent}}"/>
+            </MultiDataTrigger>
+            <Trigger Property="IsEnabled" Value="false">
+              <Setter Property="IconFill" TargetName="PART_LineUpButton" 
+                         Value="{StaticResource ScrollBar.Disabled.Glyph}"/>
+              <Setter Property="IconFill" TargetName="PART_LineDownButton"
+                        Value="{StaticResource ScrollBar.Disabled.Glyph}"/>
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+    
+    <!-- 수평형 오버라이드 -->
+    <Style.Triggers>
+      <Trigger Property="Orientation" Value="Horizontal">
+        <Setter Property="Width" Value="Auto"/>
+        <Setter Property="MinWidth" Value="0"/>
+        <Setter Property="Height" 
+                Value="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarHeightKey}}"/>
+        <Setter Property="MinHeight" 
+                Value="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarHeightKey}}"/>
+        <Setter Property="BorderThickness" Value="0,1"/>
+        <Setter Property="Template">
+          <Setter.Value>
+            <!-- 수평 ScrollBar 템플릿 -->
+            <ControlTemplate TargetType="{x:Type ctrls:HeimdallrScrollBar}">
+              <Grid x:Name="Bg" SnapsToDevicePixels="true">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition MaxWidth="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}"/>
+                  <ColumnDefinition Width="*"/>
+                  <ColumnDefinition MaxWidth="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}"/>
+                </Grid.ColumnDefinitions>
+
+                <ctrls:HeimdallrRepeatButton x:Name="PART_LineLeftButton" 
+                                             Grid.Column="0"
+                                             Icon="ArrowLeft"
+                                             IconFill="{TemplateBinding IconFill}"
+                                             IconSize="{TemplateBinding IconSize}"
+                                             Command="{x:Static ScrollBar.LineLeftCommand}" 
+                                             CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" />
+
+                <Border Grid.Column="1"
+                        CornerRadius="0"
+                        Height="{TemplateBinding Height}" 
+                        Style="{StaticResource ScrollTrackStyle}">
+
+                  <Track x:Name="PART_Track" Grid.Column="1" 
+                         IsEnabled="{TemplateBinding IsEnabled}">
+                    <Track.DecreaseRepeatButton>
+                      <RepeatButton Command="{x:Static ScrollBar.PageLeftCommand}" Background="Transparent"/>
+                    </Track.DecreaseRepeatButton>
+                    <Track.IncreaseRepeatButton>
+                      <RepeatButton Command="{x:Static ScrollBar.PageRightCommand}" Background="Transparent" />
+                    </Track.IncreaseRepeatButton>
+                    <Track.Thumb>
+                      <ctrls:HeimdallrThumb Style="{StaticResource ScrollBarThumbHorizontal}"/>
+                    </Track.Thumb>
+                  </Track>
+                </Border>
+
+                <ctrls:HeimdallrRepeatButton x:Name="PART_LineRightButton" 
+                                             Grid.Column="2" 
+                                             Icon="ArrowRight"
+                                             IconFill="{TemplateBinding IconFill}"
+                                             IconSize="{TemplateBinding IconSize}"
+                                             Command="{x:Static ScrollBar.LineRightCommand}" 
+                                             CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" />
+
+              </Grid>
+              <ControlTemplate.Triggers>
+                <!-- 마우스 오버, 마우스 Pressed-->
+                <MultiDataTrigger>
+                  <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsMouseOver, ElementName=PART_LineRightButton}" 
+                               Value="true"/>
+                    <Condition Binding="{Binding IsPressed, ElementName=PART_LineRightButton}" 
+                               Value="true"/>
+                  </MultiDataTrigger.Conditions>
+                  <Setter Property="IconFill" TargetName="PART_LineRightButton"
+                          Value="{Binding IconFill, RelativeSource={RelativeSource TemplatedParent}}"/>
+                </MultiDataTrigger>
+                
+                <MultiDataTrigger>
+                  <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsMouseOver, ElementName=PART_LineLeftButton}" 
+                               Value="true"/>
+                    <Condition Binding="{Binding IsPressed, ElementName=PART_LineLeftButton}" 
+                               Value="true"/>
+                  </MultiDataTrigger.Conditions>
+                  <Setter Property="IconFill" TargetName="PART_LineLeftButton" 
+                          Value="{Binding IconFill, RelativeSource={RelativeSource TemplatedParent}}"/>
+                </MultiDataTrigger>
+                
+                <MultiDataTrigger>
+                  <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsMouseOver, ElementName=PART_LineRightButton}" 
+                               Value="true"/>
+                    <Condition Binding="{Binding IsPressed, ElementName=PART_LineRightButton}" 
+                               Value="false"/>
+                  </MultiDataTrigger.Conditions>
+                  <Setter Property="IconFill" TargetName="PART_LineRightButton" 
+                          Value="{Binding IconFill, RelativeSource={RelativeSource TemplatedParent}}"/>
+                </MultiDataTrigger>
+                
+                <MultiDataTrigger>
+                  <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsMouseOver, ElementName=PART_LineLeftButton}" 
+                               Value="true"/>
+                    <Condition Binding="{Binding IsPressed, ElementName=PART_LineLeftButton}" 
+                               Value="false"/>
+                  </MultiDataTrigger.Conditions>
+                  <Setter Property="IconFill" TargetName="PART_LineLeftButton" 
+                          Value="{Binding IconFill, RelativeSource={RelativeSource TemplatedParent}}"/>
+                </MultiDataTrigger>
+
+                <!-- IsEnabled -->
+                <Trigger Property="IsEnabled" Value="false">
+                  <Setter Property="IconFill" TargetName="PART_LineLeftButton" 
+                          Value="{Binding IconFill, RelativeSource={RelativeSource TemplatedParent}}"/>
+                  <Setter Property="IconFill" TargetName="PART_LineRightButton" 
+                          Value="{Binding IconFill, RelativeSource={RelativeSource TemplatedParent}}"/>
+                </Trigger>
+              </ControlTemplate.Triggers>
+            </ControlTemplate>
+          </Setter.Value>
+        </Setter>
+      </Trigger>
+    </Style.Triggers>
   </Style>
 </ResourceDictionary>
 

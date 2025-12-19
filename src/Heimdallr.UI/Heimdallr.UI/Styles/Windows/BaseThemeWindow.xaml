@@ -20,7 +20,7 @@
     <Setter Property="MinWidth" Value="200" />
     <Setter Property="MinHeight" Value="200" />
     <Setter Property="Foreground" Value="#FFFFFF" />
-    <Setter Property="DimmingColor" Value="Bisque" />
+    <Setter Property="DimmingColor" Value="Transparent" />
     <Setter Property="BorderBrush" Value="#FF2B373D" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
     <Setter Property="UseLayoutRounding" Value="True" />

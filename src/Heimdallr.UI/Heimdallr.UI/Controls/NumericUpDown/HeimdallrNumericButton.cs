@@ -1,0 +1,584 @@
+﻿using Heimdallr.UI.Enums;
+using System.Globalization;
+using System.Text.RegularExpressions;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
+
+namespace Heimdallr.UI.Controls;
+
+public class HeimdallrNumericButton : Control
+{
+  private bool _isTemplateApplied = false;
+
+  static HeimdallrNumericButton()
+  {
+    DefaultStyleKeyProperty.OverrideMetadata(typeof(HeimdallrNumericButton),
+        new FrameworkPropertyMetadata(typeof(HeimdallrNumericButton)));
+  }
+
+  #region Value
+  /// <summary>
+  /// 현재 값입니다. Min ~ Max 범위 내로 제한됩니다.
+  /// </summary>
+  public double Value
+  {
+    get => (double)GetValue(ValueProperty);
+    set => SetValue(ValueProperty, value);
+  }
+  /// <summary>
+  /// value 속성은 현재 컨트롤의 값을 나타냅니다. 이 값은 Min과 Max 사이에 있어야 하며, Step 단위로 증가 또는 감소할 수 있습니다.
+  /// </summary>
+  public static readonly DependencyProperty ValueProperty =
+      DependencyProperty.Register(nameof(Value), typeof(double), typeof(HeimdallrNumericButton),
+          new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+            OnValueChanged, CoerceValue));
+  #endregion
+
+  #region Min
+  /// <summary>
+  /// 최소값입니다.
+  /// </summary>
+  public double Min
+  {
+    get => (double)GetValue(MinProperty);
+    set => SetValue(MinProperty, value);
+  }
+  /// <summary>
+  /// Min 속성은 현재 컨트롤의 최소값을 나타냅니다. 이 값은 Value 속성이 이 범위 이하로 내려가지 않도록 제한합니다.
+  /// </summary>
+  public static readonly DependencyProperty MinProperty =
+      DependencyProperty.Register(nameof(Min), typeof(double), typeof(HeimdallrNumericButton),
+          new PropertyMetadata(0.0, OnMinMaxChanged));
+  #endregion
+
+  #region Max
+  /// <summary>
+  /// 최대값입니다.
+  /// </summary>
+  public double Max
+  {
+    get => (double)GetValue(MaxProperty);
+    set => SetValue(MaxProperty, value);
+  }
+  /// <summary>
+  /// Max 속성은 현재 컨트롤의 최대값을 나타냅니다. 이 값은 Value 속성이 이 범위 이상으로 올라가지 않도록 제한합니다.
+  /// </summary>
+  public static readonly DependencyProperty MaxProperty =
+     DependencyProperty.Register(nameof(Max), typeof(double), typeof(HeimdallrNumericButton),
+         new PropertyMetadata(100.0, OnMinMaxChanged));
+  #endregion
+
+  #region Step
+  /// <summary>
+  /// 증감 단위입니다.
+  /// </summary>
+  public double Step
+  {
+    get => (double)GetValue(StepProperty);
+    set => SetValue(StepProperty, value);
+  }
+  /// <summary>
+  /// Step 속성은 현재 컨트롤의 증감 단위를 나타냅니다. 이 값은 Value 속성이 이 단위만큼 증가 또는 감소할 수 있도록 합니다.
+  /// </summary>
+  public static readonly DependencyProperty StepProperty =
+      DependencyProperty.Register(nameof(Step), typeof(double), typeof(HeimdallrNumericButton),
+          new PropertyMetadata(1.0));
+  #endregion
+
+  #region UpButtonIcon
+  /// <summary>
+  /// 증가 버튼 아이콘입니다.
+  /// </summary>
+  public IconType UpButtonIcon
+  {
+    get => (IconType)GetValue(UpButtonIconProperty);
+    set => SetValue(UpButtonIconProperty, value);
+  }
+  /// <summary>
+  /// UpButtonIcon 속성은 증가 버튼에 표시될 아이콘을 나타냅니다. 기본값은 PathIconType.None입니다.
+  /// </summary>
+  public static readonly DependencyProperty UpButtonIconProperty =
+     DependencyProperty.Register(nameof(UpButtonIcon), typeof(IconType), typeof(HeimdallrNumericButton),
+         new PropertyMetadata(IconType.None));
+  #endregion
+
+  #region DownButtonIcon
+  /// <summary>
+  /// 감소 버튼 아이콘입니다.
+  /// </summary>
+  public IconType DownButtonIcon
+  {
+    get => (IconType)GetValue(DownButtonIconProperty);
+    set => SetValue(DownButtonIconProperty, value);
+  }
+  /// <summary>
+  /// DownButtonIcon 속성은 감소 버튼에 표시될 아이콘을 나타냅니다. 기본값은 PathIconType.None입니다.
+  /// </summary>
+  public static readonly DependencyProperty DownButtonIconProperty =
+      DependencyProperty.Register(nameof(DownButtonIcon), typeof(IconType), typeof(HeimdallrNumericButton),
+          new PropertyMetadata(IconType.None));
+  #endregion
+
+  #region UP 아이콘 변경색상
+  /// <summary>
+  /// Up 버튼 아이콘의 색상입니다. 기본값은 검정색입니다.
+  /// </summary>
+  public Brush UpIconFill
+  {
+    get => (Brush)GetValue(UpIconFillProperty);
+    set => SetValue(UpIconFillProperty, value);
+  }
+  /// <summary>
+  /// IconFill 속성은 증가 및 감소 버튼 아이콘의 색상을 나타냅니다. 기본값은 검정색입니다.
+  /// </summary>
+  public static readonly DependencyProperty UpIconFillProperty =
+    DependencyProperty.Register(
+        nameof(UpIconFill),
+        typeof(Brush),
+        typeof(HeimdallrNumericButton),
+        new PropertyMetadata(new SolidColorBrush(Colors.Gray)));
+  #endregion
+
+  #region Down 아이콘 변경색상
+  /// <summary>
+  /// Down 버튼 아이콘의 색상입니다. 기본값은 검정색입니다.
+  /// </summary>
+  public Brush DownIconFill
+  {
+    get { return (Brush)GetValue(DownIconFillProperty); }
+    set { SetValue(DownIconFillProperty, value); }
+  }
+  /// <summary>
+  /// DowIconFill 속성은 감소 버튼 아이콘의 색상을 나타냅니다. 기본값은 검정색입니다.
+  /// </summary>
+  public static readonly DependencyProperty DownIconFillProperty =
+      DependencyProperty.Register(nameof(DownIconFill), typeof(Brush), typeof(HeimdallrNumericButton),
+        new PropertyMetadata(new SolidColorBrush(Colors.Gray)));
+  #endregion
+
+  #region Foreground
+  /// <summary>
+  /// 텍스트 박스의 글자색입니다.
+  /// </summary>
+  public new Brush Foreground
+  {
+    get => (Brush)GetValue(ForegroundProperty);
+    set => SetValue(ForegroundProperty, value);
+  }
+
+  /// <summary>
+  /// Foreground 속성은 텍스트 박스의 글자색을 나타냅니다.
+  /// </summary>
+  public new static readonly DependencyProperty ForegroundProperty =
+      DependencyProperty.Register(nameof(Foreground), typeof(Brush), typeof(HeimdallrNumericButton),
+          new PropertyMetadata(new SolidColorBrush(Colors.Black)));
+  #endregion
+
+  #region UpIconMouseOverFill
+  /// <summary>
+  /// Up 아이콘의 마우스 오버 색상을 설정합니다.
+  /// </summary>
+  public Brush UpIconMouseOverFill
+  {
+    get => (Brush)GetValue(UpIconMouseOverFillProperty);
+    set => SetValue(UpIconMouseOverFillProperty, value);
+  }
+  /// <summary>
+  /// Up 아이콘의 마우스 오버 색상 속성입니다.
+  /// </summary>
+  public static readonly DependencyProperty UpIconMouseOverFillProperty =
+      DependencyProperty.Register(nameof(UpIconMouseOverFill), typeof(Brush), typeof(HeimdallrNumericButton),
+          new PropertyMetadata(new SolidColorBrush(Colors.Blue)));  // 기본값은 파란색
+  #endregion
+
+  #region UpIconPressedFill
+  /// <summary>
+  /// Up 아이콘의 눌렀을 때 색상을 설정합니다.
+  /// </summary>
+  public Brush UpIconPressedFill
+  {
+    get => (Brush)GetValue(UpIconPressedFillProperty);
+    set => SetValue(UpIconPressedFillProperty, value);
+  }
+  /// <summary>
+  /// Up 아이콘의 눌렀을 때 색상 속성입니다.
+  /// </summary>
+  public static readonly DependencyProperty UpIconPressedFillProperty =
+      DependencyProperty.Register(nameof(UpIconPressedFill), typeof(Brush), typeof(HeimdallrNumericButton),
+          new PropertyMetadata(new SolidColorBrush(Colors.Red)));  // 기본값은 빨간색
+  #endregion
+
+  #region DownIconMouseOverFill
+  /// <summary>
+  /// Down 아이콘의 마우스 오버 색상을 설정합니다.
+  /// </summary>
+  public Brush DownIconMouseOverFill
+  {
+    get => (Brush)GetValue(DownIconMouseOverFillProperty);
+    set => SetValue(DownIconMouseOverFillProperty, value);
+  }
+  /// <summary>
+  /// Down 아이콘의 마우스 오버 색상 속성입니다.
+  /// </summary>
+  public static readonly DependencyProperty DownIconMouseOverFillProperty =
+      DependencyProperty.Register(nameof(DownIconMouseOverFill), typeof(Brush), typeof(HeimdallrNumericButton),
+          new PropertyMetadata(new SolidColorBrush(Colors.Orange)));  // 기본값은 오렌지색
+  #endregion
+
+  #region DownIconPressedFill
+  /// <summary>
+  /// Down 아이콘의 눌렀을 때 색상을 설정합니다.
+  /// </summary>
+  public Brush DownIconPressedFill
+  {
+    get => (Brush)GetValue(DownIconPressedFillProperty);
+    set => SetValue(DownIconPressedFillProperty, value);
+  }
+  /// <summary>
+  /// Down 아이콘의 눌렀을 때 색상 속성입니다.
+  /// </summary>
+  public static readonly DependencyProperty DownIconPressedFillProperty =
+      DependencyProperty.Register(nameof(DownIconPressedFill), typeof(Brush), typeof(HeimdallrNumericButton),
+          new PropertyMetadata(new SolidColorBrush(Colors.Green)));  // 기본값은 초록색
+  #endregion
+
+  #region IconSize
+  /// <summary>
+  /// 이이콘 사이즈 너비,높이
+  /// </summary>
+  public double IconSize
+  {
+    get => (double)GetValue(IconSizeProperty);
+    set => SetValue(IconSizeProperty, value);
+  }
+
+  /// <summary>
+  /// 아이콘사이즈 기본값
+  /// </summary>
+  public static readonly DependencyProperty IconSizeProperty =
+      DependencyProperty.Register(nameof(IconSize), typeof(double),
+          typeof(HeimdallrNumericButton), new PropertyMetadata(20.0));
+  #endregion
+
+  /// <summary>
+  /// 현재 컨트롤의 템플릿에서 TextBox를 참조하기 위한 변수입니다.
+  /// </summary>
+  private TextBox? _textBox;
+
+  #region 재정의 OnApplyTemplate
+  /// <summary>
+  /// OnApplyTemplate 메서드는 컨트롤의 템플릿이 적용될 때 호출됩니다.
+  /// </summary>
+  public override void OnApplyTemplate()
+  {
+    base.OnApplyTemplate();
+
+    if (GetTemplateChild("PART_UpButton") is HeimdallrRepeatButton up)
+    {
+      up.Click -= Up_Click;
+      up.Click += Up_Click;
+    }
+
+    if (GetTemplateChild("PART_DownButton") is HeimdallrRepeatButton down)
+    {
+      down.Click -= Down_Click;
+      down.Click += Down_Click;
+    }
+
+    if (GetTemplateChild("PART_TextBox") is TextBox textBox)
+    {
+      if (_textBox != null)
+      {
+        _textBox.PreviewTextInput -= TextBox_PreviewTextInput;
+        DataObject.RemovePastingHandler(_textBox, TextBox_Pasting);
+        _textBox.TextChanged -= TextBox_TextChanged;
+      }
+
+      _textBox = textBox;
+
+      _textBox.PreviewTextInput += TextBox_PreviewTextInput;
+      DataObject.AddPastingHandler(_textBox, TextBox_Pasting);
+      _textBox.TextChanged += TextBox_TextChanged;
+
+      _textBox.Text = Value.ToString(CultureInfo.InvariantCulture);
+    }
+
+    // 키보드 업 / 다운 이벤트 처리
+    if (_textBox != null)
+    {
+      _textBox.KeyDown += Textbox_KeyDown;
+    }
+
+    UpdateTextBox(); // ⭐ 템플릿 적용 직후 한 번 동기화
+  }
+  #endregion
+
+  #region OnValueChanged
+  /// <summary>
+  /// Value 속성이 변경될 때 호출되는 메서드입니다.
+  /// </summary>
+  /// <param name="d"></param>
+  /// <param name="e"></param>
+  private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+  {
+    var control = (HeimdallrNumericButton)d;
+
+    if (!control._isTemplateApplied)
+      return;
+
+    control.UpdateTextBox();
+  }
+  #endregion
+
+  #region CoerceValue 메서드
+  /// <summary>
+  /// Value 속성의 값을 강제적으로 조정하는 메서드입니다.
+  /// </summary>
+  /// <param name="d"></param>
+  /// <param name="baseValue"></param>
+  /// <returns></returns>
+  private static object CoerceValue(DependencyObject d, object baseValue)
+  {
+    var control = (HeimdallrNumericButton)d;
+    var value = (double)baseValue;
+    if (value < control.Min) return control.Min;
+    if (value > control.Max) return control.Max;
+    return control.NormalizePrecision(value);
+  }
+  #endregion
+
+  #region OnMinMaxChanged 메서드 
+  /// <summary>
+  /// Min 또는 Max 속성이 변경될 때 호출되는 메서드입니다. 이 메서드는 Value 속성을 Min과 Max 범위 내로 강제 조정합니다.
+  /// </summary>
+  /// <param name="d"></param>
+  /// <param name="e"></param>
+  private static void OnMinMaxChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+  {
+    var control = (HeimdallrNumericButton)d;
+
+    control.CoerceValue(ValueProperty);
+
+    if (!control._isTemplateApplied)
+      return;
+
+    control.UpdateTextBox();
+  }
+  #endregion
+
+
+  #region Textbox_KeyDown 메서드
+  /// <summary>
+  /// 키보드의 Up/Down 키를 눌렀을 때 Value 값을 증가/감소시키는 이벤트 핸들러입니다.
+  /// </summary>
+  /// <param name="sender"></param>
+  /// <param name="e"></param>
+  /// <exception cref="NotImplementedException"></exception>
+  private void Textbox_KeyDown(object sender, KeyEventArgs e)
+  {
+    if (e.Key == Key.Up)
+    {
+      Value = NormalizePrecision(Value + Step);
+      e.Handled = true;
+    }
+    else if (e.Key == Key.Down)
+    {
+      Value = NormalizePrecision(Value - Step);
+      e.Handled = true;
+    }
+  }
+  #endregion
+
+  #region Up_Click 메서드 
+  /// <summary>
+  /// Up 버튼 클릭 이벤트 핸들러에 VisualState 변경 및 값 증가 처리 통합
+  /// </summary>
+  /// <param name="sender"></param>
+  /// <param name="e"></param>
+  private async void Up_Click(object sender, RoutedEventArgs e)
+  {
+    Value = NormalizePrecision(Value + Step);
+
+    VisualStateManager.GoToState(this, "PressedUp", true);
+
+    await Task.Delay(200);
+
+    VisualStateManager.GoToState(this, "Normal", true);
+  }
+
+  #endregion
+
+  #region Down_Click 메서드 
+  /// <summary>
+  /// <summary>
+  /// Down 버튼 클릭 이벤트 핸들러에 VisualState 변경 추가
+  /// </summary>
+  /// <param name="sender"></param>
+  /// <param name="e"></param>
+  private async void Down_Click(object sender, RoutedEventArgs e)
+  {
+    Value = NormalizePrecision(Value - Step);
+
+    VisualStateManager.GoToState(this, "PressedDown", true);
+
+    await Task.Delay(200);
+
+    VisualStateManager.GoToState(this, "Normal", true);
+  }
+  #endregion
+
+  #region UpdateTextBox 메서드
+  /// <summary>
+  /// 현재 Value 값을 텍스트 박스에 업데이트합니다.
+  /// </summary>
+  private void UpdateTextBox()
+  {
+    if (_textBox == null)
+    {
+      return;
+    }
+
+    if (_textBox != null)
+    {
+      var text = Value.ToString(CultureInfo.InvariantCulture);
+      if (_textBox.Text != text)
+        _textBox.Text = text;
+    }
+
+    // 범위를 벗어나면 배경색 변경
+    if (Value < Min || Value > Max)
+    {
+      if (_textBox != null)
+        _textBox.Background = new SolidColorBrush(Colors.Red);
+    }
+    else
+    {
+      if (_textBox != null)
+        _textBox.Background = new SolidColorBrush(Colors.Transparent);
+    }
+
+    // 값이 유효하지 않으면 경고 메세지 표시
+    if (!double.TryParse(_textBox?.Text, out _))
+    {
+      // 경고 아이콘 추가
+      _textBox!.Foreground = new SolidColorBrush(Colors.Red);
+    }
+    else
+    {
+      _textBox!.Foreground = Foreground;
+    }
+  }
+  #endregion
+
+  #region TextBox_PreviewTextInput 이벤트
+  /// <summary>
+  /// 텍스트 박스에 입력이 발생했을 때 호출됩니다. 입력된 텍스트가 유효한 숫자인지 확인하고, 유효하지 않으면 입력을 취소합니다.
+  /// </summary>
+  /// <param name="sender"></param>
+  /// <param name="e"></param>
+  private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+  {
+    e.Handled = !IsTextValid(_textBox?.Text, e.Text);
+  }
+  #endregion
+
+  #region IsTextValid 메서드
+  /// <summary>
+  /// 입력값이 기존 텍스트에 추가되었을 때 전체 텍스트가 유효한 숫자인지 검사합니다.
+  /// </summary>
+  private bool IsTextValid(string? existingText, string newText)
+  {
+    string? fullText;
+
+    if (existingText == null)
+      fullText = newText;
+    else
+    {
+      // 현재 선택된 텍스트를 포함해서 붙여넣기 혹은 입력 후 텍스트를 시뮬레이트
+      if (_textBox == null) return false;
+      var selectionStart = _textBox.SelectionStart;
+      var selectionLength = _textBox.SelectionLength;
+
+      fullText = existingText.Remove(selectionStart, selectionLength)
+          .Insert(selectionStart, newText);
+    }
+
+    if (string.IsNullOrEmpty(fullText))
+      return true; // 빈 문자열도 허용(입력 중일 때)
+
+    // 정규식: 음수 부호가 맨 앞에 올 수 있고, 소수점은 하나만 존재 가능
+    return Regex.IsMatch(fullText, @"^-?\d*\.?\d*$");
+  }
+  #endregion
+
+  #region TextBox_Pasting 이벤트
+  /// <summary>
+  /// 텍스트 박스에 붙여넣기 이벤트가 발생했을 때 호출됩니다. 붙여넣기된 텍스트가 유효한 숫자인지 확인하고, 유효하지 않으면 붙여넣기를 취소합니다.
+  /// </summary>
+  /// <param name="sender"></param>
+  /// <param name="e"></param>
+  private void TextBox_Pasting(object sender, DataObjectPastingEventArgs e)
+  {
+    if (e.DataObject.GetDataPresent(typeof(string)))
+    {
+      string pasteText = (string)e.DataObject.GetData(typeof(string))!;
+      if (!IsTextValid(_textBox?.Text, pasteText))
+        e.CancelCommand();
+    }
+    else
+    {
+      e.CancelCommand();
+    }
+  }
+  #endregion
+
+  #region TextBox_TextChanged 이벤트
+  /// <summary>
+  /// 텍스트 박스의 텍스트가 변경될 때 호출됩니다. 입력된 텍스트를 숫자로 변환하고 Value 속성을 업데이트합니다.
+  /// </summary>
+  /// <param name="sender"></param>
+  /// <param name="e"></param>
+  private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+  {
+    if (_textBox == null) return;
+
+    if (double.TryParse(_textBox.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out var val))
+    {
+      Value = val;
+    }
+  }
+  #endregion
+
+  #region NormalizePrecision 메서드
+  /// <summary>
+  /// 소수 자릿수를 정규화합니다. Step이 정수면 정수로, 아니면 소수점 이하 2자리까지 처리.
+  /// </summary>
+  private double NormalizePrecision(double value)
+  {
+    if (Step % 1 == 0)
+      return Math.Round(value, 0);
+    else
+    {
+      int decimalPlaces = GetDecimalPlaces(Step);
+      return Math.Round(value, decimalPlaces);
+    }
+  }
+  #endregion
+
+  #region GetDecimalPlaces 메서드
+  /// <summary>
+  /// 소수 자릿수를 계산합니다. 입력된 값의 소수점 이하 자릿수를 반환합니다.
+  /// </summary>
+  /// <param name="value"></param>
+  /// <returns></returns>
+  private static int GetDecimalPlaces(double value)
+  {
+    string text = value.ToString(CultureInfo.InvariantCulture);
+    int index = text.IndexOf('.');
+    if (index < 0) return 0;
+    return text.Length - index - 1;
+  }
+  #endregion
+}

@@ -5,10 +5,40 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ImplicitUsings>enable</ImplicitUsings>
+
+	<!-- NuGet 패키지 메타데이터 추가 -->
+
+	<!-- 자동으로 nupkg 확장자 생성  -->
+	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  
+	<!-- 패키지 이름 -->
+	<PackageId>Heimdallr.Uitily</PackageId>
+	  
+	<!-- 버전 -->
+	<Version>1.0.0</Version>
+	  
+	<!-- 작성자 -->
+	<Authors>Heimdallr</Authors>
+	  
+	<!-- 회사 이름 -->
+	<Company>Heimdallr.Company</Company>
+	  
+	<!-- 패키지 설명 -->
+	<Description>Heimdallr.WPF Uitily</Description>
+	  
+	<!-- 태그 -->
+	<PackageTags>NuGet, Example</PackageTags>
+	  
+	<!-- GitHub 저장소 URL -->
+	<RepositoryUrl>https://github.com/wiseking7/HeimdallrV25</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Heimdallr.UI\Heimdallr.UI\Heimdallr.UI.csproj" />
+    <PackageReference Include="Prism.DryIoc" Version="9.0.537" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ViewModelBase\" />
   </ItemGroup>
 
 </Project>

@@ -1,8 +1,5 @@
-﻿using Heimdallr.Utility;
+﻿using Heimdallr.UI.Base;
 using Moq;
-using Prism.Events;
-using Prism.Ioc;
-using Prism.Regions;
 
 namespace Tests;
 

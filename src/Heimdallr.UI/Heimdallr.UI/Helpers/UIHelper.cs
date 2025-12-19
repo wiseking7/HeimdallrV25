@@ -1,6 +1,5 @@
 ﻿using Heimdallr.UI.Controls; // HeimdallrMessageBox namespace
 using Heimdallr.UI.Enums;
-using Prism.Commands;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -128,6 +127,9 @@ public static class UIHelper
   /// <returns>DelegateCommand</returns>
   public static DelegateCommand CreateDelegateCommand(Action execute, Func<bool>? canExecute = null)
   {
+    // canExecute가 null일 경우 기본값으로 true를 반환
+    canExecute ??= () => true;
+
     return new DelegateCommand(() => RunOnUIThread(execute), canExecute);
   }
 
@@ -140,6 +142,9 @@ public static class UIHelper
   /// <returns>DelegateCommand&lt;T&gt;</returns>
   public static DelegateCommand<T> CreateDelegateCommand<T>(Action<T> execute, Func<T, bool>? canExecute = null)
   {
+    // canExecute가 null일 경우 기본값으로 항상 true를 반환
+    canExecute ??= param => true;
+
     return new DelegateCommand<T>((param) => RunOnUIThread(() => execute(param)), canExecute);
   }
 

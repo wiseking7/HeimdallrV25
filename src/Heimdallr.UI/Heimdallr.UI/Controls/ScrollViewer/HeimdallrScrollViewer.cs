@@ -18,27 +18,6 @@ public class HeimdallrScrollViewer : ScrollViewer
   }
   #endregion
 
-  #region 초기화
-  /// <summary>
-  /// OnInitialized는 컨트롤이 초기화될 때 호출되는 메서드입니다.
-  /// </summary>
-  /// <param name="e"></param>
-  protected override void OnInitialized(EventArgs e)
-  {
-    // 기본 ScrollViewer의 초기화 로직을 호출합니다.
-    base.OnInitialized(e);
-
-    // 현재 이 컨트롤에 Style이 설정되어 있지 않고,
-    // StyleProperty에 로컬 값이 설정되어 있지 않은 경우 (즉, 스타일이 없으면)
-    if (Style == null && ReadLocalValue(StyleProperty) == DependencyProperty.UnsetValue)
-    {
-      // ScrollViewer 타입에 등록된 기본 스타일을 이 컨트롤에 자동으로 적용하도록 합니다.
-      // 이렇게 하면 별도로 스타일을 지정하지 않아도 ScrollViewer 기본 스타일을 사용하게 됨.
-      SetResourceReference(StyleProperty, typeof(ScrollViewer));
-    }
-  }
-  #endregion
-
   #region 마우스 휠
   /// <summary>
   /// 

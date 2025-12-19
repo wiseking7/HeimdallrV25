@@ -1,6 +1,5 @@
 ﻿using Moq;
-using Prism.Ioc;
-using Prism.Regions;
+
 
 namespace Tests.ViewModeTests;
 

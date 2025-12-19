@@ -2,8 +2,7 @@
 using Heimdallr.App.Themes.UI;
 using Heimdallr.App.ViewModel;
 using Heimdallr.UI.MVVM;
-using Prism.Ioc;
-using Prism.Modularity;
+using Heimdallr.Utility.Extensions;
 
 namespace HeimdallrApp;
 
@@ -39,5 +38,9 @@ public class HelperModules : IModule
 
   public void RegisterTypes(IContainerRegistry containerRegistry)
   {
+    containerRegistry.RegisterViewsForNavigationAutomatically();
+
+    // 또는, TestDialogView를 IDialogService에 직접 등록하려면
+    containerRegistry.RegisterDialog<TestDialogView, TestDialogViewModel>();
   }
 }

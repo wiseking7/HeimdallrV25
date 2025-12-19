@@ -1,9 +1,4 @@
-﻿using Prism.Events;
-using Prism.Ioc;
-using Prism.Mvvm;
-using Prism.Navigation;
-using Prism.Regions;
-using System.Collections;
+﻿using System.Collections;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq.Expressions;
@@ -11,7 +6,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows;
 
-namespace Heimdallr.Utility;
+namespace Heimdallr.UI.Base;
 /// <summary>
 /// MVVM용 기본 ViewModel
 /// BindableBase, INotifyDataErrorInfo, IDestructible, Prism INavigationAware
@@ -747,11 +742,11 @@ public abstract class ViewModelBase : BindableBase, INotifyDataErrorInfo, IDestr
 
   #region ValidatePropertyPublic (테스트 / 외부 호출용)
 
-#if DEBUG
+
   public Task ValidatePropertyAsyncPublic(string propertyName) => ValidatePropertyFullAsync(propertyName);
   public void ClearErrorsPublic(string propertyName) => ClearErrors(propertyName);
   public void ClearAllErrorsPublic() => ClearAllErrors();
-#endif
+
   #endregion
 }
 

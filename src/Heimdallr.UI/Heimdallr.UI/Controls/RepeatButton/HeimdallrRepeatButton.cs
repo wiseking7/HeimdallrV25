@@ -20,7 +20,17 @@ public class HeimdallrRepeatButton : RepeatButton
   /// 아이콘의 색상을 설정하는 속성
   /// </summary>
   public static readonly DependencyProperty IconFillProperty =
-      DependencyProperty.Register(nameof(IconFill), typeof(Brush), typeof(HeimdallrRepeatButton), new PropertyMetadata(Brushes.DarkGray));
+      DependencyProperty.Register(nameof(IconFill), typeof(Brush), typeof(HeimdallrRepeatButton), new PropertyMetadata(Brushes.Transparent, OnIconFillChanged));
+
+  private static void OnIconFillChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+  {
+    if (e.NewValue == DependencyProperty.UnsetValue || e.NewValue == null)
+    {
+      ((HeimdallrRepeatButton)d).SetCurrentValue(
+          IconFillProperty,
+          Brushes.Transparent);
+    }
+  }
   #endregion
 
   #region HeimdallrIcon 색상지정
@@ -36,7 +46,17 @@ public class HeimdallrRepeatButton : RepeatButton
   /// 아이콘의 색상을 설정하는 속성
   /// </summary>
   public static readonly DependencyProperty MouserOverIconFillProperty =
-      DependencyProperty.Register(nameof(MouserOverIconFill), typeof(Brush), typeof(HeimdallrRepeatButton), new PropertyMetadata(Brushes.DarkGray));
+      DependencyProperty.Register(nameof(MouserOverIconFill), typeof(Brush), typeof(HeimdallrRepeatButton), new PropertyMetadata(Brushes.Transparent, OnMouseOverIconFillChanged));
+
+  private static void OnMouseOverIconFillChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+  {
+    if (e.NewValue == DependencyProperty.UnsetValue || e.NewValue == null)
+    {
+      ((HeimdallrRepeatButton)d).SetCurrentValue(
+          MouserOverIconFillProperty,
+          Brushes.Transparent);
+    }
+  }
   #endregion
 
   #region Icon 지정

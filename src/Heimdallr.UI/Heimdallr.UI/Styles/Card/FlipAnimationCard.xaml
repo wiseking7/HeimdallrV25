@@ -6,6 +6,8 @@
     <Setter Property="CardWidth" Value="100" />
     <Setter Property="CardHeight" Value="100" />
     <Setter Property="IconSize" Value="70" />
+    <Setter Property="FrontCornerRadius" Value="7" />
+    <Setter Property="BackCornerRadius" Value="7" />
     <Setter Property="FrontBackground" Value="#FF526D82" />
     <Setter Property="Template">
       <Setter.Value>

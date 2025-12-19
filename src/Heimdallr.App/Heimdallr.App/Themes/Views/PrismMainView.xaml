@@ -24,10 +24,10 @@
                                           Command="{Binding MessageCommand}" />
 
                 <ctrls:HeimdallrMenuItem
-                                          Header="고급 설정"
+                                          Header="다이얼로그 데스트 열기 "
                                           Icon="Broadcast"
                                           IconFill="#FFFFFFFF"
-                                          Command="{Binding MessageCommand}"
+                                          Command="{Binding OpenDialogCommand}"
                                           CommandParameter="Advanced" />
 
                 <ctrls:HeimdallrMenuItem Header="비활성 메뉴"
@@ -92,7 +92,7 @@
     
     <Setter Property="Content">
       <Setter.Value>
-        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+        <ctrls:HeimdallrScrollViewer  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
           <Grid>
             <Grid.RowDefinitions>
               <RowDefinition Height="*"/>
@@ -104,17 +104,7 @@
               <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <!-- HeimdallrIcon-->
             <Grid Grid.Row="1">
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-              </Grid.ColumnDefinitions>
-              <ctrls:HeimdallrIcon Grid.Column="0" Icon="Sale" IconSize="50"  Fill="Chartreuse"/>
-              <ctrls:HeimdallrIcon Grid.Column="1" IconSize="100" Image="HanJimin" />
-            </Grid>
-
-            <Grid Grid.Row="2">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <!--0 -->
@@ -161,27 +151,27 @@
               </Grid.ColumnDefinitions>
               <ctrls:HeimdallrCloseButton Grid.Column="0" IconSize="25" Fill="AliceBlue"
                                           Command="{Binding MessageCommand}"/>
-              <ctrls:HeimdallrMaximizeButton Grid.Column="1" IconSize="25" Fill="Aqua"
+              <ctrls:HeimdallrMaximizeButton Grid.Column="1" IconSize="25" Fill="Aqua" Margin="10 0 0 0"
                                           Command="{Binding MessageCommand}"/>
-              <ctrls:HeimdallrMinimizeButton Grid.Column="2" IconSize="25"  Fill="Chocolate"
+              <ctrls:HeimdallrMinimizeButton Grid.Column="2" IconSize="25"  Fill="Chocolate" Margin="10 0 0 0"
                                           Command="{Binding MessageCommand}"/>
-              <ctrls:HeimdallrHoldSubmitButton Grid.Column="3" Content="HoldSubmit" BorderThickness="2"
+              <ctrls:HeimdallrHoldSubmitButton Grid.Column="3" Content="HoldSubmit" BorderThickness="2" Margin="10 0 0 0"
                                           Command="{Binding MessageCommand}"/>
-              <ctrls:HeimdallrFlatButton Grid.Column="4"  Content="FlatButton" 
+              <ctrls:HeimdallrFlatButton Grid.Column="4"  Content="FlatButton" Margin="10 0 0 0"
                                          Command="{Binding MessageCommand}" CornerRadius="7"/>
-              <ctrls:HeimdallrPulseEllipseButton Grid.Column="5" Icon="Arrow_Triangle_Right" Content="PulesEllipseButon"
+              <ctrls:HeimdallrPulseEllipseButton Grid.Column="5" Icon="Arrow_Triangle_Right" Content="PulesEllipseButon" Margin="10 0 0 0"
                                                  Command="{Binding MessageCommand}" />
-              <ctrls:HeimdallrPulseButton Grid.Column="6" Icon="AcitveA" Background="#FF50577A"
+              <ctrls:HeimdallrPulseButton Grid.Column="6" Icon="AcitveA" Background="#FF50577A" Margin="10 0 0 0"
                                           ButtonText="PulseButton Rset"  Width="120"
                                           Command="{Binding ResetCommand}" CornerRadius="7" />
-              <ctrls:HeimdallrHoldButton Grid.Column="7" Icon="AcitveA" ButtonText="Start HeimdallrProgressBar"
+              <ctrls:HeimdallrHoldButton Grid.Column="7" Icon="AcitveA" ButtonText="Start HeimdallrProgressBar" Margin="10 0 0 0"
                                              BackgroundRectangleFill="Beige" HoldDuration="0:0:1" AnimatedFillDuration="0:0:0.1"
                                              Command="{Binding StartCommand}"/>
-              <ctrls:HeimdallrSwitchCheckBox Grid.Column="8" Icon="Ghost1" Width="120" 
+              <ctrls:HeimdallrSwitchCheckBox Grid.Column="8" Icon="Ghost1" Width="120" Margin="10 0 0 0"
                                              OnLabel="ON할아버지" OffLabel="OFF할아버지" OnLebelForeground="#FFFFFFFF"
                                              OffLebelForeground="#FF8C3061"/>
-              <ctrls:HeimdallrIconToggleButton Grid.Column="9" Icon="Success_Flag"  IconMouseOverFill="Firebrick"/>
-              <ctrls:HeimdallrComboBox Grid.Column="10" Icon="Success" IconMouseOverFill="AliceBlue"
+              <ctrls:HeimdallrIconToggleButton Grid.Column="9" Icon="Success_Flag"  IconMouseOverFill="Firebrick" Margin="10 0 0 0"/>
+              <ctrls:HeimdallrComboBox Grid.Column="10" Icon="Success" IconMouseOverFill="AliceBlue" Margin="10 0 0 0"
                                        PlaceholderText="역할" PlaceholderForeground="AliceBlue" 
                                        SelectedItemForeground="#FFF25912"
                                        ItemsSource="{Binding EmployeePosition}"
@@ -189,17 +179,13 @@
                                        SelectedValuePath="Value"
                                        DisplayMemberPath="Description"/>
               <!-- 선택된 아이템 표시 -->
-              <TextBlock Grid.Column="11"
-                 Margin="10,0,0,0"
-                 VerticalAlignment="Center"
-                 FontSize="16"
-                 Foreground="Black"
-                 Text="{Binding SelectedEmployeePosition}"/>
+              <TextBlock Grid.Column="11"  Margin="10,0,0,0" VerticalAlignment="Center" FontSize="16" Foreground="Black"
+                         Text="{Binding SelectedEmployeePosition}"/>
 
-              <ctrls:HeimdallrRepeatButton Grid.Column="12" Background="Aqua" Width="100" Height="35" 
-                                BorderBrush="Black" BorderThickness="2" Content="리피트버튼"/>
+              <ctrls:HeimdallrRepeatButton Grid.Column="12" Background="Aqua" Width="100" Height="36" Margin="10 0 0 0"
+                                           BorderBrush="Black" BorderThickness="2" Content="리피트버튼"/>
 
-              <ctrls:HeimdallrPlaceholderTextBox Grid.Column="13" 
+              <ctrls:HeimdallrPlaceholderTextBox Grid.Column="13" Margin="10 0 0 0"
                                                  MaxLength="10"
                                                  Icon="AcitveB"
                                                  BorderBrush="AliceBlue"
@@ -213,14 +199,14 @@
                                                  RightIconToolTipContent="자동코드생성"
                                                  Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
 
-              <ctrls:HeimdallrRadioButton Grid.Column="14" Icon="WindowMaximize" IconFill="AliceBlue" 
+              <ctrls:HeimdallrRadioButton Grid.Column="14" Icon="WindowMaximize" IconFill="AliceBlue"  Margin="10 0 0 0"
                                           MouseOverForeground="AliceBlue" />
 
-              <ctrls:HeimdallrProgressBar Grid.Column="15" Value="{Binding Value}" Maximum="{Binding Maximum}"  Width="100"
-                                          Minimum="{Binding Minimum}"  Background="{DynamicResource DarkPlum}"/>
+              <ctrls:HeimdallrProgressBar Grid.Column="15" Value="{Binding Value}" Maximum="{Binding Maximum}"  Width="100" Margin="10 0 0 0"
+                                          Minimum="{Binding Minimum}" Background="{DynamicResource DarkPlum}"/>
 
             </Grid>
-            <Grid Grid.Row="3" >
+            <Grid Grid.Row="2" >
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <!--0 -->
@@ -256,20 +242,34 @@
                 <!--13 -->
               </Grid.ColumnDefinitions>
 
-              <ctrls:HeimdallrRepeatButton Grid.Column="0" Background="Aqua" Width="30" Height="30" 
-                        BorderBrush="Black" BorderThickness="0"
-                        Icon="AcitveB" IconFill="BlanchedAlmond" CornerRadius="7"/>
+              <ctrls:HeimdallrRepeatButton Grid.Column="0" Background="Aqua" Margin="10 0 0 0"
+                                           BorderBrush="Black" BorderThickness="0"
+                                           Icon="AcitveB" IconFill="BlanchedAlmond" CornerRadius="7"/>
 
-              <ctrls:HeimdallrThumb Grid.Column="1" Margin="10 0 0 0" Background="Red" Width="120" Height="30"
-                         MouseOverBrush="Blue" IsDraggingBrush="GreenYellow"/>
+              <ctrls:HeimdallrThumb Grid.Column="1" Margin="10 0 0 0" Background="Red" Width="120" Height="35"
+                                    MouseOverBrush="Blue" IsDraggingBrush="GreenYellow"/>
 
-              <ctrls:HeimdallrScrollBar Grid.Column="2" Margin="10 0 0 0" />
+
+              <ctrls:HeimdallrPlaceholderTextBox Grid.Column="2" MaxLength="10" Icon="Facebook" BorderBrush="AliceBlue"
+                                                 Foreground="#FFFFFFFF" UseFloatingLabel="True" PlaceholderText="입력하세요"
+                                                 PlaceholderForeground="AliceBlue" RightIcon="AcitveB"
+                                                 RightIconFill="Azure" Margin="10 0 0 0"
+                                                 RightIconToolTipContent="테스트" />
+
+              <ctrls:HeimdallrHoldButton Grid.Column="3" Icon="Save" ButtonText="OK" BackgroundRectangleFill="Beige" 
+                                         HoldDuration="0:0:1" AnimatedFillDuration="0:0:0.1" Margin="10 0 0 0" />
+
+              <ctrls:HeimdallrNumericButton Grid.Column="4" Margin="10 0 0 0" Max="1000" Min="-50" Step="50" UpButtonIcon="Account" DownButtonIcon="AccountA" />
+
+              <ctrls:HeimdallrIcon Grid.Column="5" Icon="Sale" IconSize="50"  Fill="Chartreuse" Margin="10 0 0 0"/>
             </Grid>
-
-            <ctrls:FlipAnimationCard Grid.Row="3" Image="WangchuranA" Icon="Account" CardWidth="50" CardHeight="50" />
 
             <Grid Grid.Row="0" >
               <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
               </Grid.ColumnDefinitions>
@@ -277,7 +277,26 @@
                                       IsLoading="{Binding IsLoading}"  
                                       Visibility="{Binding IsLoading, Converter={convt:BooleanToVisibilityConverter}}"/>
 
-              <ctrls:HeimdallrFlatButton Grid.Column="1" Content="Loading Button" Command="{Binding ToggleBusyCommand}" />
+              <ctrls:HeimdallrRadioButton Grid.Column="1" Icon="Cash" Command="{Binding ToggleBusyCommand}" />
+
+              <ctrls:FlipAnimationCard Grid.Column="2" Image="AmazonPrime" CardWidth="200" CardHeight="200">
+                <ctrls:FlipAnimationCard.BackContent>
+                  <ctrls:HeimdallrFlatButton />
+                </ctrls:FlipAnimationCard.BackContent>
+              </ctrls:FlipAnimationCard>
+
+              <StackPanel Grid.Row="3" Orientation="Horizontal">
+                <ctrls:HeimdallrIcon IconSize="100" Icon="ArrowUpBold" />
+                <ctrls:HeimdallrIcon IconSize="100" Icon="ArrowDownBold" />
+              </StackPanel>
+                
+              <ctrls:HeimdallrScrollBar Orientation="Horizontal" Grid.Column="4" Margin="10 0 0 0" Width="200" Height="20"
+                                        
+                                        />
+
+              <ctrls:HeimdallrScrollBar Orientation="Vertical" Grid.Column="5" Margin="10 0 0 0" Height="100"
+                                        
+                                        />
             </Grid>
 
             <!--#region AnimatedContentMenu Row 0-->
@@ -378,7 +397,7 @@
             </Grid>-->
             <!--#endregion-->
 
-            <Grid Grid.Row="4">
+            <Grid Grid.Row="3">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -412,7 +431,7 @@
 
            
             <!-- ViewModelBase 메서드 테스트-->
-            <Grid Grid.Row="5" Margin="5" >
+            <Grid Grid.Row="4" Margin="5" >
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -438,12 +457,12 @@
             </Grid>
             
             
-            <TextBlock Grid.Row="6" Text="{Binding BusyMessage, UpdateSourceTrigger=PropertyChanged}" FontSize="20"
+            <TextBlock Grid.Row="5" Text="{Binding BusyMessage, UpdateSourceTrigger=PropertyChanged}" FontSize="20"
                Foreground="Red" />
             
             
           </Grid>
-        </ScrollViewer>
+        </ctrls:HeimdallrScrollViewer>
       </Setter.Value>
     </Setter>
   </Style>

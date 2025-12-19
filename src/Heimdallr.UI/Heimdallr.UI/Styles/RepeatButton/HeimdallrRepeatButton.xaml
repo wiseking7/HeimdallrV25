@@ -6,15 +6,14 @@
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Colors/Color.xaml" />
   </ResourceDictionary.MergedDictionaries>
 
-  <Style TargetType="{x:Type ctrls:HeimdallrRepeatButton}">
+  <Style TargetType="{x:Type ctrls:HeimdallrRepeatButton}" BasedOn="{StaticResource {x:Type RepeatButton}}">
     <Setter Property="Focusable" Value="False"/>
     <Setter Property="IsTabStop" Value="False"/>
-    <Setter Property="Width" Value="120"/>
-    <Setter Property="Height" Value="40"/>
-    <Setter Property="IconSize" Value="30" />
-    <Setter Property="Background" Value="{StaticResource DarkGranite}"/>
-    <Setter Property="BorderBrush" Value="{StaticResource DarkGranite}"/>
-    <Setter Property="BorderThickness" Value="1"/>
+    <Setter Property="Width" Value="16"/>
+    <Setter Property="Height" Value="16"/>
+    <Setter Property="CornerRadius" Value="7" />
+    <Setter Property="IconFill" Value="{StaticResource DarkBlueGray}" />
+    <Setter Property="Background" Value="Transparent"/>
 
     <Setter Property="Template">
       <Setter.Value>
@@ -44,7 +43,7 @@
                 <ctrls:HeimdallrIcon x:Name="icon"
                                      Padding="2"
                                      Icon="{TemplateBinding Icon}"
-                                     Fill="{TemplateBinding IconFill}" />
+                                     Fill="{Binding IconFill, RelativeSource={RelativeSource TemplatedParent}}"/>
               </Viewbox>
               
               <ContentPresenter Grid.Column="1"
@@ -56,16 +55,17 @@
           <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
               <Setter TargetName="icon" Property="Fill" Value="{Binding MouserOverIconFill, RelativeSource={RelativeSource TemplatedParent}}" />
-              <Setter TargetName="border" Property="Background" Value="{StaticResource DarkCrimson}"/>
-              <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource DarkCrimson}"/>
+              <Setter TargetName="border" Property="Background" Value="Transparent"/>
+              <Setter TargetName="border" Property="BorderBrush" Value="Transparent"/>
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-              <Setter TargetName="border" Property="Background" Value="{StaticResource DarkBlue}"/>
-              <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource DarkBlue}"/>
+              <Setter TargetName="icon" Property="Fill" Value="{Binding MouserOverIconFill, RelativeSource={RelativeSource TemplatedParent}}" />
+              <Setter TargetName="border" Property="Background" Value="Transparent"/>
+              <Setter TargetName="border" Property="BorderBrush" Value="Transparent"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-              <Setter TargetName="border" Property="Background" Value="{StaticResource DarkAmber}"/>
-              <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource DarkAmber}"/>
+              <Setter TargetName="border" Property="Background" Value="Transparent"/>
+              <Setter TargetName="border" Property="BorderBrush" Value="Transparent"/>
               <Setter TargetName="border" Property="Opacity" Value="0.5"/>
             </Trigger>
           </ControlTemplate.Triggers>

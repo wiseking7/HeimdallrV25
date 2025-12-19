@@ -217,7 +217,6 @@ public class BaseThemeWindow : HeimdallrWindow
 
   #region Dimming 수정 부분
   private BlurEffect? _dimmingEffect;
-  private const double MaxBlurRadius = 15.0; // 최대 블러 정도 (픽셀 단위)
 
   /// <summary>
   /// 디밍 투명도 변경시 호출되는 콜백
@@ -230,7 +229,7 @@ public class BaseThemeWindow : HeimdallrWindow
       // 기존: window._dimmingEffect.Radius = (double)e.NewValue;
       double opacity = (double)e.NewValue;   // 0.0 ~ 1.0
 
-      window._dimmingEffect.Radius = opacity * MaxBlurRadius;
+      window._dimmingEffect.Radius = opacity;
     }
   }
 
@@ -374,7 +373,7 @@ public class BaseThemeWindow : HeimdallrWindow
     {
       _dimmingEffect = new BlurEffect
       {
-        Radius = this.DimmingOpacity * MaxBlurRadius,
+        Radius = this.DimmingOpacity,
         KernelType = KernelType.Gaussian
       };
 

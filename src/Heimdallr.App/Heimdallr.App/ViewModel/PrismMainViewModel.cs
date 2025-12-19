@@ -1,11 +1,9 @@
 ﻿using Heimdallr.Domain.Enums;
+using Heimdallr.UI.Base;
 using Heimdallr.UI.Controls;
 using Heimdallr.UI.Enums;
 using Heimdallr.UI.Helpers;
 using Heimdallr.Utility;
-using Prism.Commands;
-using Prism.Ioc;
-using Prism.Regions;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -20,11 +18,13 @@ namespace Heimdallr.App.ViewModel;
 public class PrismMainViewModel : ViewModelBase
 {
   private readonly Lazy<ResourceManager> _resourceManager;
+  private readonly Lazy<IDialogService> _dialogService;
 
   #region 생성자
   public PrismMainViewModel(IContainerProvider container) : base(container)
   {
     _resourceManager = ResolveLazy<ResourceManager>();
+    _dialogService = ResolveLazy<IDialogService>();
 
     ValidationMethod();
     _ = RunOnUiThreadAsync(async () => await RunTests());
@@ -933,6 +933,28 @@ public class PrismMainViewModel : ViewModelBase
   #endregion
 
   #region
+
+  #region DialogTest
+  private DelegateCommand? _openDialogCommand;
+  public DelegateCommand? OpenDialogCommand =>
+      _openDialogCommand ??= new DelegateCommand(OpenDialog);
+
+  private void OpenDialog()
+  {
+    var parameters = new DialogParameters
+        {
+            { "Message", "Test Dialog Opened!" }
+        };
+
+    _dialogService.Value.ShowDialog("TestDialogView", parameters, r =>
+    {
+      if (r.Result == ButtonResult.OK)
+      {
+        // 다이얼로그가 OK로 닫힌 경우
+      }
+    });
+  }
+  #endregion
   #endregion
 
   #region LoadingOverlay
@@ -949,10 +971,11 @@ public class PrismMainViewModel : ViewModelBase
       {
         // IsBusy를 true로 변경 → LoadingOverlay 표시
         IsLoading = true;
-        BusyMessage = "데이터 로딩 중...";
+        await UIHelper.ShowBusyMessageAsync(this, "데이터 로딩 중...", 2000);
+        //BusyMessage = "데이터 로딩 중...";
 
         // 테스트용 딜레이 (예: API 호출)
-        await Task.Delay(3000);
+        //await Task.Delay(3000);
 
         // 완료 후 IsBusy를 false로 변경 → LoadingOverlay 숨김
         IsLoading = false;

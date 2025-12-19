@@ -78,7 +78,7 @@ public class HeimdallrScrollBar : ScrollBar
   /// </summary>
   public static readonly DependencyProperty IconFillProperty =
       DependencyProperty.Register(nameof(IconFill), typeof(Brush), typeof(HeimdallrScrollBar),
-          new PropertyMetadata(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF456882"))));
+          new PropertyMetadata(Brushes.Transparent));
   #endregion
 
   #region IconSize
@@ -98,6 +98,31 @@ public class HeimdallrScrollBar : ScrollBar
       DependencyProperty.Register(nameof(IconSize), typeof(double),
           typeof(HeimdallrScrollBar), new PropertyMetadata(8.0));
   #endregion
+
+  #region VerticalThumbWidth
+  public double VerticalThumbWidth
+  {
+    get => (double)GetValue(VerticalThumbWidthProperty);
+    set => SetValue(VerticalThumbWidthProperty, value);
+  }
+
+  public static readonly DependencyProperty VerticalThumbWidthProperty =
+      DependencyProperty.Register(nameof(VerticalThumbWidth), typeof(double),
+          typeof(HeimdallrScrollBar), new PropertyMetadata(25.0));
+  #endregion
+
+  #region HorizontalThumbHeight
+  public double HorizontalThumbHeight
+  {
+    get => (double)GetValue(HorizontalThumbHeightProperty);
+    set => SetValue(HorizontalThumbHeightProperty, value);
+  }
+
+  public static readonly DependencyProperty HorizontalThumbHeightProperty =
+      DependencyProperty.Register(nameof(HorizontalThumbHeight), typeof(double),
+          typeof(HeimdallrScrollBar), new PropertyMetadata(15.0));
+  #endregion
+
 
   /// <summary>
   /// HeimdallrScrollbar 템플릿이 적용될 때 호출됩니다.

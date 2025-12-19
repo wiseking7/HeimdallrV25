@@ -59,6 +59,9 @@ public enum IconType
   [Description("화살표 아래")]
   ArrowDown,
 
+  [Description("화살표 아래")]
+  ArrowDownBold,
+
   [Description("화살표 왼쪽")]
   ArrowLeft,
 

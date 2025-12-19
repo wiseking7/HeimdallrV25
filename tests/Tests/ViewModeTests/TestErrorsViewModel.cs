@@ -1,4 +1,4 @@
-﻿using Heimdallr.Utility;
+﻿using Heimdallr.UI.Base;
 using Prism.Ioc;
 
 namespace Tests.ViewModeTests;

@@ -16,6 +16,7 @@
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Button/HeimdallrPulseEllipseButton.xaml" />
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Button/HeimdallrPulseButton.xaml"/>
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Button/HeimdallrHoldButton.xaml" />
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/NumericUpDown/HeimdallrNumericButton.xaml" />
 
     <!-- LoadingOverlay-->
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Indicator/LoadingOverlay.xaml" />

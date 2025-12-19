@@ -1,6 +1,4 @@
 ﻿using Heimdallr.UI.MVVM;
-using Prism.Ioc;
-using Prism.Regions;
 
 namespace Heimdallr.UI.Helpers;
 
