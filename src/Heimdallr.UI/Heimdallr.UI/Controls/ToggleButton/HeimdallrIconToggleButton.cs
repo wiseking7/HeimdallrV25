@@ -59,7 +59,7 @@ public class HeimdallrIconToggleButton : ToggleButton
 
   #region Icon, IconSize, IconFill, IconCheckedFill, IconDisabledFill
   /// <summary>
-  /// 타이틀 아이콘으로 표시될 PathIcon 타입 지정 (예: Barcode, Setting 등)
+  /// 타이틀 아이콘으로 표시될 Icon 타입 지정 (예: Barcode, Setting 등)
   /// </summary>
   public IconType Icon
   {
@@ -91,7 +91,7 @@ public class HeimdallrIconToggleButton : ToggleButton
   #endregion
 
   /// <summary>
-  /// PathIcon (주 아이콘) 의 색상 지정용 Brush
+  /// Icon (주 아이콘) 의 색상 지정용 Brush
   /// 기본값은 회색(Gray)
   /// </summary>
   public Brush IconFill

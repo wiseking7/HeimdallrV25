@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
   <ResourceDictionary.MergedDictionaries>
- 
+
     <!--CARD -->
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Card/FlipAnimationCard.xaml" />
 
@@ -21,13 +21,21 @@
     <!-- LoadingOverlay-->
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Indicator/LoadingOverlay.xaml" />
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Indicator/Indicator.xaml" />
-    
+
+    <!-- ListView-->
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/ListView/HeimdallrListView.xaml" />
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/ListView/HeimdallrListViewItem.xaml" />
+
+    <!-- Slider -->
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Slider/HeimdallrSlider.xaml" />
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Slider/HeimdallrRiotSlider.xaml" />
+
     <!-- ContentMenu-->
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/ContextMenu/HeimdallrContextMenu.xaml" />
-    
+
     <!-- MenuItem-->
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/MenuItem/HeimdallrMenuItem.xaml" />
-    
+
     <!-- TextBox -->
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/TextBox/HeimdallrIPlaceholderTextBox.xaml" />
 
@@ -36,7 +44,7 @@
 
     <!-- PasswordBox-->
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/PasswordBox/HeimdallrPlaceholderPasswordBox.xaml" />
-    
+
     <!-- ComboBox -->
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/ComboBox/HeimdallrComboBox.xaml" />
 
@@ -48,6 +56,11 @@
 
     <!-- ToggleButton -->
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/ToggleButton/HeimdallrIconToggleButton.xaml" />
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/ToggleButton/HeimdallrThemeSwitchToggleButton.xaml" />
+
+    <!-- TreeView/TreeViewItem-->
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/TreeView/HeimdallrTreeViewItem.xaml" />
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/TreeView/HeimdallrTreeView.xaml" />
 
     <!-- Heimdallr Icon -->
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Assets/HeimdallrIcon.xaml" />
@@ -70,7 +83,7 @@
 
     <!-- MenuContent -->
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/ContentControl/AnimatedContentMenu.xaml" />
-    
+
     <!--Colors-->
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Colors/Color.xaml" />
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Colors/DarkColors.xaml" />

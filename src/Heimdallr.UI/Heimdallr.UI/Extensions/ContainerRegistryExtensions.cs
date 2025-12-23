@@ -1,7 +1,6 @@
-﻿using Prism.Ioc;
-using System.Reflection;
+﻿using System.Reflection;
 
-namespace Heimdallr.Utility.Extensions;
+namespace Heimdallr.UI.Extensions;
 
 /// <summary>
 /// 

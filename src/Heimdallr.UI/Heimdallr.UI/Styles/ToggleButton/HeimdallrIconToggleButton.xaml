@@ -7,11 +7,14 @@
   </ResourceDictionary.MergedDictionaries>
 
   <!-- HeimdallrIconToggleButton 스타일 정의 (팝업창이나 ContentMenu 외부 UI 열기) -->
-  <Style TargetType="{x:Type ctrls:HeimdallrIconToggleButton}">
+  <Style TargetType="{x:Type ctrls:HeimdallrIconToggleButton}" >
     <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderBrush" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0"/>
 
-    <Setter Property="IconMouseOverFill" Value="{StaticResource ControlDarkBrush}" />
-    <Setter Property="IconCheckedFill" Value="{StaticResource DarkCherryRed}" />
+    <Setter Property="IconMouseOverFill" Value="{StaticResource DarkGold}" />
+    <Setter Property="IconCheckedFill" Value="#FFEF88AD" />
     <Setter Property="IconDisabledFill" Value="{StaticResource DarkGraphite}" />
 
     <Setter Property="Template">
@@ -19,17 +22,17 @@
         <ControlTemplate TargetType="{x:Type ctrls:HeimdallrIconToggleButton}">
 
           <Border Name="border"
+                  Background="{TemplateBinding Background}"
                   BorderBrush="Transparent"
-                  CornerRadius="0" 
                   BorderThickness="{TemplateBinding BorderThickness}"
-                  Background="Transparent"
+                  CornerRadius="{TemplateBinding CornerRadius}" 
                   SnapsToDevicePixels="True">
 
             <Viewbox Margin="0 2 10 2"
                      VerticalAlignment="Center"
                      HorizontalAlignment="Center"
-                    Width="{Binding IconSize, RelativeSource={RelativeSource TemplatedParent}}"
-                    Height="{Binding IconSize, RelativeSource={RelativeSource TemplatedParent}}">   
+                     Width="{TemplateBinding IconSize}"
+                     Height="{TemplateBinding IconSize}">   
               <ctrls:HeimdallrIcon x:Name="icon" 
                                    Stretch="Uniform"
                                    Icon="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}}"

@@ -1,0 +1,106 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ctrls="clr-namespace:Heimdallr.UI.Controls">
+
+  <!-- 1️ 먼저 GridViewColumnHeaderStyle 정의 -->
+  <Style x:Key="GridViewColumnHeaderStyle"
+       TargetType="GridViewColumnHeader">
+
+    <!-- 헤더의 배경색 -->
+    <Setter Property="Background"
+          Value="{Binding Background,
+                  RelativeSource={RelativeSource AncestorType=Border}}" />
+
+    <!-- 헤더의 높이-->
+    <Setter Property="Height"
+          Value="{Binding Height,
+                  RelativeSource={RelativeSource AncestorType=GridViewHeaderRowPresenter}}" />
+
+    <!-- 글자 크기 -->
+    <Setter Property="FontSize"
+          Value="{Binding RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrListView},
+                          Path=ColumnHeaderFontSize}" />
+    
+    <!-- 글자 두께 -->
+    <Setter Property="FontWeight"
+          Value="{Binding RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrListView},
+                          Path=ColumnHeaderFontWeight}" />
+
+    <!-- 헤더 글자 색상 -->
+    <Setter Property="Foreground"
+          Value="{Binding RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrListView},
+                          Path=ColumnHeaderForeground}" />
+    
+    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    <Setter Property="Padding" Value="10,5"/>
+
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="GridViewColumnHeader">
+          <Border Background="{TemplateBinding Background}">
+            <ContentPresenter
+              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+              VerticalAlignment="Center"
+              Margin="{TemplateBinding Padding}" />
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <Style TargetType="{x:Type ctrls:HeimdallrListView}" >
+    <Setter Property="Background" Value="#FF234C6A" />
+    <Setter Property="BorderBrush" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Foreground" Value="#FFFFFFFF" />
+    <Setter Property="FontSize" Value="16" />
+    <Setter Property="SelectionMode" Value="Single" />
+
+    <!--커스텀 속성 등록-->
+    <Setter Property="View">
+      <Setter.Value>
+        <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}" />
+      </Setter.Value>
+    </Setter>
+
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type ctrls:HeimdallrListView}">
+          <Border Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}"
+                  UseLayoutRounding="True"
+                  SnapsToDevicePixels="True">
+
+            <ctrls:HeimdallrScrollViewer Background="Transparent"
+                                         Focusable="False"
+                                         HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                         VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" >
+
+              <DockPanel>
+
+                <!-- 헤더 (고정) -->
+                <Border x:Name="HeaderBackgroundBorder"
+                        DockPanel.Dock="Top"
+                        Background="{TemplateBinding ColumnHeaderBackground}"
+                        Height="{TemplateBinding ColumnHeaderHeight}"
+                        SnapsToDevicePixels="True"
+                        UseLayoutRounding="True">
+
+                  <GridViewHeaderRowPresenter Columns="{Binding View.Columns, RelativeSource={RelativeSource TemplatedParent}}"
+                                              ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}" />
+
+                </Border>
+
+                <!-- 아이템 -->
+                <ItemsPresenter />
+
+              </DockPanel>
+            </ctrls:HeimdallrScrollViewer>
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+
+  </Style>
+</ResourceDictionary>

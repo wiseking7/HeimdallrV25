@@ -142,14 +142,14 @@ public class HeimdallrSwitchCheckBox : CheckBox
   }
 
   /// <summary>
-  /// PathIcon 속성의 DependencyProperty 정의
+  /// Icon 속성의 DependencyProperty 정의
   /// </summary>
   public static readonly DependencyProperty IconProperty =
       DependencyProperty.Register(nameof(Icon), typeof(IconType), typeof(HeimdallrSwitchCheckBox),
           new PropertyMetadata(IconType.None));
 
   /// <summary>
-  /// 아이콘의 색상 (PathIcon의 Fill 브러시)
+  /// 아이콘의 색상 (Icon의 Fill 브러시)
   /// </summary>
   public Brush Fill
   {

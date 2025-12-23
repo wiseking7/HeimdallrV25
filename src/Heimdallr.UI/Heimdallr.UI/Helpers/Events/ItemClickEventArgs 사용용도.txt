@@ -1,0 +1,109 @@
+﻿1️ 구조와 용도
+ItemClickEventArgs
+
+RoutedEventArgs를 상속받아 클릭된 항목 정보를 담는 클래스.
+
+프로퍼티:
+
+public object? ClickedItem { get; internal set; }
+
+
+사용자가 클릭한 항목 데이터를 저장.
+
+생성자 오버로드:
+
+기본 생성자
+
+클릭된 항목 지정
+
+라우팅 이벤트와 클릭 항목 지정
+
+ItemClickEventHandler
+
+이벤트 델리게이트 형식:
+
+public delegate void ItemClickEventHandler(object sender, ItemClickEventArgs e);
+
+
+UI 컨트롤이 항목 클릭 시 호출할 수 있는 이벤트 시그니처 정의.
+
+sender: 이벤트를 발생시킨 컨트롤
+
+e: 클릭된 항목 정보를 가진 ItemClickEventArgs
+
+2️ 실제 사용 시나리오
+
+이벤트를 직접 정의하고, ListBox 같은 항목 컨트롤에 적용한다고 가정합니다.
+
+Step 1: 커스텀 컨트롤 예제
+public class ItemList : ListBox
+{
+    // ItemClick 이벤트 선언
+    public event ItemClickEventHandler? ItemClick;
+
+    protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
+    {
+        base.OnMouseLeftButtonUp(e);
+
+        // 클릭된 항목 가져오기
+        var clickedItem = this.SelectedItem;
+        if (clickedItem != null)
+        {
+            // 이벤트 발생
+            ItemClick?.Invoke(this, new ItemClickEventArgs(clickedItem));
+        }
+    }
+}
+
+
+ListBox를 상속한 ItemList를 만들고, 마우스 클릭 시 선택된 항목을 ItemClick 이벤트로 전달.
+
+이때 클릭된 항목은 ItemClickEventArgs.ClickedItem에 담겨 전달됩니다.
+
+Step 2: XAML 사용 예제
+<Window x:Class="WpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:local="clr-namespace:WpfApp"
+        Title="ItemClick Demo" Height="300" Width="400">
+    <Grid>
+        <local:ItemList x:Name="MyItemList" Margin="20"/>
+    </Grid>
+</Window>
+
+
+local:ItemList를 XAML에 추가
+
+Step 3: C# 코드에서 이벤트 연결
+public partial class MainWindow : Window
+{
+    public MainWindow()
+    {
+        InitializeComponent();
+
+        // 항목 추가
+        MyItemList.Items.Add("Apple");
+        MyItemList.Items.Add("Banana");
+        MyItemList.Items.Add("Cherry");
+
+        // ItemClick 이벤트 구독
+        MyItemList.ItemClick += MyItemList_ItemClick;
+    }
+
+    private void MyItemList_ItemClick(object sender, ItemClickEventArgs e)
+    {
+        MessageBox.Show($"클릭된 항목: {e.ClickedItem}");
+    }
+}
+
+
+클릭하면 MessageBox에 클릭한 항목 표시.
+
+e.ClickedItem을 통해 어떤 항목을 클릭했는지 알 수 있음.
+
+3️ 요약
+항목	용도
+ItemClickEventArgs	클릭된 항목 데이터를 담는 이벤트 인자
+ItemClickEventHandler	항목 클릭 이벤트를 처리하는 델리게이트 시그니처
+사용처	ListBox, Menu, TreeView, DataGrid 등 항목 선택 UI에서 클릭 이벤트 처리
+
+아이템을 클릭하면 -> 항목삭제, 항목편집, 항목을 다른 화면으로 이동, 항목에 관련된 설정 변경, 저장

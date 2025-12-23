@@ -29,7 +29,7 @@ public class IconToVisibilityConverter : BaseValueConverter<IconToVisibilityConv
   /// <returns>Visibility.Visible 또는 Visibility.Collapsed</returns>
   public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
   {
-    // PathIconType 타입인지 확인하고, None이 아니면 Visible 반환
+    // IconType 타입인지 확인하고, None이 아니면 Visible 반환
     if (value is IconType icon && icon != IconType.None)
       return Visibility.Visible;
 

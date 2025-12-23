@@ -2,7 +2,52 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:ui="clr-namespace:Heimdallr.App.Themes.UI"
                     xmlns:ctrls="clr-namespace:Heimdallr.UI.Controls;assembly=Heimdallr.UI"
-                    xmlns:convt="clr-namespace:Heimdallr.UI.Converters;assembly=Heimdallr.UI">
+                    xmlns:convt="clr-namespace:Heimdallr.UI.Converters;assembly=Heimdallr.UI"
+                    xmlns:he="clr-namespace:Heimdallr.UI.Helpers;assembly=Heimdallr.UI"
+                    xmlns:exten="clr-namespace:Heimdallr.UI.Extensions;assembly=Heimdallr.UI">
+
+  <!--#region ListView 컨텍스트 메뉴(비밀번호 변경, 복원, 삭제) -->
+  <ctrls:HeimdallrContextMenu x:Key="ContextMenu" DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}"
+                              BackgroundColor="AliceBlue">
+    <!--#region 비밀번호 변경 컨텍스트 메뉴 -->
+    <ctrls:HeimdallrMenuItem
+    Margin="10,5"
+    Command="{Binding MessageCommand}"
+    CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+    IconFill="#FFFDCFFA"
+    FontSize="16"
+    Header="비밀번호변경"
+    IconSize="15"
+    Icon="Exchange" />
+    <!--#endregion-->
+
+    <!--#region 복원 컨텍스트 메뉴 (IsActive(bool), IsLocked(bool), FailedLoginAttempts(int)-->
+    <ctrls:HeimdallrMenuItem
+    Margin="10,5"
+    Command="{Binding MessageCommand}"
+    CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+    IconFill="#FF739EC9"
+    FontSize="16"
+    Header="복원"
+    IconSize="15"
+    Icon="AccountA" 
+    />
+    <!--#endregion -->
+
+    <!--#region 삭제 -->
+    <ctrls:HeimdallrMenuItem
+    Margin="10,5"
+    Command="{Binding MessageCommand}"
+    CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+    FontSize="16"
+    Header="삭제"
+    IconSize="15"
+    Icon="Delete" 
+     />
+    <!--#endregion-->
+  </ctrls:HeimdallrContextMenu>
+  <!--#endregion-->
+
 
   <Style TargetType="{x:Type ui:PrismMainView}"
          BasedOn="{StaticResource {x:Type ctrls:BaseThemeWindow}}">
@@ -147,7 +192,7 @@
                 <ColumnDefinition Width="Auto" />
                 <!--19 -->
                 <ColumnDefinition Width="*"    />
-   
+
               </Grid.ColumnDefinitions>
               <ctrls:HeimdallrCloseButton Grid.Column="0" IconSize="25" Fill="AliceBlue"
                                           Command="{Binding MessageCommand}"/>
@@ -169,8 +214,9 @@
                                              Command="{Binding StartCommand}"/>
               <ctrls:HeimdallrSwitchCheckBox Grid.Column="8" Icon="Ghost1" Width="120" Margin="10 0 0 0"
                                              OnLabel="ON할아버지" OffLabel="OFF할아버지" OnLebelForeground="#FFFFFFFF"
-                                             OffLebelForeground="#FF8C3061"/>
-              <ctrls:HeimdallrIconToggleButton Grid.Column="9" Icon="Success_Flag"  IconMouseOverFill="Firebrick" Margin="10 0 0 0"/>
+                                             OffLebelForeground="#FF8C3061" IsChecked="{Binding IsLoading, Mode=TwoWay}"/>
+              <ctrls:HeimdallrIconToggleButton Grid.Column="9" Icon="Success_Flag"  IconMouseOverFill="#FFFFCC00" Margin="10 0 0 0"
+                                               IsChecked="{Binding IsLoading, Mode=TwoWay}"/>
               <ctrls:HeimdallrComboBox Grid.Column="10" Icon="Success" IconMouseOverFill="AliceBlue" Margin="10 0 0 0"
                                        PlaceholderText="역할" PlaceholderForeground="AliceBlue" 
                                        SelectedItemForeground="#FFF25912"
@@ -179,7 +225,7 @@
                                        SelectedValuePath="Value"
                                        DisplayMemberPath="Description"/>
               <!-- 선택된 아이템 표시 -->
-              <TextBlock Grid.Column="11"  Margin="10,0,0,0" VerticalAlignment="Center" FontSize="16" Foreground="Black"
+              <TextBlock Grid.Column="11"  Margin="10,0,0,0" VerticalAlignment="Center" FontSize="16" Foreground="White"
                          Text="{Binding SelectedEmployeePosition}"/>
 
               <ctrls:HeimdallrRepeatButton Grid.Column="12" Background="Aqua" Width="100" Height="36" Margin="10 0 0 0"
@@ -200,7 +246,7 @@
                                                  Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
 
               <ctrls:HeimdallrRadioButton Grid.Column="14" Icon="WindowMaximize" IconFill="AliceBlue"  Margin="10 0 0 0"
-                                          MouseOverForeground="AliceBlue" />
+                                          MouseOverForeground="AliceBlue" Command="{Binding MessageCommand}" />
 
               <ctrls:HeimdallrProgressBar Grid.Column="15" Value="{Binding Value}" Maximum="{Binding Maximum}"  Width="100" Margin="10 0 0 0"
                                           Minimum="{Binding Minimum}" Background="{DynamicResource DarkPlum}"/>
@@ -246,7 +292,7 @@
                                            BorderBrush="Black" BorderThickness="0"
                                            Icon="AcitveB" IconFill="BlanchedAlmond" CornerRadius="7"/>
 
-              <ctrls:HeimdallrThumb Grid.Column="1" Margin="10 0 0 0" Background="Red" Width="120" Height="35"
+              <ctrls:HeimdallrThumb Grid.Column="1" Margin="10 0 0 0" Background="Red"
                                     MouseOverBrush="Blue" IsDraggingBrush="GreenYellow"/>
 
 
@@ -261,16 +307,18 @@
 
               <ctrls:HeimdallrNumericButton Grid.Column="4" Margin="10 0 0 0" Max="1000" Min="-50" Step="50" UpButtonIcon="Account" DownButtonIcon="AccountA" />
 
-              <ctrls:HeimdallrIcon Grid.Column="5" Icon="Sale" IconSize="50"  Fill="Chartreuse" Margin="10 0 0 0"/>
+              <ctrls:HeimdallrIcon Grid.Column="5" Icon="Sale" IconSize="50"  Fill="Chartreuse" Margin="10 0 0 0"
+                                   Command="{Binding MessageCommand}"/>
             </Grid>
 
             <Grid Grid.Row="0" >
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
               </Grid.ColumnDefinitions>
               <ctrls:LoadingOverlay Grid.Column="0" IndicatorType="Blocks" Foreground="White"
@@ -289,7 +337,7 @@
                 <ctrls:HeimdallrIcon IconSize="100" Icon="ArrowUpBold" />
                 <ctrls:HeimdallrIcon IconSize="100" Icon="ArrowDownBold" />
               </StackPanel>
-                
+
               <ctrls:HeimdallrScrollBar Orientation="Horizontal" Grid.Column="4" Margin="10 0 0 0" Width="200" Height="20"
                                         
                                         />
@@ -297,6 +345,93 @@
               <ctrls:HeimdallrScrollBar Orientation="Vertical" Grid.Column="5" Margin="10 0 0 0" Height="100"
                                         
                                         />
+
+              <ctrls:HeimdallrTreeView Grid.Column="6" Width="200" Background="Transparent">
+                <ctrls:HeimdallrTreeViewItem Icon="Approval"
+                                             ExpandIcon="Arrow_Triangle_Down"
+                                             CollapseIcon="Arrow_Triangle_Up"
+                                             SelectedBackground="AliceBlue"
+                                             ExpandToggleIconSize="15"
+                                             FontSize="10" Foreground="Red">
+
+                  <ctrls:HeimdallrTreeViewItem Text="등록" Icon="Create"
+                                               ExpandIcon="Arrow_Triangle_Down"
+                                               CollapseIcon="Arrow_Triangle_Up"
+                                               IconSize="20"
+                                               ExpandIconFill="AliceBlue"
+                                               ExpandToggleIconSize="10"
+                                               CollapseIconFill="Bisque"
+                                               SelectedCommand="{Binding MessageCommand}"
+                                               CommandParameter="없음">
+
+                    <!-- 하위 아이템: 세부정보 -->
+                    <ctrls:HeimdallrTreeViewItem Text="세부정보" Icon="Create" 
+                                                 IconSize="16"
+                                                 IconFill="AliceBlue"
+                                                 Foreground="Green"
+
+                                                 SelectedCommand="{Binding MessageCommand}"
+                                                 CommandParameter="없음"/>
+
+                    <!-- 또 다른 하위 아이템 -->
+                    <ctrls:HeimdallrTreeViewItem Text="추가정보" Icon="Create"
+                                                 IconSize="16"
+                                                 IconFill="LightGreen"
+                                                 Foreground="Blue"
+
+                                                 SelectedCommand="{Binding MessageCommand}"
+                                                 CommandParameter="없음"/>
+                  </ctrls:HeimdallrTreeViewItem>
+                </ctrls:HeimdallrTreeViewItem>
+              </ctrls:HeimdallrTreeView>
+
+              <ctrls:HeimdallrListView Grid.Column="7" 
+                                       ColumnHeaderHeight="36"
+                                       ColumnHeaderBackground="#FF018790"
+                                       ContextMenu="{StaticResource ContextMenu}"
+                                       ColumnHeaderFontSize="20"
+                                       ColumnHeaderFontWeight="SemiBold"
+                                       ColumnHeaderForeground="#FF9B5DE0"
+                                       ItemsSource="{Binding ListViewTest}"
+                                       SelectedBackground="#FF87BAC3"
+                                       MouseOverBackground="#334155"
+                                       Background="Transparent"
+                                       ScrollViewer.VerticalScrollBarVisibility="Auto">
+
+               
+
+                <ctrls:HeimdallrListView.View>
+                  <GridView >
+
+                    <GridViewColumn Header="이름" Width="150" exten:GridViewColumnExtensions.SortMemberPath="Name">
+                      <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                          <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                      </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="나이" Width="100" exten:GridViewColumnExtensions.SortMemberPath="Age">
+                      <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                          <TextBlock Text="{Binding Age}" />
+                        </DataTemplate>
+                      </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+
+                    <GridViewColumn Header="부서" Width="150" exten:GridViewColumnExtensions.SortMemberPath="Department">
+                      <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                          <TextBlock Text="{Binding Department}"/>
+                        </DataTemplate>
+                      </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                  </GridView>
+                </ctrls:HeimdallrListView.View>
+
+              </ctrls:HeimdallrListView>
             </Grid>
 
             <!--#region AnimatedContentMenu Row 0-->
@@ -310,7 +445,9 @@
                 <RowDefinition Height="*" />
               </Grid.RowDefinitions>
 
-              --><!-- 열기/닫기 버튼 --><!--
+              -->
+            <!-- 열기/닫기 버튼 -->
+            <!--
               <Button Grid.Row="2" Grid.Column="0"
                       Content="Toggle Menu"
                       Width="100" Height="30"
@@ -342,7 +479,9 @@
                       <ListBox.ItemTemplate>
                         <DataTemplate>
                           <StackPanel>
-                            --><!-- 상위 메뉴 RadioButton --><!--
+                            -->
+            <!-- 상위 메뉴 RadioButton -->
+            <!--
                             <RadioButton Content="{Binding Title}"
                            GroupName="MainMenu"
                            FontSize="18"
@@ -357,7 +496,9 @@
                               </RadioButton.InputBindings>
                             </RadioButton>
 
-                            --><!-- 하위 메뉴 ItemsControl --><!--
+                            -->
+            <!-- 하위 메뉴 ItemsControl -->
+            <!--
                             <ItemsControl ItemsSource="{Binding SubItems}">
                               <ItemsControl.Style>
                                 <Style TargetType="ItemsControl">
@@ -408,31 +549,47 @@
                 <ColumnDefinition Width="*" />
               </Grid.ColumnDefinitions>
 
-              <StackPanel Grid.Column="0" Margin="20">
-                <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
-                <ItemsControl ItemsSource="{Binding NameErrors}">
+              <StackPanel Grid.Column="0" Margin="10 0 0 0" Orientation="Horizontal" >
+                <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Width="200" Height="36"/>
+                <ItemsControl ItemsSource="{Binding NameErrors}" >
                   <ItemsControl.ItemTemplate>
                     <DataTemplate>
                       <TextBlock Foreground="Red" Text="{Binding}"/>
                     </DataTemplate>
                   </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                <Button Content="Submit" 
+                <Button Content="Submit" Height="36"
                         IsEnabled="{Binding HasErrorsBindable, Converter={convt:InverseBooleanConverter}}" Width="100"/>
               </StackPanel>
 
-              <ctrls:HeimdallrPlaceholderPasswordBox Grid.Column="1"  Foreground="#FFFFFFFF"
+              <ctrls:HeimdallrPlaceholderPasswordBox Grid.Column="1"  Foreground="#FFFFFFFF" Margin="10 0 0 0"
                                                     Icon="Address"
                                                     EyeIcon="Key"
                                                     PlaceholderText="비밀번호를 입력하세요"
                                                     PlaceholderForeground="AliceBlue"
                                                     Password="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+              <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="10 0 0 0">
+                <ctrls:HeimdallrSlider Minimum="0" Maximum="100" Value="{Binding SliderValue, Mode=TwoWay}"
+                                       Margin="10 0 0 0" SmallChange="1" LargeChange="10"/>
+                <TextBlock Text="{Binding DisplayText}"  VerticalAlignment="Center"/>
+              </StackPanel>
+
+              <ctrls:HeimdallrThemeSwitchToggleButton Grid.Column="3"  IsChecked="{Binding IsLoading, Mode=TwoWay}" />
             </Grid>
 
-           
+
             <!-- ViewModelBase 메서드 테스트-->
             <Grid Grid.Row="4" Margin="5" >
               <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -452,12 +609,42 @@
                                                  RightIconToolTipContent="ViewModelBase 테스트"
                                                  Text="{Binding ViewModel, UpdateSourceTrigger=PropertyChanged}"/>
 
-              <Label Grid.Column="1" Name="ErrorLabel" Foreground="Red" Content="{Binding NameErrorsText}" />
+              <Label Grid.Column="1" Name="ErrorLabel" Foreground="Red" Content="{Binding NameErrorsText}" Margin="5 0 0 0" />
 
+              <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >
+
+                <!-- MVVM 버튼 1 -->
+                <Button Content="MVVM 버튼 1" Width="120" Height="50"
+                        Command="{Binding ButtonClickCommand}"
+                        CommandParameter="MVVM 버튼 1"
+                        he:FocusVisualHelper.FocusVisualPrimaryBrush="{Binding ButtonPrimaryBrush}"
+                        he:FocusVisualHelper.FocusVisualPrimaryThickness="{Binding ButtonPrimaryThickness}"
+                        he:FocusVisualHelper.FocusVisualSecondaryBrush="{Binding ButtonSecondaryBrush}"
+                        he:FocusVisualHelper.FocusVisualSecondaryThickness="{Binding ButtonSecondaryThickness}"
+                        he:FocusVisualHelper.FocusVisualMargin="{Binding ButtonFocusMargin}"
+                        he:FocusVisualHelper.UseSystemFocusVisuals="{Binding UseSystemFocusVisuals}"
+                        he:FocusVisualHelper.IsTemplateFocusTarget="{Binding IsTemplateFocusTarget}" />
+
+                <!-- MVVM 버튼 2 -->
+                <Button Content="MVVM 버튼 2" Width="120" Height="50"
+                        Command="{Binding ButtonClickCommand}"
+                        CommandParameter="MVVM 버튼 2"
+                        he:FocusVisualHelper.FocusVisualPrimaryBrush="{Binding ButtonPrimaryBrush}"
+                        he:FocusVisualHelper.FocusVisualPrimaryThickness="{Binding ButtonPrimaryThickness}"
+                        he:FocusVisualHelper.FocusVisualSecondaryBrush="{Binding ButtonSecondaryBrush}"
+                        he:FocusVisualHelper.FocusVisualSecondaryThickness="{Binding ButtonSecondaryThickness}"
+                        he:FocusVisualHelper.FocusVisualMargin="{Binding ButtonFocusMargin}"
+                        he:FocusVisualHelper.UseSystemFocusVisuals="{Binding UseSystemFocusVisuals}"
+                        he:FocusVisualHelper.IsTemplateFocusTarget="{Binding IsTemplateFocusTarget}" />
+
+              </StackPanel>
             </Grid>
-            
-            
-            <TextBlock Grid.Row="5" Text="{Binding BusyMessage, UpdateSourceTrigger=PropertyChanged}" FontSize="20"
+
+
+
+       
+
+          <TextBlock Grid.Row="6" Text="{Binding BusyMessage, UpdateSourceTrigger=PropertyChanged}" FontSize="20"
                Foreground="Red" />
             
             

@@ -71,6 +71,9 @@ public enum IconType
   [Description("굵은 화살표 왼쪽")]
   ArrowLeftBold,
 
+  [Description("좌측,우측 연결 화살표 왼쪽")]
+  ArrowLeftRight,
+
   [Description("얇은 화살표 왼쪽")]
   ArrowLeftThin,
 

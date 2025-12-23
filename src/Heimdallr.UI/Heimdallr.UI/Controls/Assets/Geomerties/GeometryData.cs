@@ -94,6 +94,7 @@ public class GeometryData
   /// </summary>
   public static string ArrowUpBold => GeometryConverter.GetData();
   public static string ArrowDownBold => GeometryConverter.GetData();
+  public static string ArrowLeftRight => GeometryConverter.GetData();
   public static string ArrowUp => GeometryConverter.GetData();
   public static string Arrow_Triangle_Right => GeometryConverter.GetData();
   public static string Arrow_Triangle_Up => GeometryConverter.GetData();

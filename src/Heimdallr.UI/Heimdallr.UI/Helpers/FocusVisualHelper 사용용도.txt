@@ -1,0 +1,93 @@
+﻿1️⃣ 용도
+
+포커스 시 외곽선 커스터마이징
+
+기본 WPF 포커스 테두리는 굵기, 색상, 마진 등을 세밀하게 조정하기 어렵습니다.
+
+FocusVisualHelper를 사용하면:
+
+주 외곽선 색상/두께
+
+보조 외곽선 색상/두께
+
+마진
+
+코너 라운드(CornerRadius)
+등을 속성 단위로 제어 가능합니다.
+
+시스템 FocusVisual 사용 여부 제어
+
+UseSystemFocusVisuals 속성으로 WPF 기본 FocusVisual 사용 여부 결정
+
+템플릿 포커스 타겟 지정
+
+템플릿 내 특정 FrameworkElement를 포커스 대상(IsTemplateFocusTarget)으로 지정 가능
+
+예: Button 템플릿 안의 Border에 포커스를 맞춤
+
+키보드 접근성 개선
+
+Tab/Arrow 키로 탐색 시 표시되는 포커스 테두리를 개발자가 직접 제어할 수 있음
+
+Adorner를 사용한 동적 표시
+
+FocusVisualAdorner를 통해 실제 시각적 요소를 AdornerLayer에 추가
+
+시각적 요소를 독립적으로 배치, Measure, Arrange 가능
+
+2️⃣ 주요 속성 및 의미
+속성	설명
+FocusVisualPrimaryBrush	주 포커스 외곽선 색상
+FocusVisualSecondaryBrush	보조 포커스 외곽선 색상
+FocusVisualPrimaryThickness	주 외곽선 두께
+FocusVisualSecondaryThickness	보조 외곽선 두께
+FocusVisualMargin	포커스 외곽선 여백(Margin)
+UseSystemFocusVisuals	WPF 기본 FocusVisual 사용 여부
+IsTemplateFocusTarget	템플릿 내 특정 요소를 포커스 대상으로 지정
+IsSystemFocusVisual	현재 시스템 FocusVisual 사용 여부
+ShowFocusVisual	실제 포커스 시각 요소 표시 여부
+3️⃣ 사용 방법 예제
+XAML
+<Button Content="클릭 버튼" Width="150" Height="40"
+        local:FocusVisualHelper.FocusVisualPrimaryBrush="Red"
+        local:FocusVisualHelper.FocusVisualPrimaryThickness="3"
+        local:FocusVisualHelper.FocusVisualSecondaryBrush="Yellow"
+        local:FocusVisualHelper.FocusVisualSecondaryThickness="1"
+        local:FocusVisualHelper.FocusVisualMargin="2"
+        local:FocusVisualHelper.UseSystemFocusVisuals="False"
+        local:FocusVisualHelper.IsTemplateFocusTarget="True"/>
+
+C# (코드에서 설정)
+var button = new Button { Content = "코드 버튼" };
+FocusVisualHelper.SetFocusVisualPrimaryBrush(button, Brushes.Green);
+FocusVisualHelper.SetFocusVisualPrimaryThickness(button, new Thickness(2));
+FocusVisualHelper.SetFocusVisualSecondaryBrush(button, Brushes.Orange);
+FocusVisualHelper.SetFocusVisualSecondaryThickness(button, new Thickness(1));
+FocusVisualHelper.SetFocusVisualMargin(button, new Thickness(3));
+FocusVisualHelper.SetUseSystemFocusVisuals(button, false);
+FocusVisualHelper.SetIsTemplateFocusTarget(button, true);
+
+
+Tab 키로 버튼으로 포커스를 이동하면 지정된 색상과 두께의 외곽선이 나타납니다.
+
+AdornerLayer를 활용하기 때문에 다른 컨트롤 레이아웃을 방해하지 않고 표시 가능.
+
+4️⃣ 네이밍 적절성
+
+FocusVisualHelper → ✔ 적절
+
+WPF에서 FocusVisual 관련 헬퍼 기능을 모아둔 클래스라는 의미를 명확히 전달
+
+속성 이름들도 FocusVisualPrimaryBrush, FocusVisualSecondaryThickness 등 직관적
+
+✅ 정리
+
+WPF 기본 포커스 테두리를 세밀하게 제어할 수 있는 헬퍼 클래스
+
+키보드 접근성(Accessibility)과 사용자 경험 향상
+
+XAML + 코드 양쪽에서 설정 가능
+
+Adorner를 사용하여 실제 시각적 요소를 독립적으로 관리
+
+예제 -> 

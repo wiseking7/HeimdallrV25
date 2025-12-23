@@ -1,8 +1,8 @@
 ﻿using Heimdallr.App;
 using Heimdallr.App.Themes.UI;
 using Heimdallr.App.ViewModel;
+using Heimdallr.UI.Extensions;
 using Heimdallr.UI.MVVM;
-using Heimdallr.Utility.Extensions;
 
 namespace HeimdallrApp;
 

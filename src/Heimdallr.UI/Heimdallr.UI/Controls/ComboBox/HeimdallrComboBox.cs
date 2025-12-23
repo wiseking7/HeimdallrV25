@@ -72,7 +72,7 @@ public class HeimdallrComboBox : ComboBox
           new PropertyMetadata(IconType.None));
 
   /// <summary>
-  /// 주 아이콘(PathIcon)의 너비 (픽셀 단위) 지정
+  /// 주 아이콘(Icon)의 너비 (픽셀 단위) 지정
   /// 기본값은 16픽셀
   /// </summary>
   public double IconSize
@@ -88,7 +88,7 @@ public class HeimdallrComboBox : ComboBox
       new PropertyMetadata(16.0)); // 기본값 16
 
   /// <summary>
-  /// PathIcon (주 아이콘) 의 색상 지정용 Brush
+  /// Icon (주 아이콘) 의 색상 지정용 Brush
   /// 기본값은 회색(Gray)
   /// </summary>
   public Brush IconFill

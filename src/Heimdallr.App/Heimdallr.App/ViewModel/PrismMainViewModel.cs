@@ -1,15 +1,16 @@
-﻿using Heimdallr.Domain.Enums;
+﻿using Heimdallr.App.Enums;
 using Heimdallr.UI.Base;
 using Heimdallr.UI.Controls;
 using Heimdallr.UI.Enums;
+using Heimdallr.UI.Extensions;
 using Heimdallr.UI.Helpers;
-using Heimdallr.Utility;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 
@@ -33,6 +34,8 @@ public class PrismMainViewModel : ViewModelBase
     LoadMenuItems();
 
     InitializeTimer();
+
+    HeimdallrTreeViewInitialize();
 
     // ViewModelBase 테스트
     AddValidationRule(nameof(Name), () =>
@@ -1146,6 +1149,109 @@ public class PrismMainViewModel : ViewModelBase
     ThemeManager.ChangedTheme(theme);
   });
   #endregion
+
+  #region HeimdallrSlider 테스트
+  private double _sliderValue;
+
+  public double SliderValue
+  {
+    get => _sliderValue;
+    set
+    {
+      if (SetProperty(ref _sliderValue, value))
+      {
+        RaisePropertyChanged(nameof(DisplayText));
+      }
+    }
+  }
+
+  public string DisplayText => $"값 변경 테스트: {SliderValue:F0}";
+  #endregion
+
+  #region FocusVisualHelper 테스트
+  private Brush _primaryBrush = Brushes.Red;
+  private Thickness _primaryThickness = new Thickness(3);
+  private Brush _secondaryBrush = Brushes.Yellow;
+  private Thickness _secondaryThickness = new Thickness(1);
+  private Thickness _focusMargin = new Thickness(2);
+
+  public Brush ButtonPrimaryBrush
+  {
+    get => _primaryBrush;
+    set { _primaryBrush = value; RaisePropertyChanged(); }
+  }
+
+  public Thickness ButtonPrimaryThickness
+  {
+    get => _primaryThickness;
+    set { _primaryThickness = value; RaisePropertyChanged(); }
+  }
+
+  public Brush ButtonSecondaryBrush
+  {
+    get => _secondaryBrush;
+    set { _secondaryBrush = value; RaisePropertyChanged(); }
+  }
+
+  public Thickness ButtonSecondaryThickness
+  {
+    get => _secondaryThickness;
+    set { _secondaryThickness = value; RaisePropertyChanged(); }
+  }
+
+  public Thickness ButtonFocusMargin
+  {
+    get => _focusMargin;
+    set { _focusMargin = value; RaisePropertyChanged(); }
+  }
+
+  public bool UseSystemFocusVisuals { get; set; } = false;
+  public bool IsTemplateFocusTarget { get; set; } = true;
+
+  // 버튼 클릭 Command
+  public ICommand ButtonClickCommand => new DelegateCommand<string>(buttonName =>
+  {
+    MessageBox.Show($"{buttonName} 클릭됨!");
+  });
+  #endregion
+
+  #region TreeView 테스트
+  public ObservableCollection<TreeItemModel>? Items { get; set; }
+  private void HeimdallrTreeViewInitialize()
+  {
+    Items = new ObservableCollection<TreeItemModel>
+        {
+            new TreeItemModel
+            {
+                Text = "Root Item 1",
+                Children = new ObservableCollection<TreeItemModel>
+                {
+                    new TreeItemModel { Text = "Child 1" },
+                    new TreeItemModel { Text = "Child 2" }
+                }
+            },
+            new TreeItemModel
+            {
+                Text = "Root Item 2",
+                Children = new ObservableCollection<TreeItemModel>
+                {
+                    new TreeItemModel { Text = "Child A" },
+                    new TreeItemModel { Text = "Child B" }
+                }
+            }
+        };
+  }
+  #endregion
+
+  #region ListView 테스트
+  public ObservableCollection<ListViewModel> ListViewTest { get; } =
+        new ObservableCollection<ListViewModel>
+        {
+            new ListViewModel { Name = "홍길동", Age = 30, Department = "개발" },
+            new ListViewModel { Name = "김철수", Age = 25, Department = "기획" },
+            new ListViewModel { Name = "이영희", Age = 28, Department = "디자인" }
+        };
+  #endregion
 }
 
 #region AnimatedContentMenu
@@ -1199,3 +1305,22 @@ public class ExampleService : IExampleService
 
   public string GetMessage() => "서비스 실행됨";
 }
+
+#region TreeViewItem Model
+public class TreeItemModel
+{
+  public string? Text { get; set; }
+  public ObservableCollection<TreeItemModel>? Children { get; set; }
+  public bool IsExpanded { get; set; }
+  public bool IsSelected { get; set; }
+}
+#endregion
+
+#region ListView Model
+public class ListViewModel
+{
+  public string? Name { get; set; }
+  public int Age { get; set; }
+  public string? Department { get; set; }
+}
+#endregion

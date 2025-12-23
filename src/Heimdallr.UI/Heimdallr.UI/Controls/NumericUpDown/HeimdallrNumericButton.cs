@@ -97,7 +97,7 @@ public class HeimdallrNumericButton : Control
     set => SetValue(UpButtonIconProperty, value);
   }
   /// <summary>
-  /// UpButtonIcon 속성은 증가 버튼에 표시될 아이콘을 나타냅니다. 기본값은 PathIconType.None입니다.
+  /// UpButtonIcon 속성은 증가 버튼에 표시될 아이콘을 나타냅니다. 기본값은 IconType.None입니다.
   /// </summary>
   public static readonly DependencyProperty UpButtonIconProperty =
      DependencyProperty.Register(nameof(UpButtonIcon), typeof(IconType), typeof(HeimdallrNumericButton),
@@ -114,7 +114,7 @@ public class HeimdallrNumericButton : Control
     set => SetValue(DownButtonIconProperty, value);
   }
   /// <summary>
-  /// DownButtonIcon 속성은 감소 버튼에 표시될 아이콘을 나타냅니다. 기본값은 PathIconType.None입니다.
+  /// DownButtonIcon 속성은 감소 버튼에 표시될 아이콘을 나타냅니다. 기본값은 IconType.None입니다.
   /// </summary>
   public static readonly DependencyProperty DownButtonIconProperty =
       DependencyProperty.Register(nameof(DownButtonIcon), typeof(IconType), typeof(HeimdallrNumericButton),

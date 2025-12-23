@@ -58,7 +58,7 @@ public class HeimdallrHoldButton : Button
 
   #region Icon
   /// <summary>
-  /// 아이콘 타입 (사용자 정의 PathIconType)
+  /// 아이콘 타입 (사용자 정의 Icon)
   /// </summary>
   public IconType Icon
   {

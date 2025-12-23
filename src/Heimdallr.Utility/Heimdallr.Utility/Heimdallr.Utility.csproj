@@ -12,10 +12,10 @@
 	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	  
 	<!-- 패키지 이름 -->
-	<PackageId>Heimdallr.Uitily</PackageId>
+	<PackageId>Heimdallr.Utility</PackageId>
 	  
 	<!-- 버전 -->
-	<Version>1.0.0</Version>
+	<Version>1.0.1</Version>
 	  
 	<!-- 작성자 -->
 	<Authors>Heimdallr</Authors>
@@ -24,7 +24,7 @@
 	<Company>Heimdallr.Company</Company>
 	  
 	<!-- 패키지 설명 -->
-	<Description>Heimdallr.WPF Uitily</Description>
+	<Description>Heimdallr.Utility</Description>
 	  
 	<!-- 태그 -->
 	<PackageTags>NuGet, Example</PackageTags>
@@ -38,6 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Extensions\" />
     <Folder Include="ViewModelBase\" />
   </ItemGroup>
 

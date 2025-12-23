@@ -19,13 +19,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Heimdallr.Domain\Heimdallr.Domain\Heimdallr.Domain.csproj" />
     <ProjectReference Include="..\..\src\Heimdallr.UI\Heimdallr.UI\Heimdallr.UI.csproj" />
-    <ProjectReference Include="..\..\src\Heimdallr.Utility\Heimdallr.Utility\Heimdallr.Utility.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controls\" />
   </ItemGroup>
 
 </Project>
