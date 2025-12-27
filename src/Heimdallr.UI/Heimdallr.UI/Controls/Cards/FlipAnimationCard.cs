@@ -12,11 +12,51 @@ namespace Heimdallr.UI.Controls;
 /// </summary>
 public class FlipAnimationCard : ContentControl
 {
+  #region 생성자
   // 정적 생성자
   static FlipAnimationCard()
   {
     DefaultStyleKeyProperty.OverrideMetadata(typeof(FlipAnimationCard), new FrameworkPropertyMetadata(typeof(FlipAnimationCard)));
   }
+
+  /// <summary>
+  /// 생성자
+  /// </summary>
+  public FlipAnimationCard()
+  {
+    ToolTipOpening += FlipAnimationCard_ToolTipOpening;
+  }
+  #endregion
+
+  #region FlipAnimationCard_ToolTipOpening 이벤트
+  private void FlipAnimationCard_ToolTipOpening(object sender, ToolTipEventArgs e)
+  {
+    // ToolTip 자체가 없으면 아예 열리지 않게
+    if (ToolTip == null)
+    {
+      e.Handled = true;
+      return;
+    }
+
+    // 이미 HeimdallrToolTip이면 그대로 사용
+    if (ToolTip is HeimdallrToolTip)
+      return;
+
+    // 문자열일 경우만 변환
+    if (ToolTip is string tooltipText && !string.IsNullOrWhiteSpace(tooltipText))
+    {
+      ToolTip = new HeimdallrToolTip
+      {
+        Content = tooltipText
+      };
+    }
+    else
+    {
+      // 빈 문자열 / 알 수 없는 타입 → 표시 안 함
+      e.Handled = true;
+    }
+  }
+  #endregion
 
   #region Title, Description
   /// <summary>
@@ -49,13 +89,6 @@ public class FlipAnimationCard : ContentControl
     set => SetValue(CardDescriptionProperty, value);
   }
   #endregion
-
-  /// <summary>
-  /// 생성자
-  /// </summary>
-  public FlipAnimationCard()
-  {
-  }
 
   #region Card width, height
   /// <summary>

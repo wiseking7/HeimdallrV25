@@ -1,0 +1,40 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ctrls="clr-namespace:Heimdallr.UI.Controls">
+
+  <!-- SliderContentMenu의 스타일 정의 -->
+  <Style TargetType="{x:Type ctrls:HeimdallrSlideContentPanel}">
+    <!-- 기본 속성 -->
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderBrush" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Foreground" Value="#FFB9B4C7" />
+    <Setter Property="FontSize" Value="16" />
+
+    <!--커스텀 속성-->
+    <Setter Property="OpenCloseDuration" Value="0:0:0.8" />
+    <Setter Property="FallbackOpenWidth" Value="100" />
+    
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type ctrls:HeimdallrSlideContentPanel}">
+          
+          <!-- 메뉴의 외관을 정의하는 Border -->
+          <Border Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}"
+                  SnapsToDevicePixels="True"
+                  UseLayoutRounding="True">
+
+            <ctrls:HeimdallrScrollViewer x:Name="PART_ScrollViewer" 
+                                         HorizontalScrollBarVisibility="Disabled" 
+                                         VerticalScrollBarVisibility="Auto">
+              <!-- 메뉴의 콘텐츠를 표시하는 ContentControl -->
+              <ContentControl Content="{TemplateBinding Content}" />
+            </ctrls:HeimdallrScrollViewer>
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+</ResourceDictionary>

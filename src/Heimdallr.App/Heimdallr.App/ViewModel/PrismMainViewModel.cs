@@ -1,5 +1,4 @@
 ﻿using Heimdallr.App.Enums;
-using Heimdallr.UI.Base;
 using Heimdallr.UI.Controls;
 using Heimdallr.UI.Enums;
 using Heimdallr.UI.Extensions;
@@ -1252,7 +1251,15 @@ public class PrismMainViewModel : ViewModelBase
             new ListViewModel { Name = "이영희", Age = 28, Department = "디자인" }
         };
   #endregion
+
+  #region SliderContentPanel 테스트
+  private bool _isOpen;
+  public bool IsOpen { get => _isOpen; set => SetProperty(ref _isOpen, value); }
+
+  public DelegateCommand SliderContentPanelCommand => new DelegateCommand(() => { IsOpen = true; });
+  #endregion
 }
+
 
 #region AnimatedContentMenu
 public class MenuItemViewModel : INotifyPropertyChanged

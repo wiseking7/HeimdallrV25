@@ -26,7 +26,7 @@ public class BaseThemeWindow : HeimdallrWindow
   /// 타이틀 헤더 영역의 배경색을 설정하는 Brush 타입 속성
   /// 다크 테마에 맞는 기본 색상을 지정 가능
   /// </summary>
-  public static readonly DependencyProperty TitleHeaderBackgroundProperty;
+  public static readonly DependencyProperty HeaderBackgroundProperty;
 
   /// <summary>
   /// 닫기 버튼 클릭 시 실행할 ICommand 명령 속성
@@ -38,7 +38,7 @@ public class BaseThemeWindow : HeimdallrWindow
   /// 윈도우 타이틀을 커스텀 오브젝트(보통 문자열)로 지정하는 속성
   /// Window.Title 속성을 숨기고 대신 사용
   /// </summary>
-  public static readonly new DependencyProperty TitleProperty;
+  public static readonly DependencyProperty HeaderProperty;
 
   /// <summary>
   /// 최대화 시 태스크바를 포함하여 창 크기 제한 여부를 지정하는 bool 속성
@@ -68,10 +68,10 @@ public class BaseThemeWindow : HeimdallrWindow
   /// 윈도우 타이틀을 나타냅니다.
   /// 기본 Window.Title 대신 이 속성을 사용하여 XAML 바인딩 가능
   /// </summary>
-  public new object Title
+  public object Header
   {
-    get => GetValue(TitleProperty);
-    set => SetValue(TitleProperty, value);
+    get => GetValue(HeaderProperty);
+    set => SetValue(HeaderProperty, value);
   }
 
   /// <summary>
@@ -87,10 +87,10 @@ public class BaseThemeWindow : HeimdallrWindow
   /// <summary>
   /// 타이틀 헤더 배경색 Brush
   /// </summary>
-  public Brush TitleHeaderBackground
+  public Brush HeaderBackground
   {
-    get => (Brush)GetValue(TitleHeaderBackgroundProperty);
-    set => SetValue(TitleHeaderBackgroundProperty, value);
+    get => (Brush)GetValue(HeaderBackgroundProperty);
+    set => SetValue(HeaderBackgroundProperty, value);
   }
 
   /// <summary>
@@ -163,13 +163,13 @@ public class BaseThemeWindow : HeimdallrWindow
   #endregion
 
   #region Title 에 Content 추가 속성 
-  public static readonly DependencyProperty TitleContentProperty =
-    DependencyProperty.Register(nameof(TitleContent), typeof(object), typeof(BaseThemeWindow));
+  public static readonly DependencyProperty HeaderContentProperty =
+    DependencyProperty.Register(nameof(HeaderContent), typeof(object), typeof(BaseThemeWindow));
 
-  public object TitleContent
+  public object HeaderContent
   {
-    get => GetValue(TitleContentProperty);
-    set => SetValue(TitleContentProperty, value);
+    get => GetValue(HeaderContentProperty);
+    set => SetValue(HeaderContentProperty, value);
   }
   #endregion
 
@@ -188,10 +188,10 @@ public class BaseThemeWindow : HeimdallrWindow
     CloseCommandProperty = DependencyProperty.Register(nameof(CloseCommand), typeof(ICommand), typeof(BaseThemeWindow),
       new PropertyMetadata(null));
 
-    TitleProperty = DependencyProperty.Register(nameof(Title), typeof(object), typeof(BaseThemeWindow),
+    HeaderProperty = DependencyProperty.Register(nameof(Header), typeof(object), typeof(BaseThemeWindow),
       new UIPropertyMetadata(null));
 
-    TitleHeaderBackgroundProperty = DependencyProperty.Register(nameof(TitleHeaderBackground), typeof(Brush), typeof(BaseThemeWindow),
+    HeaderBackgroundProperty = DependencyProperty.Register(nameof(HeaderBackground), typeof(Brush), typeof(BaseThemeWindow),
       new PropertyMetadata(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF344C64"))));
 
     DimmingColorProperty = DependencyProperty.Register(nameof(DimmingColor), typeof(Brush), typeof(BaseThemeWindow),
@@ -338,7 +338,6 @@ public class BaseThemeWindow : HeimdallrWindow
         }
       };
     }
-
 
     // 닫기 버튼 찾고 클릭 이벤트 등록 (CloseCommand 실행 또는 기본 Close 호출)
     if (GetTemplateChild("PART_CloseButton") is HeimdallrCloseButton btn)

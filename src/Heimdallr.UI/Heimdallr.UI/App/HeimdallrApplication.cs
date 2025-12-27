@@ -1,8 +1,5 @@
 ﻿using Heimdallr.UI.Helpers;
 using Heimdallr.UI.MVVM;
-using Prism.DryIoc;
-using Prism.Ioc;
-using Prism.Modularity;
 using System.Diagnostics;
 using System.Reflection;
 using System.Windows;

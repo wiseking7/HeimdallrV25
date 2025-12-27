@@ -1,5 +1,5 @@
 ﻿using Heimdallr.UI.Attributes;
-using Heimdallr.UI.Base;
+
 
 namespace Heimdallr.App.ViewModel;
 
@@ -11,6 +11,11 @@ public class TestDialogViewModel : BaseDialogWithDimming
     Title = "TestDialogView";
   }
 
+  private bool _isOpen;
+  public bool IsOpen { get => _isOpen; set => SetProperty(ref _isOpen, value); }
+
+
+  public DelegateCommand? NavigateCommand { get; }
   public string Message { get; set; } = "테스트 다이얼로그";
 
 

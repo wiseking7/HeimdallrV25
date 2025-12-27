@@ -32,6 +32,38 @@ public class HeimdallrPlaceholderPasswordBox : Control
   {
     CommandManager.RegisterClassCommandBinding(typeof(HeimdallrPlaceholderPasswordBox),
         new CommandBinding(ToggleShowPasswordCommand, OnToggleShowPassword));
+
+    ToolTipOpening += HeimdallrPlaceholderPasswordBox_ToolTipOpening;
+  }
+  #endregion
+
+  #region HeimdallrPlaceholderPasswordBox_ToolTipOpening 이벤트
+  private void HeimdallrPlaceholderPasswordBox_ToolTipOpening(object sender, ToolTipEventArgs e)
+  {
+    // ToolTip 자체가 없으면 아예 열리지 않게
+    if (ToolTip == null)
+    {
+      e.Handled = true;
+      return;
+    }
+
+    // 이미 HeimdallrToolTip이면 그대로 사용
+    if (ToolTip is HeimdallrToolTip)
+      return;
+
+    // 문자열일 경우만 변환
+    if (ToolTip is string tooltipText && !string.IsNullOrWhiteSpace(tooltipText))
+    {
+      ToolTip = new HeimdallrToolTip
+      {
+        Content = tooltipText
+      };
+    }
+    else
+    {
+      // 빈 문자열 / 알 수 없는 타입 → 표시 안 함
+      e.Handled = true;
+    }
   }
   #endregion
 
@@ -342,4 +374,16 @@ public class HeimdallrPlaceholderPasswordBox : Control
   public static readonly DependencyProperty EyeIconFillProperty = DependencyProperty.Register(nameof(EyeIconFill), typeof(Brush),
           typeof(HeimdallrPlaceholderPasswordBox), new PropertyMetadata(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFDDE6ED"))));
   #endregion
+
+  #region RightIconToolTip
+  public string RightIconToolTip
+  {
+    get => (string)GetValue(RightIconToolTipProperty);
+    set => SetValue(RightIconToolTipProperty, value);
+  }
+
+  public static readonly DependencyProperty RightIconToolTipProperty =
+      DependencyProperty.Register(nameof(RightIconToolTip), typeof(string), typeof(HeimdallrPlaceholderPasswordBox), new PropertyMetadata(string.Empty));
+  #endregion
 }
+

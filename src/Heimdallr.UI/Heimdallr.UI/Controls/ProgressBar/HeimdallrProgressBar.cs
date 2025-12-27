@@ -10,11 +10,48 @@ namespace Heimdallr.UI.Controls;
 /// </summary>
 public class HeimdallrProgressBar : ProgressBar
 {
+  #region 생성자
   static HeimdallrProgressBar()
   {
     DefaultStyleKeyProperty.OverrideMetadata(typeof(HeimdallrProgressBar),
         new FrameworkPropertyMetadata(typeof(HeimdallrProgressBar)));
   }
+
+  public HeimdallrProgressBar()
+  {
+    ToolTipOpening += HeimdallrProgressBar_ToolTipOpening;
+  }
+  #endregion
+
+  #region HeimdallrProgressBar_ToolTipOpening 이벤트
+  private void HeimdallrProgressBar_ToolTipOpening(object sender, ToolTipEventArgs e)
+  {
+    // ToolTip 자체가 없으면 아예 열리지 않게
+    if (ToolTip == null)
+    {
+      e.Handled = true;
+      return;
+    }
+
+    // 이미 HeimdallrToolTip이면 그대로 사용
+    if (ToolTip is HeimdallrToolTip)
+      return;
+
+    // 문자열일 경우만 변환
+    if (ToolTip is string tooltipText && !string.IsNullOrWhiteSpace(tooltipText))
+    {
+      ToolTip = new HeimdallrToolTip
+      {
+        Content = tooltipText
+      };
+    }
+    else
+    {
+      // 빈 문자열 / 알 수 없는 타입 → 표시 안 함
+      e.Handled = true;
+    }
+  }
+  #endregion
 
   #region Fill 프로퍼티 (진행률 채우기 색상)
   /// <summary>
@@ -61,6 +98,7 @@ public class HeimdallrProgressBar : ProgressBar
           new PropertyMetadata(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFFFF"))));
   #endregion
 
+  #region OnApplyTemplate 재정의 메서드
   /// <summary>
   /// 템플릿 적용 시 호출됨. 애니메이션 초기화 등을 여기서 처리.
   /// </summary>
@@ -70,7 +108,9 @@ public class HeimdallrProgressBar : ProgressBar
 
     UpdateVisuals();
   }
+  #endregion
 
+  #region UpdateVisuals 메서드
   /// <summary>
   /// 진행률 및 상태에 따라 시각 요소(너비, 애니메이션 등) 갱신
   /// </summary>
@@ -85,4 +125,5 @@ public class HeimdallrProgressBar : ProgressBar
       VisualStateManager.GoToState(this, "Determinate", true);
     }
   }
+  #endregion
 }

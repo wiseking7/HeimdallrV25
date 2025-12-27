@@ -235,6 +235,57 @@ public class HeimdallrIcon : ContentControl
     DefaultStyleKeyProperty.OverrideMetadata(typeof(HeimdallrIcon), new FrameworkPropertyMetadata(typeof(HeimdallrIcon)));
   }
 
+  /// <summary>
+  /// HeimdallrIcon 생성자: 기본 생성자
+  /// </summary>
+  public HeimdallrIcon()
+  {
+    MouseLeftButtonUp += (sender, e) =>
+    {
+      // 마우스 왼쪽 버튼 클릭 시 Command 실행
+      if (Command != null && Command.CanExecute(CommandParameter))
+      {
+        Command.Execute(CommandParameter);
+        e.Handled = true; // 이벤트 처리 완료 표시
+      }
+    };
+
+    Cursor = Cursors.Hand; // 마우스 커서를 손 모양으로 변경
+
+    ToolTipOpening += HeimdallrIcon_ToolTipOpening;
+  }
+  #endregion
+
+  #region HeimdallrIcon_ToolTipOpening 이벤트
+  private void HeimdallrIcon_ToolTipOpening(object sender, ToolTipEventArgs e)
+  {
+    // ToolTip 자체가 없으면 아예 열리지 않게
+    if (ToolTip == null)
+    {
+      e.Handled = true;
+      return;
+    }
+
+    // 이미 HeimdallrToolTip이면 그대로 사용
+    if (ToolTip is HeimdallrToolTip)
+      return;
+
+    // 문자열일 경우만 변환
+    if (ToolTip is string tooltipText && !string.IsNullOrWhiteSpace(tooltipText))
+    {
+      ToolTip = new HeimdallrToolTip
+      {
+        Content = tooltipText
+      };
+    }
+    else
+    {
+      // 빈 문자열 / 알 수 없는 타입 → 표시 안 함
+      e.Handled = true;
+    }
+  }
+  #endregion
+
   #region Stretch
   /// <summary>
   /// Viewbox 또는 Path 렌더링에 사용할 Stretch 모드
@@ -269,27 +320,6 @@ public class HeimdallrIcon : ContentControl
       Debug.WriteLine($"[{nameof(HeimdallrIcon)}.{MethodBase.GetCurrentMethod()?.Name}] Data -> null 입니다");
     }
   }
-  #endregion
-
-
-  /// <summary>
-  /// HeimdallrIcon 생성자: 기본 생성자
-  /// </summary>
-  public HeimdallrIcon()
-  {
-    MouseLeftButtonUp += (sender, e) =>
-    {
-      // 마우스 왼쪽 버튼 클릭 시 Command 실행
-      if (Command != null && Command.CanExecute(CommandParameter))
-      {
-        Command.Execute(CommandParameter);
-        e.Handled = true; // 이벤트 처리 완료 표시
-      }
-    };
-
-    Cursor = Cursors.Hand; // 마우스 커서를 손 모양으로 변경
-  }
-
   #endregion
 }
 

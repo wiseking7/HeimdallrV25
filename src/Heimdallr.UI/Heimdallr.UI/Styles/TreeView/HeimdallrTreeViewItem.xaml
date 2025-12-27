@@ -28,6 +28,10 @@
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="IconFill" Value="#FFD3DAD9" />
     <Setter Property="IconSize" Value="30" />
+    
+    <!-- 커스텀 속성-->
+    <Setter Property="ExpandIcon" Value="Arrow_Ellipse_DownA" />
+    <Setter Property="CollapseIcon" Value="Arrow_Ellipse_UpA" />
     <Setter Property="ExpandToggleIconSize" Value="25" />
     <Setter Property="ExpandIconFill" Value="#FFE0D9D9" />
     <Setter Property="CollapseIconFill" Value="#FFD2C1B6" />

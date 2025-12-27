@@ -13,12 +13,49 @@ namespace Heimdallr.UI.Controls;
 /// </summary>
 public class HeimdallrSlider : Slider
 {
+  #region 생성자
   static HeimdallrSlider()
   {
     // 기본 스타일 키를 오버라이드하여 커스텀 템플릿 연결
     DefaultStyleKeyProperty.OverrideMetadata(typeof(HeimdallrSlider),
       new FrameworkPropertyMetadata(typeof(HeimdallrSlider)));
   }
+
+  public HeimdallrSlider()
+  {
+    ToolTipOpening += HeimdallrSlider_ToolTipOpening;
+  }
+  #endregion
+
+  #region HeimdallrSlider_ToolTipOpening 이벤트
+  private void HeimdallrSlider_ToolTipOpening(object sender, ToolTipEventArgs e)
+  {
+    // ToolTip 자체가 없으면 아예 열리지 않게
+    if (ToolTip == null)
+    {
+      e.Handled = true;
+      return;
+    }
+
+    // 이미 HeimdallrToolTip이면 그대로 사용
+    if (ToolTip is HeimdallrToolTip)
+      return;
+
+    // 문자열일 경우만 변환
+    if (ToolTip is string tooltipText && !string.IsNullOrWhiteSpace(tooltipText))
+    {
+      ToolTip = new HeimdallrToolTip
+      {
+        Content = tooltipText
+      };
+    }
+    else
+    {
+      // 빈 문자열 / 알 수 없는 타입 → 표시 안 함
+      e.Handled = true;
+    }
+  }
+  #endregion
 
   #region OnApplyTemplate 재정의
   /// <summary>

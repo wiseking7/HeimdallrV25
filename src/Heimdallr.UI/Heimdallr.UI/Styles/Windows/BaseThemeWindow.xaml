@@ -12,8 +12,8 @@
   <Style TargetType="{x:Type ctrls:BaseThemeWindow}">
 
     <!--#region 윈도우 기본속성 -->
-    <Setter Property="Background" Value="#FF344C64" />
-    <Setter Property="TitleHeaderBackground" Value="#FF344C64" />
+    <Setter Property="Background" Value="#FF282C34" />
+    <Setter Property="HeaderBackground" Value="#FF282C34" />
     <Setter Property="AllowsTransparency" Value="True" />
     <Setter Property="WindowStyle" Value="None" />
     <Setter Property="BorderThickness" Value="0" />
@@ -21,7 +21,7 @@
     <Setter Property="MinHeight" Value="200" />
     <Setter Property="Foreground" Value="#FFFFFF" />
     <Setter Property="DimmingColor" Value="Transparent" />
-    <Setter Property="BorderBrush" Value="#FF2B373D" />
+    <Setter Property="BorderBrush" Value="#FF282C34" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
     <Setter Property="UseLayoutRounding" Value="True" />
     <Setter Property="FontSize" Value="14" />
@@ -56,12 +56,13 @@
                   UseLayoutRounding="{TemplateBinding UseLayoutRounding}">
             
             <!--#region Row 2, Column 2-->
-            <ctrls:HeimdallrGrid Columns="*" Rows="Auto, *">
+            <ctrls:HeimdallrGrid Columns="*" Rows="Auto, *" >
 
               <!--#region Row 0, Column 6 -->
               <ctrls:HeimdallrGrid Grid.Row="0"
-                                   Background="{Binding TitleHeaderBackground, RelativeSource={RelativeSource TemplatedParent}}"
+                                   Background="{Binding HeaderBackground, RelativeSource={RelativeSource TemplatedParent}}"
                                    Columns="Auto, Auto, *, Auto"
+                                   Margin="0 10 0 10"
                                    Rows="Auto">
 
                 <!--#region DragBar 영역 Row 0 전체 -->
@@ -90,8 +91,8 @@
 
                 <!-- 여기에 추가 UI 넣기용 ContentPresenter -->
                 <ContentPresenter Grid.Column="2"
-                                  x:Name="PART_TitleContent"
-                                  Content="{TemplateBinding TitleContent}" 
+                                  x:Name="PART_HeaderContent"
+                                  Content="{TemplateBinding HeaderContent}" 
                                   VerticalAlignment="Center"/>
 
                 <!--#region 윈도우 버튼 영역(작게,크게,닫기) -->
@@ -102,12 +103,15 @@
                     <ColumnDefinition Width="40" />
                   </Grid.ColumnDefinitions>
                   <ctrls:HeimdallrMinimizeButton Grid.Column="0"
-                                                 x:Name="PART_MinButton" />
+                                                 x:Name="PART_MinButton" 
+                                                 ToolTip="MIN"/>
                   <ctrls:HeimdallrMaximizeButton Grid.Column="1"
-                                                 x:Name="PART_MaxButton" />
+                                                 x:Name="PART_MaxButton"
+                                                 ToolTip="MAX"/>
                   <ctrls:HeimdallrCloseButton Grid.Column="2"
                                               Margin="0 0 5 0"
-                                              x:Name="PART_CloseButton" />
+                                              x:Name="PART_CloseButton" 
+                                              ToolTip="CLOSE"/>
                 </Grid>
                 <!--#endregion-->
               </ctrls:HeimdallrGrid>

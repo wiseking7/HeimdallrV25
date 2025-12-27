@@ -10,13 +10,52 @@ namespace Heimdallr.UI.Controls;
 
 public class HeimdallrNumericButton : Control
 {
+  #region 필드
   private bool _isTemplateApplied = false;
+  #endregion
 
+  #region 생성자
   static HeimdallrNumericButton()
   {
     DefaultStyleKeyProperty.OverrideMetadata(typeof(HeimdallrNumericButton),
         new FrameworkPropertyMetadata(typeof(HeimdallrNumericButton)));
   }
+
+  public HeimdallrNumericButton()
+  {
+    ToolTipOpening += HeimdallrNumericButton_ToolTipOpening;
+  }
+  #endregion
+
+  #region HeimdallrNumericButton_ToolTipOpening 이벤트
+  private void HeimdallrNumericButton_ToolTipOpening(object sender, ToolTipEventArgs e)
+  {
+    // ToolTip 자체가 없으면 아예 열리지 않게
+    if (ToolTip == null)
+    {
+      e.Handled = true;
+      return;
+    }
+
+    // 이미 HeimdallrToolTip이면 그대로 사용
+    if (ToolTip is HeimdallrToolTip)
+      return;
+
+    // 문자열일 경우만 변환
+    if (ToolTip is string tooltipText && !string.IsNullOrWhiteSpace(tooltipText))
+    {
+      ToolTip = new HeimdallrToolTip
+      {
+        Content = tooltipText
+      };
+    }
+    else
+    {
+      // 빈 문자열 / 알 수 없는 타입 → 표시 안 함
+      e.Handled = true;
+    }
+  }
+  #endregion
 
   #region Value
   /// <summary>

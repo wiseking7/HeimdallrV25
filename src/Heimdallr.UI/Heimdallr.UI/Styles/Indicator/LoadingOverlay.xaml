@@ -4,6 +4,10 @@
   
   <Style TargetType="{x:Type ctrls:LoadingOverlay}">
     <Setter Property="Cursor" Value="Hand" />
+    
+    <!-- 커스텀 속성-->
+    <Setter Property="LoadingText" Value="PROGRESS..." />
+
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ctrls:LoadingOverlay}">

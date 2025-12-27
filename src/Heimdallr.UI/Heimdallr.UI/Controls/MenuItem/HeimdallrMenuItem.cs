@@ -24,6 +24,38 @@ public class HeimdallrMenuItem : MenuItem
   public HeimdallrMenuItem()
   {
     IsEnabledChanged += OnIsEnabledChanged;
+
+    ToolTipOpening += HeimdallrMenuItem_ToolTipOpening;
+  }
+  #endregion
+
+  #region HeimdallrMenuItem_ToolTipOpening 이벤트
+  private void HeimdallrMenuItem_ToolTipOpening(object sender, ToolTipEventArgs e)
+  {
+    // ToolTip 자체가 없으면 아예 열리지 않게
+    if (ToolTip == null)
+    {
+      e.Handled = true;
+      return;
+    }
+
+    // 이미 HeimdallrToolTip이면 그대로 사용
+    if (ToolTip is HeimdallrToolTip)
+      return;
+
+    // 문자열일 경우만 변환
+    if (ToolTip is string tooltipText && !string.IsNullOrWhiteSpace(tooltipText))
+    {
+      ToolTip = new HeimdallrToolTip
+      {
+        Content = tooltipText
+      };
+    }
+    else
+    {
+      // 빈 문자열 / 알 수 없는 타입 → 표시 안 함
+      e.Handled = true;
+    }
   }
   #endregion
 
@@ -180,6 +212,7 @@ public class HeimdallrMenuItem : MenuItem
   #endregion
 
   #region 사용자 정의 상태 속성들
+  #region MenuItemIsMouseOver
   public Brush MenuItemIsMouseOver
   {
     get => (Brush)GetValue(MenuItemIsMouseOverProperty);
@@ -187,7 +220,9 @@ public class HeimdallrMenuItem : MenuItem
   }
   public static readonly DependencyProperty MenuItemIsMouseOverProperty =
       DependencyProperty.Register(nameof(MenuItemIsMouseOver), typeof(Brush), typeof(HeimdallrMenuItem), new PropertyMetadata(Brushes.DarkBlue));
+  #endregion
 
+  #region MenuItemIsMouseOverBrush
   public Brush MenuItemIsMouseOverBrush
   {
     get => (Brush)GetValue(MenuItemIsMouseOverBrushProperty);
@@ -195,7 +230,9 @@ public class HeimdallrMenuItem : MenuItem
   }
   public static readonly DependencyProperty MenuItemIsMouseOverBrushProperty =
       DependencyProperty.Register(nameof(MenuItemIsMouseOverBrush), typeof(Brush), typeof(HeimdallrMenuItem), new PropertyMetadata(Brushes.DodgerBlue));
+  #endregion
 
+  #region MenuItemPressedBrush
   public Brush MenuItemPressedBrush
   {
     get => (Brush)GetValue(MenuItemPressedBrushProperty);
@@ -203,7 +240,9 @@ public class HeimdallrMenuItem : MenuItem
   }
   public static readonly DependencyProperty MenuItemPressedBrushProperty =
       DependencyProperty.Register(nameof(MenuItemPressedBrush), typeof(Brush), typeof(HeimdallrMenuItem), new PropertyMetadata(Brushes.DarkBlue));
+  #endregion
 
+  #region MenuItemDisabledForegroundBrush
   public Brush MenuItemDisabledForegroundBrush
   {
     get => (Brush)GetValue(MenuItemDisabledForegroundBrushProperty);
@@ -211,5 +250,6 @@ public class HeimdallrMenuItem : MenuItem
   }
   public static readonly DependencyProperty MenuItemDisabledForegroundBrushProperty =
       DependencyProperty.Register(nameof(MenuItemDisabledForegroundBrush), typeof(Brush), typeof(HeimdallrMenuItem), new PropertyMetadata(Brushes.Gray));
+  #endregion
   #endregion
 }

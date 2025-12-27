@@ -13,6 +13,7 @@
     <Setter Property="Foreground" Value="#FFFFFFFF" />
     <Setter Property="BorderBrush" Value="Transparent" />
 
+    <!-- 커스텀 속성 -->
     <Setter Property="MenuItemPressedBrush" Value="{StaticResource DarkBlueGray}" />
     <Setter Property="MenuItemDisabledForegroundBrush" Value="{StaticResource DarkBurgundyRed}" />
     <Setter Property="MenuItemIsMouseOver" Value="{StaticResource DarkRoyalPurple}" />

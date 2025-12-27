@@ -1,5 +1,6 @@
-﻿using Heimdallr.UI.Base;
+﻿
 using Moq;
+using Tests.ViewModeTests;
 
 namespace Tests;
 

@@ -1,5 +1,6 @@
 ﻿using Heimdallr.UI.Enums;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 
@@ -7,7 +8,7 @@ namespace Heimdallr.UI.Controls;
 
 public class HeimdallrRepeatButton : RepeatButton
 {
-  #region HeimdallrIcon 색상지정
+  #region IconFill 색상지정
   /// <summary>
   /// HeimdallrIcon 의 색상을 설정하는 속성
   /// </summary>
@@ -21,7 +22,9 @@ public class HeimdallrRepeatButton : RepeatButton
   /// </summary>
   public static readonly DependencyProperty IconFillProperty =
       DependencyProperty.Register(nameof(IconFill), typeof(Brush), typeof(HeimdallrRepeatButton), new PropertyMetadata(Brushes.Transparent, OnIconFillChanged));
+  #endregion
 
+  #region OnIconFillChanged 메서드
   private static void OnIconFillChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
   {
     if (e.NewValue == DependencyProperty.UnsetValue || e.NewValue == null)
@@ -33,7 +36,7 @@ public class HeimdallrRepeatButton : RepeatButton
   }
   #endregion
 
-  #region HeimdallrIcon 색상지정
+  #region MouserOverIconFill
   /// <summary>
   /// HeimdallrIcon 의 색상을 설정하는 속성
   /// </summary>
@@ -47,7 +50,9 @@ public class HeimdallrRepeatButton : RepeatButton
   /// </summary>
   public static readonly DependencyProperty MouserOverIconFillProperty =
       DependencyProperty.Register(nameof(MouserOverIconFill), typeof(Brush), typeof(HeimdallrRepeatButton), new PropertyMetadata(Brushes.Transparent, OnMouseOverIconFillChanged));
+  #endregion
 
+  #region OnMouseOverIconFillChanged 메서드
   private static void OnMouseOverIconFillChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
   {
     if (e.NewValue == DependencyProperty.UnsetValue || e.NewValue == null)
@@ -59,7 +64,7 @@ public class HeimdallrRepeatButton : RepeatButton
   }
   #endregion
 
-  #region Icon 지정
+  #region Icon
   /// <summary>
   /// Heimdallr 아이콘의 경로를 지정하는 속성
   /// </summary>
@@ -73,10 +78,9 @@ public class HeimdallrRepeatButton : RepeatButton
   /// </summary>
   public static readonly DependencyProperty IconProperty =
         DependencyProperty.Register(nameof(Icon), typeof(IconType), typeof(HeimdallrRepeatButton), new PropertyMetadata(IconType.None));
-
   #endregion
 
-  #region Icon Size 지정
+  #region IconSize
   /// <summary>
   /// Heimdallr 아이콘의 사이즈 지정
   /// </summary>
@@ -94,7 +98,6 @@ public class HeimdallrRepeatButton : RepeatButton
   #endregion
 
   #region CornerRadius
-
   /// <summary>
   /// 버튼의 테두리 둥근 정도를 설정합니다.
   /// </summary>
@@ -103,7 +106,6 @@ public class HeimdallrRepeatButton : RepeatButton
     get => (CornerRadius)GetValue(CornerRadiusProperty);
     set => SetValue(CornerRadiusProperty, value);
   }
-
   /// <summary>
   /// CornerRadius에 대한 종속성 속성 정의.
   /// 기본값은 (0)입니다.
@@ -111,7 +113,6 @@ public class HeimdallrRepeatButton : RepeatButton
   public static readonly DependencyProperty CornerRadiusProperty =
       DependencyProperty.Register(nameof(CornerRadius), typeof(CornerRadius), typeof(HeimdallrRepeatButton),
           new PropertyMetadata(new CornerRadius(0)));
-
   #endregion
 
   #region 종속성 생성자
@@ -119,6 +120,41 @@ public class HeimdallrRepeatButton : RepeatButton
   {
     DefaultStyleKeyProperty.OverrideMetadata(typeof(HeimdallrRepeatButton),
       new FrameworkPropertyMetadata(typeof(HeimdallrRepeatButton)));
+  }
+
+  public HeimdallrRepeatButton()
+  {
+    ToolTipOpening += HeimdallrRepeatButton_ToolTipOpening;
+  }
+  #endregion
+
+  #region HeimdallrRepeatButton_ToolTipOpening 이벤트
+  private void HeimdallrRepeatButton_ToolTipOpening(object sender, ToolTipEventArgs e)
+  {
+    // ToolTip 자체가 없으면 아예 열리지 않게
+    if (ToolTip == null)
+    {
+      e.Handled = true;
+      return;
+    }
+
+    // 이미 HeimdallrToolTip이면 그대로 사용
+    if (ToolTip is HeimdallrToolTip)
+      return;
+
+    // 문자열일 경우만 변환
+    if (ToolTip is string tooltipText && !string.IsNullOrWhiteSpace(tooltipText))
+    {
+      ToolTip = new HeimdallrToolTip
+      {
+        Content = tooltipText
+      };
+    }
+    else
+    {
+      // 빈 문자열 / 알 수 없는 타입 → 표시 안 함
+      e.Handled = true;
+    }
   }
   #endregion
 }

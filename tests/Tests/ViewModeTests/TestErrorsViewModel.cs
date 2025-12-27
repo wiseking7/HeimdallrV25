@@ -1,7 +1,4 @@
-﻿using Heimdallr.UI.Base;
-using Prism.Ioc;
-
-namespace Tests.ViewModeTests;
+﻿namespace Tests.ViewModeTests;
 
 /// <summary>
 /// 동기 검증만 사용

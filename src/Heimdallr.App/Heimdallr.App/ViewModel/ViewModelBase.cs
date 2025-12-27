@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows;
 
-namespace Heimdallr.UI.Base;
+namespace Heimdallr.App.ViewModel;
 /// <summary>
 /// MVVM용 기본 ViewModel
 /// BindableBase, INotifyDataErrorInfo, IDestructible, Prism INavigationAware

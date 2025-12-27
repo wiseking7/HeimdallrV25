@@ -21,7 +21,12 @@
     <Setter Property="MinWidth" Value="120"/>
     <Setter Property="Height" Value="35"/>
 
+    <!-- 커스텀 속성-->
     <Setter Property="IconSize" Value="30" />
+    <Setter Property="Min" Value="0" />
+    <Setter Property="Max" Value="100" />
+    <Setter Property="UpButtonIcon" Value="Arrow_Ellipse_UpA" />
+    <Setter Property="DownButtonIcon" Value="Arrow_Ellipse_DownA" />
 
     <Setter Property="Template">
       <Setter.Value>

@@ -11,13 +11,13 @@
     
     <!-- 커스텀 속성-->
     <Setter Property="HoldDuration" Value="0:0:0.8" />
-    <Setter Property="EllipseFill" Value="DimGray" />
-    <Setter Property="BackgrounEllipseFill" Value="DodgerBlue" />
+    <Setter Property="EllipseFill" Value="#FF696969" />
+    <Setter Property="HoldEllipseFill" Value="#FF9932CC" />
+    <Setter Property="BackgrounEllipseFill" Value="#FF1E90FF" />
     <Setter Property="MouseOverBackground" Value="#FFE0D9D9" />
     <Setter Property="PressedBackground" Value="#FF3B9797" />
     <Setter Property="KeyboardFocusBorderBrush" Value="#FFEBD5AB" />
-    <Setter Property="HoldEllipseFill" Value="DarkOrchid" />
-   
+
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ctrls:HeimdallrHoldSubmitButton}">

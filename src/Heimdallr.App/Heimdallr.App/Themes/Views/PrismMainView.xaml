@@ -11,14 +11,15 @@
                               BackgroundColor="AliceBlue">
     <!--#region 비밀번호 변경 컨텍스트 메뉴 -->
     <ctrls:HeimdallrMenuItem
-    Margin="10,5"
-    Command="{Binding MessageCommand}"
-    CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-    IconFill="#FFFDCFFA"
-    FontSize="16"
-    Header="비밀번호변경"
-    IconSize="15"
-    Icon="Exchange" />
+                            Margin="10,5"
+                            Command="{Binding MessageCommand}"
+                            CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                            IconFill="#FFFDCFFA"
+                            FontSize="16"
+                            Header="비밀번호변경"
+                            IconSize="15"
+                            Icon="Exchange" 
+                            ToolTip="비밀번호변경"/>
     <!--#endregion-->
 
     <!--#region 복원 컨텍스트 메뉴 (IsActive(bool), IsLocked(bool), FailedLoginAttempts(int)-->
@@ -31,7 +32,7 @@
     Header="복원"
     IconSize="15"
     Icon="AccountA" 
-    />
+    ToolTip="복원"/>
     <!--#endregion -->
 
     <!--#region 삭제 -->
@@ -43,7 +44,7 @@
     Header="삭제"
     IconSize="15"
     Icon="Delete" 
-     />
+    ToolTip="삭제" />
     <!--#endregion-->
   </ctrls:HeimdallrContextMenu>
   <!--#endregion-->
@@ -54,11 +55,12 @@
 
     <Setter Property="Background" Value="{DynamicResource WindowBackgroundColor}" />
 
-    <Setter Property="TitleHeaderBackground" Value="{DynamicResource TitleHeaderBackground}" />
-    <Setter Property="TitleContent">
+    <Setter Property="HeaderBackground" Value="{DynamicResource TitleHeaderBackground}" />
+    <Setter Property="HeaderContent">
       <Setter.Value>
         <StackPanel Orientation="Horizontal">
-          <ctrls:HeimdallrFlatButton x:Name="FlatButton" Content="설정" Margin="5,0" CornerRadius="7" Background="Transparent">
+          <ctrls:HeimdallrFlatButton x:Name="FlatButton" Content="설정" Margin="5,0" CornerRadius="7" Background="Transparent"
+                                     ToolTip="설정">
             <ctrls:HeimdallrFlatButton.ContextMenu>
               <ctrls:HeimdallrContextMenu >
 
@@ -66,56 +68,64 @@
                                           Header="일반 설정"
                                           Icon="Setting"
                                           IconFill="#FFFFFFFF"
-                                          Command="{Binding MessageCommand}" />
+                                          Command="{Binding MessageCommand}" 
+                                          ToolTip="일반설정"/>
 
                 <ctrls:HeimdallrMenuItem
                                           Header="다이얼로그 데스트 열기 "
                                           Icon="Broadcast"
                                           IconFill="#FFFFFFFF"
                                           Command="{Binding OpenDialogCommand}"
-                                          CommandParameter="Advanced" />
+                                          CommandParameter="Advanced" 
+                                          ToolTip="다이얼로그 테스트 열기"/>
 
                 <ctrls:HeimdallrMenuItem Header="비활성 메뉴"
                                          IconFill="#FFFFFFFF"
                                          Icon="Lock"
                                          IsEnabled="False"
-                                         Command="{Binding MessageCommand}"/>
+                                         Command="{Binding MessageCommand}"
+                                         ToolTip="비횔성 메뉴"/>
               </ctrls:HeimdallrContextMenu>
             </ctrls:HeimdallrFlatButton.ContextMenu>
           </ctrls:HeimdallrFlatButton>
 
-          <ctrls:HeimdallrFlatButton x:Name="DimmingButton" Content="다이밍설정" Margin="5,0" CornerRadius="7" Background="Transparent">
+          <ctrls:HeimdallrFlatButton x:Name="DimmingButton" Content="다이밍설정" Margin="5,0" CornerRadius="7" Background="Transparent"
+                                     ToolTip="다이밍설정">
             <ctrls:HeimdallrFlatButton.ContextMenu>
               <ctrls:HeimdallrContextMenu >
                 <!-- 다이밍 색상 선택 메뉴 -->
                 <ctrls:HeimdallrMenuItem Header="다크" Icon="Setting" IconFill="#FF000000"
                                      Command="{Binding ChangeDimmingColorCommand}"
-                                     CommandParameter="#FF141414"/>
+                                     CommandParameter="#FF141414" ToolTip="다크입니다"/>
                 <ctrls:HeimdallrMenuItem Header="라이트" Icon="Broadcast" IconFill="#FFFFFFFF"
                                      Command="{Binding ChangeDimmingColorCommand}"
-                                     CommandParameter="#FFF5F5F5"/>
+                                     CommandParameter="#FFF5F5F5" ToolTip="라이트"/>
                 <ctrls:HeimdallrMenuItem Header="커스텀" Icon="Lock" IconFill="#FFFFA500"
                                      Command="{Binding ChangeDimmingColorCommand}"
-                                     CommandParameter="#FFFFA500"/>
+                                     CommandParameter="#FFFFA500" ToolTip="커스텀"/>
 
                 <!-- 다이밍 ON/OFF 토글 -->
                 <Separator/>
                 <ctrls:HeimdallrMenuItem Header="다이밍 토글"
                                      Icon="Power"
                                      IconFill="#FFFFFFFF"
+                                     ToolTip="다이밍 토글"
                                      Command="{Binding ToggleDimmingCommand}"/>
               </ctrls:HeimdallrContextMenu>
             </ctrls:HeimdallrFlatButton.ContextMenu>
           </ctrls:HeimdallrFlatButton>
 
           <!-- 테마 설정 버튼 -->
-          <ctrls:HeimdallrFlatButton x:Name="ThemeButton" Content="테마설정" Margin="5,0" CornerRadius="7" Background="Transparent">
+          <ctrls:HeimdallrFlatButton x:Name="ThemeButton" Content="테마설정" Margin="5,0" CornerRadius="7" Background="Transparent"
+                                     ToolTip="테마설정">
             <ctrls:HeimdallrFlatButton.ContextMenu>
               <ctrls:HeimdallrContextMenu>
                 <ctrls:HeimdallrMenuItem Header="라이트 테마" Icon="Date" IconFill="#FFFFA500"
-                                 Command="{Binding ChangeThemeCommand}" CommandParameter="Light"/>
+                                         Command="{Binding ChangeThemeCommand}" CommandParameter="Light"
+                                         ToolTip="라이드테마"/>
                 <ctrls:HeimdallrMenuItem Header="다크 테마" Icon="Magnify" IconFill="#FF555555"
-                                 Command="{Binding ChangeThemeCommand}" CommandParameter="Dark"/>
+                                         Command="{Binding ChangeThemeCommand}" CommandParameter="Dark"
+                                         ToolTip="다크테마"/>
               </ctrls:HeimdallrContextMenu>
             </ctrls:HeimdallrFlatButton.ContextMenu>
           </ctrls:HeimdallrFlatButton>
@@ -127,9 +137,9 @@
 
           <!-- ProgressBar 바인딩 -->
           <ProgressBar Minimum="0" Maximum="100" Value="50" 
-                 Height="20" Width="200"
-                 Background="{DynamicResource BackgroundColor}"
-                 Foreground="{DynamicResource SliderBrush}"/>
+                       Height="20" Width="200"
+                       Background="{DynamicResource BackgroundColor}"
+                       Foreground="{DynamicResource SliderBrush}"/>
 
         </StackPanel>
       </Setter.Value>
@@ -145,7 +155,7 @@
               <RowDefinition Height="Auto" />
               <RowDefinition Height="*" />
               <RowDefinition Height="*" />
-              <RowDefinition Height="*" />
+              <RowDefinition Height="100" />
               <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
@@ -195,41 +205,57 @@
 
               </Grid.ColumnDefinitions>
               <ctrls:HeimdallrCloseButton Grid.Column="0" IconSize="25" Fill="AliceBlue"
-                                          Command="{Binding MessageCommand}"/>
+                                          Command="{Binding MessageCommand}" />
+              
               <ctrls:HeimdallrMaximizeButton Grid.Column="1" IconSize="25" Fill="Aqua" Margin="10 0 0 0"
-                                          Command="{Binding MessageCommand}"/>
+                                          Command="{Binding MessageCommand}" />
+              
               <ctrls:HeimdallrMinimizeButton Grid.Column="2" IconSize="25"  Fill="Chocolate" Margin="10 0 0 0"
-                                          Command="{Binding MessageCommand}"/>
+                                          Command="{Binding MessageCommand}" />
+              
               <ctrls:HeimdallrHoldSubmitButton Grid.Column="3" Content="HoldSubmit" BorderThickness="2" Margin="10 0 0 0"
-                                          Command="{Binding MessageCommand}"/>
+                                          Command="{Binding MessageCommand}" ToolTip="HoldSubmitButton"/>
+              
               <ctrls:HeimdallrFlatButton Grid.Column="4"  Content="FlatButton" Margin="10 0 0 0"
-                                         Command="{Binding MessageCommand}" CornerRadius="7"/>
+                                         Command="{Binding MessageCommand}" CornerRadius="7" ToolTip="FlatButton"/>
+              
               <ctrls:HeimdallrPulseEllipseButton Grid.Column="5" Icon="Arrow_Triangle_Right" Content="PulesEllipseButon" Margin="10 0 0 0"
-                                                 Command="{Binding MessageCommand}" />
+                                                 ShapeMode="Circle"
+                                                 Command="{Binding MessageCommand}" ToolTip="PulseEllipseButton"/>
+              
               <ctrls:HeimdallrPulseButton Grid.Column="6" Icon="AcitveA" Background="#FF50577A" Margin="10 0 0 0"
                                           ButtonText="PulseButton Rset"  Width="120"
-                                          Command="{Binding ResetCommand}" CornerRadius="7" />
+                                          Command="{Binding ResetCommand}" CornerRadius="7" ToolTip="PulseButton"/>
+              
               <ctrls:HeimdallrHoldButton Grid.Column="7" Icon="AcitveA" ButtonText="Start HeimdallrProgressBar" Margin="10 0 0 0"
                                              BackgroundRectangleFill="Beige" HoldDuration="0:0:1" AnimatedFillDuration="0:0:0.1"
-                                             Command="{Binding StartCommand}"/>
+                                             Command="{Binding StartCommand}" ToolTip="HoldButton"/>
+              
               <ctrls:HeimdallrSwitchCheckBox Grid.Column="8" Icon="Ghost1" Width="120" Margin="10 0 0 0"
                                              OnLabel="ON할아버지" OffLabel="OFF할아버지" OnLebelForeground="#FFFFFFFF"
-                                             OffLebelForeground="#FF8C3061" IsChecked="{Binding IsLoading, Mode=TwoWay}"/>
+                                             OffLebelForeground="#FF8C3061" IsChecked="{Binding IsLoading, Mode=TwoWay}"
+                                             ToolTip="SwitchCheckBox"/>
+              
               <ctrls:HeimdallrIconToggleButton Grid.Column="9" Icon="Success_Flag"  IconMouseOverFill="#FFFFCC00" Margin="10 0 0 0"
-                                               IsChecked="{Binding IsLoading, Mode=TwoWay}"/>
+                                               IsChecked="{Binding IsLoading, Mode=TwoWay}"
+                                               ToolTip="IconToggleButton"/>
+              
               <ctrls:HeimdallrComboBox Grid.Column="10" Icon="Success" IconMouseOverFill="AliceBlue" Margin="10 0 0 0"
                                        PlaceholderText="역할" PlaceholderForeground="AliceBlue" 
                                        SelectedItemForeground="#FFF25912"
                                        ItemsSource="{Binding EmployeePosition}"
                                        SelectedValue="{Binding SelectedEmployeePosition, Mode=TwoWay}"
                                        SelectedValuePath="Value"
-                                       DisplayMemberPath="Description"/>
+                                       DisplayMemberPath="Description"
+                                       ToolTip="ComboBox"/>
+              
               <!-- 선택된 아이템 표시 -->
               <TextBlock Grid.Column="11"  Margin="10,0,0,0" VerticalAlignment="Center" FontSize="16" Foreground="White"
                          Text="{Binding SelectedEmployeePosition}"/>
 
               <ctrls:HeimdallrRepeatButton Grid.Column="12" Background="Aqua" Width="100" Height="36" Margin="10 0 0 0"
-                                           BorderBrush="Black" BorderThickness="2" Content="리피트버튼"/>
+                                           BorderBrush="Black" BorderThickness="2" Content="리피트버튼"
+                                           ToolTip="RepeatButton"/>
 
               <ctrls:HeimdallrPlaceholderTextBox Grid.Column="13" Margin="10 0 0 0"
                                                  MaxLength="10"
@@ -242,14 +268,17 @@
                                                  RightIcon="AcitveB"
                                                  RightIconFill="Azure"
                                                  RightCommand="{Binding MessageCommand}"
-                                                 RightIconToolTipContent="자동코드생성"
-                                                 Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+                                                 RightIconToolTip="자동코드생성"
+                                                 Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                                                 ToolTip="PlaceHolderTextBox"/>
 
-              <ctrls:HeimdallrRadioButton Grid.Column="14" Icon="WindowMaximize" IconFill="AliceBlue"  Margin="10 0 0 0"
-                                          MouseOverForeground="AliceBlue" Command="{Binding MessageCommand}" />
+              <ctrls:HeimdallrRadioButton Grid.Column="14" Icon="WindowMaximize" IconFill="#FFD2C1B6"  Margin="10 0 0 0"
+                                          Command="{Binding MessageCommand}" 
+                                          ToolTip="RADIOBUTTON"/>
 
               <ctrls:HeimdallrProgressBar Grid.Column="15" Value="{Binding Value}" Maximum="{Binding Maximum}"  Width="100" Margin="10 0 0 0"
-                                          Minimum="{Binding Minimum}" Background="{DynamicResource DarkPlum}"/>
+                                          Minimum="{Binding Minimum}" Background="{DynamicResource DarkPlum}"
+                                          ToolTip="PregressBar" />
 
             </Grid>
             <Grid Grid.Row="2" >
@@ -290,25 +319,29 @@
 
               <ctrls:HeimdallrRepeatButton Grid.Column="0" Background="Aqua" Margin="10 0 0 0"
                                            BorderBrush="Black" BorderThickness="0"
-                                           Icon="AcitveB" IconFill="BlanchedAlmond" CornerRadius="7"/>
+                                           Icon="AcitveB" IconFill="BlanchedAlmond" CornerRadius="7"
+                                           ToolTip="리피트버튼"/>
 
               <ctrls:HeimdallrThumb Grid.Column="1" Margin="10 0 0 0" Background="Red"
-                                    MouseOverBrush="Blue" IsDraggingBrush="GreenYellow"/>
+                                    MouseOverBrush="Blue" IsDraggingBrush="GreenYellow"
+                                    ToolTip="Thumb"/>
 
 
               <ctrls:HeimdallrPlaceholderTextBox Grid.Column="2" MaxLength="10" Icon="Facebook" BorderBrush="AliceBlue"
                                                  Foreground="#FFFFFFFF" UseFloatingLabel="True" PlaceholderText="입력하세요"
                                                  PlaceholderForeground="AliceBlue" RightIcon="AcitveB"
                                                  RightIconFill="Azure" Margin="10 0 0 0"
-                                                 RightIconToolTipContent="테스트" />
+                                                 RightIconToolTip="테스트" ToolTip="PlaceHolderTextbox"/>
 
               <ctrls:HeimdallrHoldButton Grid.Column="3" Icon="Save" ButtonText="OK" BackgroundRectangleFill="Beige" 
-                                         HoldDuration="0:0:1" AnimatedFillDuration="0:0:0.1" Margin="10 0 0 0" />
+                                         HoldDuration="0:0:1" AnimatedFillDuration="0:0:0.1" Margin="10 0 0 0" 
+                                         ToolTip="HoldButton"/>
 
-              <ctrls:HeimdallrNumericButton Grid.Column="4" Margin="10 0 0 0" Max="1000" Min="-50" Step="50" UpButtonIcon="Account" DownButtonIcon="AccountA" />
+              <ctrls:HeimdallrNumericButton Grid.Column="4" Margin="10 0 0 0" Max="1000" Min="-50" Step="50" UpButtonIcon="Arrow_Ellipse_UpA" DownButtonIcon="Arrow_Ellipse_DownA"
+                                            ToolTip="NumericButton"/>
 
               <ctrls:HeimdallrIcon Grid.Column="5" Icon="Sale" IconSize="50"  Fill="Chartreuse" Margin="10 0 0 0"
-                                   Command="{Binding MessageCommand}"/>
+                                   Command="{Binding MessageCommand}" ToolTip="HeimdallrIcon"/>
             </Grid>
 
             <Grid Grid.Row="0" >
@@ -322,32 +355,32 @@
                 <ColumnDefinition Width="*" />
               </Grid.ColumnDefinitions>
               <ctrls:LoadingOverlay Grid.Column="0" IndicatorType="Blocks" Foreground="White"
-                                      IsLoading="{Binding IsLoading}"  
-                                      Visibility="{Binding IsLoading, Converter={convt:BooleanToVisibilityConverter}}"/>
+                                    IsLoading="{Binding IsLoading}"  ToolTip="LoadingOverlay"
+                                    Visibility="{Binding IsLoading, Converter={convt:BooleanToVisibilityConverter}}"/>
 
-              <ctrls:HeimdallrRadioButton Grid.Column="1" Icon="Cash" Command="{Binding ToggleBusyCommand}" />
+              <ctrls:HeimdallrRadioButton Grid.Column="1" Icon="Cash" Command="{Binding ToggleBusyCommand}" ToolTip="RadioButton"/>
 
-              <ctrls:FlipAnimationCard Grid.Column="2" Image="AmazonPrime" CardWidth="200" CardHeight="200">
+              <ctrls:FlipAnimationCard Grid.Column="2" Image="AmazonPrime" CardWidth="200" CardHeight="200" ToolTip="CARD">
                 <ctrls:FlipAnimationCard.BackContent>
                   <ctrls:HeimdallrFlatButton />
                 </ctrls:FlipAnimationCard.BackContent>
               </ctrls:FlipAnimationCard>
 
               <StackPanel Grid.Row="3" Orientation="Horizontal">
-                <ctrls:HeimdallrIcon IconSize="100" Icon="ArrowUpBold" />
-                <ctrls:HeimdallrIcon IconSize="100" Icon="ArrowDownBold" />
+                <ctrls:HeimdallrIcon IconSize="100" Icon="Customer" ToolTip="ArrowUpBold"/>
+                <ctrls:HeimdallrIcon IconSize="100" Icon="User" ToolTip="ArrowDownBold"/>
               </StackPanel>
 
               <ctrls:HeimdallrScrollBar Orientation="Horizontal" Grid.Column="4" Margin="10 0 0 0" Width="200" Height="20"
-                                        
+                                        ToolTip="ScrollBar"
                                         />
 
               <ctrls:HeimdallrScrollBar Orientation="Vertical" Grid.Column="5" Margin="10 0 0 0" Height="100"
-                                        
+                                        ToolTip="ScrollBar"
                                         />
 
-              <ctrls:HeimdallrTreeView Grid.Column="6" Width="200" Background="Transparent">
-                <ctrls:HeimdallrTreeViewItem Icon="Approval"
+              <ctrls:HeimdallrTreeView Grid.Column="6" Width="200" Background="Transparent" ToolTip="TreeView">
+                <ctrls:HeimdallrTreeViewItem Icon="Approval" ToolTip="TreeViewItem"
                                              ExpandIcon="Arrow_Triangle_Down"
                                              CollapseIcon="Arrow_Triangle_Up"
                                              SelectedBackground="AliceBlue"
@@ -398,7 +431,7 @@
                                        Background="Transparent"
                                        ScrollViewer.VerticalScrollBarVisibility="Auto">
 
-               
+
 
                 <ctrls:HeimdallrListView.View>
                   <GridView >
@@ -434,110 +467,6 @@
               </ctrls:HeimdallrListView>
             </Grid>
 
-            <!--#region AnimatedContentMenu Row 0-->
-            <!--<Grid Grid.Row="0">
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-              </Grid.ColumnDefinitions>
-              <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-              </Grid.RowDefinitions>
-
-              -->
-            <!-- 열기/닫기 버튼 -->
-            <!--
-              <Button Grid.Row="2" Grid.Column="0"
-                      Content="Toggle Menu"
-                      Width="100" Height="30"
-                      HorizontalAlignment="Right"
-                      VerticalAlignment="Top"
-                      Margin="10"
-                      Command="{Binding ToggleMenuCommand}" />
-
-              <ctrls:AnimatedContentMenu 
-                                        Grid.Row="0"
-                                        IsOpen="{Binding MenuVisible}"
-                                        SlideDirection="Left"
-                                        OverlayMode="Push"
-                                        Background="#FF456882"
-                                        Padding="5"
-                                        HorizontalAlignment="Right"
-                                        EasingMode="BackEaseIn"
-                                        OpenCloseDuration="0:0:1">
-
-                <ctrls:AnimatedContentMenu.Content>
-                  <Grid>
-                    <Grid.RowDefinitions>
-                      <RowDefinition Height="Auto" />
-                      <RowDefinition Height="Auto" />
-                      <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-
-                    <ListBox Grid.Row="0" ItemsSource="{Binding MenuItems}" Background="Transparent" BorderThickness="0">
-                      <ListBox.ItemTemplate>
-                        <DataTemplate>
-                          <StackPanel>
-                            -->
-            <!-- 상위 메뉴 RadioButton -->
-            <!--
-                            <RadioButton Content="{Binding Title}"
-                           GroupName="MainMenu"
-                           FontSize="18"
-                           Foreground="White"
-                           HorizontalContentAlignment="Left"
-                           Margin="5 10 0 0"
-                           IsChecked="{Binding IsChecked, Mode=TwoWay}">
-                              <RadioButton.InputBindings>
-                                <MouseBinding MouseAction="LeftClick"
-                                    Command="{Binding RelativeSource={RelativeSource AncestorType=ListBox}, Path=DataContext.ToggleSubMenuCommand}"
-                                    CommandParameter="{Binding}" />
-                              </RadioButton.InputBindings>
-                            </RadioButton>
-
-                            -->
-            <!-- 하위 메뉴 ItemsControl -->
-            <!--
-                            <ItemsControl ItemsSource="{Binding SubItems}">
-                              <ItemsControl.Style>
-                                <Style TargetType="ItemsControl">
-                                  <Setter Property="Visibility" Value="Collapsed"/>
-                                  <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsExpanded}" Value="True">
-                                      <Setter Property="Visibility" Value="Visible"/>
-                                    </DataTrigger>
-                                  </Style.Triggers>
-                                </Style>
-                              </ItemsControl.Style>
-                              <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                  <RadioButton Content="{Binding Title}"
-                                       GroupName="SubMenu"
-                                       FontSize="16"
-                                       Foreground="LightGray"
-                                       HorizontalContentAlignment="Left"
-                                       Margin="20 5 0 5"
-                                       IsChecked="{Binding IsChecked, Mode=TwoWay}"/>
-                                </DataTemplate>
-                              </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                          </StackPanel>
-                        </DataTemplate>
-                      </ListBox.ItemTemplate>
-                    </ListBox>
-
-                    <ctrls:HeimdallrHoldIconButton  Icon="Account" Grid.Row="1" Content="sdfsdfsf" />
-                    <ctrls:HeimdallrRadioButton Grid.Row="2" Icon="Address" IconFill="AliceBlue" 
-                                     
-                                     Content="라이도홈버튼"/>
-
-                  </Grid>
-                </ctrls:AnimatedContentMenu.Content>
-              </ctrls:AnimatedContentMenu>
-            </Grid>-->
-            <!--#endregion-->
-
             <Grid Grid.Row="3">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -565,13 +494,14 @@
               <ctrls:HeimdallrPlaceholderPasswordBox Grid.Column="1"  Foreground="#FFFFFFFF" Margin="10 0 0 0"
                                                     Icon="Address"
                                                     EyeIcon="Key"
+                                                    RightIconToolTip="비밀번호 보기"
                                                     PlaceholderText="비밀번호를 입력하세요"
                                                     PlaceholderForeground="AliceBlue"
                                                     Password="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
               <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="10 0 0 0">
                 <ctrls:HeimdallrSlider Minimum="0" Maximum="100" Value="{Binding SliderValue, Mode=TwoWay}"
-                                       Margin="10 0 0 0" SmallChange="1" LargeChange="10"/>
+                                       Margin="10 0 0 0" SmallChange="1" LargeChange="10" ToolTip="Slider"/>
                 <TextBlock Text="{Binding DisplayText}"  VerticalAlignment="Center"/>
               </StackPanel>
 
@@ -606,7 +536,7 @@
                                                  RightIcon="AcitveB"
                                                  RightIconFill="Azure"
                                                  RightCommand="{Binding MessageCommand}"
-                                                 RightIconToolTipContent="ViewModelBase 테스트"
+                                                 RightIconToolTip="ViewModelBase 테스트"
                                                  Text="{Binding ViewModel, UpdateSourceTrigger=PropertyChanged}"/>
 
               <Label Grid.Column="1" Name="ErrorLabel" Foreground="Red" Content="{Binding NameErrorsText}" Margin="5 0 0 0" />
@@ -640,12 +570,164 @@
               </StackPanel>
             </Grid>
 
+            <!--#region AnimatedContentMenu Row 0-->
+            <Grid Grid.Row="5">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+              </Grid.RowDefinitions>
 
+              <!--열기/닫기 버튼--> 
+              <Button Grid.Column="1"
+                      Content="Toggle Menu"
+                      Width="100" Height="30"
+                      HorizontalAlignment="Right"
+                      VerticalAlignment="Top"
+                      Margin="10"
+                      Command="{Binding ToggleMenuCommand}" />
 
-       
+              <ctrls:AnimatedContentMenu Grid.Column="0"
+                                         IsOpen="{Binding MenuVisible}"
+                                         SlideDirection="Left"
+                                         OverlayMode="Push"
+                                         Background="#FF456882"
+                                         Padding="5"
+                                         HorizontalAlignment="Right"
+                                         EasingMode="BackEaseIn"
+                                         OpenCloseDuration="0:0:1">
 
-          <TextBlock Grid.Row="6" Text="{Binding BusyMessage, UpdateSourceTrigger=PropertyChanged}" FontSize="20"
-               Foreground="Red" />
+                <ctrls:AnimatedContentMenu.Content>
+                  <Grid>
+                    <Grid.RowDefinitions>
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <ListBox Grid.Row="0" ItemsSource="{Binding MenuItems}" Background="Transparent" BorderThickness="0">
+                      <ListBox.ItemTemplate>
+                        <DataTemplate>
+                          <StackPanel>
+
+                            <!--상위 메뉴 RadioButton-->
+                            <ctrls:HeimdallrRadioButton Content="{Binding Title}"
+                                         GroupName="MainMenu"
+                                         FontSize="18"
+                                         Foreground="White"
+                                         HorizontalContentAlignment="Left"
+                                         Margin="5 10 0 0"
+                                         IsChecked="{Binding IsChecked, Mode=TwoWay}">
+                              <ctrls:HeimdallrRadioButton.InputBindings>
+                                <MouseBinding MouseAction="LeftClick"
+                                              Command="{Binding RelativeSource={RelativeSource AncestorType=ListBox}, Path=DataContext.ToggleSubMenuCommand}"
+                                              CommandParameter="{Binding}" />
+                              </ctrls:HeimdallrRadioButton.InputBindings>
+                            </ctrls:HeimdallrRadioButton>
+                        
+                            <!--하위 메뉴 ItemsControl-->
+                            <ItemsControl ItemsSource="{Binding SubItems}">
+                              <ItemsControl.Style>
+                                <Style TargetType="ItemsControl">
+                                  <Setter Property="Visibility" Value="Collapsed"/>
+                                  <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsExpanded}" Value="True">
+                                      <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                  </Style.Triggers>
+                                </Style>
+                              </ItemsControl.Style>
+                              <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                  <ctrls:HeimdallrRadioButton Content="{Binding Title}"
+                                                              GroupName="SubMenu"
+                                                              FontSize="16"
+                                                              Foreground="LightGray"
+                                                              HorizontalContentAlignment="Left"
+                                                              Margin="20 5 0 5"
+                                                              IsChecked="{Binding IsChecked, Mode=TwoWay}"/>
+                                </DataTemplate>
+                              </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                          </StackPanel>
+                          </DataTemplate>
+                        </ListBox.ItemTemplate>
+                      </ListBox>
+                    <ctrls:HeimdallrRadioButton Grid.Row="2" Icon="Address" IconFill="AliceBlue" 
+                                                Content="라디오홈버튼"/>
+                  </Grid>
+                </ctrls:AnimatedContentMenu.Content>
+              </ctrls:AnimatedContentMenu>
+
+              <ctrls:HeimdallrDropdownContentMenu x:Name="MyDropdown" Grid.Column="2" Label="옵션선택" Icon="Menu"
+                                                  IconSize="30" 
+                                                  Width="200" VerticalAlignment="Top"
+                                                  >
+                <ctrls:HeimdallrDropdownContentMenu.Content>
+                  <StackPanel>
+                    <ctrls:HeimdallrFlatButton Content="메뉴 항목 1" Margin="2" Command="{Binding MessageCommand}"/>
+                    <ctrls:HeimdallrFlatButton Content="메뉴 항목 2" Margin="2" Command="{Binding MessageCommand}"/>
+                    <ctrls:HeimdallrFlatButton Content="메뉴 항목 3" Margin="2"  Command="{Binding MessageCommand}"/>
+                    <ctrls:HeimdallrFlatButton Content="메뉴 항목 4" Margin="2" Command="{Binding MessageCommand}"/>
+                    <ctrls:HeimdallrFlatButton Content="메뉴 항목 5" Margin="2" Command="{Binding MessageCommand}"/>
+                    <ctrls:HeimdallrFlatButton Content="메뉴 항목 6" Margin="2"  Command="{Binding MessageCommand}"/>
+                  </StackPanel>
+                </ctrls:HeimdallrDropdownContentMenu.Content>
+              </ctrls:HeimdallrDropdownContentMenu>
+              
+              <!-- 슬라이드 메뉴 -->
+              <ctrls:HeimdallrSlideContentPanel x:Name="SlideMenu" Grid.Column="3" Margin="5" 
+                                       IsOpen="{Binding IsOpen, Mode=TwoWay}" 
+                                       Background="#FF2B2B2B"
+                                       BorderBrush="#FF555555"
+                                       BorderThickness="1"
+                                       ToolTip="SlideContentPanel">
+                <ctrls:HeimdallrSlideContentPanel.Content>
+                  
+                    <StackPanel>
+                      <ctrls:HeimdallrRadioButton Content="슬라이드메뉴항목 1" Icon="Account" Margin="2" Command="{Binding MessageCommand}"/>
+                      <ctrls:HeimdallrRadioButton Content="슬라이드메뉴항목 2" Icon="AccountA" Margin="2" Command="{Binding MessageCommand}"/>
+                      <ctrls:HeimdallrRadioButton Content="메뉴 항목5" Icon="AccountBox" Margin="2"  Command="{Binding MessageCommand}"/>
+                    </StackPanel>
+                
+                </ctrls:HeimdallrSlideContentPanel.Content>
+              </ctrls:HeimdallrSlideContentPanel>
+
+              <!-- 메뉴 열기 버튼 -->
+              <ctrls:HeimdallrSwitchCheckBox Grid.Column="4" Icon="Ghost1" Width="120" Margin="10 0 0 0"
+                                OnLabel="슬라이드ON" OffLabel="슬라이드OFF" OnLebelForeground="#FFFFFFFF"
+                                OffLebelForeground="#FF8C3061" IsChecked="{Binding IsOpen, Mode=TwoWay}"/>
+             
+            </Grid>
+            <!--#endregion-->
+
+            <Grid Grid.Row="6">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+
+              <TextBlock Grid.Column="0" Text="{Binding BusyMessage, UpdateSourceTrigger=PropertyChanged}" FontSize="20"
+                         Foreground="Red" />
+
+              <Grid Grid.Column="1">
+                <StackPanel Orientation="Horizontal">
+                  <ctrls:HeimdallrIcon Icon="Read" Fill="White" IconSize="30" />
+                </StackPanel>
+              </Grid>
+            </Grid>
+           
             
             
           </Grid>

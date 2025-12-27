@@ -10,13 +10,15 @@
     <Setter Property="Background" Value="Transparent" />
     
     <!-- 기본적용-->
-    <Setter Property="IconSize" Value="15" />
-    <Setter Property="IconFill" Value="#FFDCD7C9" />
+    <Setter Property="Icon" Value="None" />
+    <Setter Property="IconSize" Value="13" />
+    <Setter Property="IconFill" Value="#FF4A47A3" />
+    <Setter Property="ShapeMode" Value="Free" />
     <Setter Property="Ellipse1Brush" Value="#FF577B8D" />
     <Setter Property="Ellipse2Brush" Value="#FF7A1CAC" />
     <Setter Property="Ellipse3Brush" Value="#FFB9B4C7" />
     <Setter Property="Width" Value="40" />
-    <Setter Property="Height" Value="36" />
+    <Setter Property="Height" Value="40" />
 
     <Setter Property="Template">
       <Setter.Value>
@@ -43,6 +45,8 @@
 
               <!-- 아이콘을 ellipse3의 크기에 맞춰 정확히 중앙 정렬 -->
               <Viewbox Stretch="Uniform"
+                       Width="{TemplateBinding IconSize}"
+                       Height="{TemplateBinding IconSize}"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center">
                 <ctrls:HeimdallrIcon x:Name="icon"

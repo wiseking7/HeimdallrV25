@@ -23,11 +23,15 @@ public class StringToVisibilityConverter : BaseValueConverter<StringToVisibility
   /// <returns></returns>
   public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
   {
+    if (targetType != typeof(Visibility))
+      return Visibility.Visible;
+
     // 문자열이 null 또는 빈 문자열인지 확인
-    bool hasText = value is string str && !string.IsNullOrEmpty(str);
+    bool hasText = value is string str && !string.IsNullOrWhiteSpace(str);
 
     // 파라미터 처리 (Invert 여부)
     string param = (parameter?.ToString()?.ToLowerInvariant()) ?? string.Empty;
+
     bool invert = param == "invert" || param == "false";
 
     // 동작 방식에 따라 Visibility 설정

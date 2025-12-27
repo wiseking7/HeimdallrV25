@@ -32,6 +32,13 @@
 
     <!-- ContentMenu-->
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/ContextMenu/HeimdallrContextMenu.xaml" />
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Panel/HeimdallrSlideContentPanel.xaml" />
+
+    <!-- DroupDown -->
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/DropDown/HeimdallrDropdownContentMenu.xaml" />
+
+    <!-- Region -->
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Region/HeimdallrRegion.xaml" />
 
     <!-- MenuItem-->
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/MenuItem/HeimdallrMenuItem.xaml" />

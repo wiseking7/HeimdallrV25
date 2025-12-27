@@ -407,6 +407,9 @@ public enum IconType
   [Description("고객 A")]
   CustomerA,
 
+  [Description("고객 B")]
+  CustomerB,
+
   [Description("대시보드")]
   Dashboard,
 

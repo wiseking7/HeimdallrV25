@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ui="https://Heimdallr.WPF.UI"
                     xmlns:ctrls="clr-namespace:Heimdallr.App.Themes.UI">
 
   <Style TargetType="{x:Type ctrls:TestDialogView}">
@@ -11,12 +12,78 @@
                   BorderBrush="{TemplateBinding BorderBrush}"
                   BorderThickness="{TemplateBinding BorderThickness}">
 
-            <TextBlock Text="테스트 다이얼로그 뷰입니다."
-                       Foreground="#FFFFFFFF"
-                       FontSize="25"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center" />
+            <Grid Background="Transparent">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+              <ui:HeimdallrSlideContentPanel x:Name="AnimationMenu"
+                                             Grid.Column="0"
+                                             IsOpen="{Binding IsOpen, Mode=TwoWay}"                                         
+                                             Background="#FF456882"
+                                             HorizontalAlignment="Stretch" >
 
+                <ui:HeimdallrSlideContentPanel.Content>
+                  <StackPanel Orientation="Vertical">
+                    <!--상위메뉴 Home-->
+                    <ui:HeimdallrRadioButton Icon="Home" IconFill="AliceBlue"
+                                 Command="{Binding NavigateCommand}"
+                                 CommandParameter="HomeView" ToolTip="HOME">
+                    </ui:HeimdallrRadioButton>
+
+                    <!--상위메뉴 Dashboard-->
+                    <ui:HeimdallrRadioButton Icon="Dashboard" IconFill="AliceBlue" 
+                                 Command="{Binding NavigateCommand}"
+                                 CommandParameter="DashBoardView" ToolTip="대쉬보드"/>
+
+                    <!--상위메뉴 Customer-->
+                    <ui:HeimdallrRadioButton Icon="CustomerA" IconFill="AliceBlue" />
+
+                    <!--상위메뉴 Sale-->
+                    <ui:HeimdallrRadioButton Icon="SaleA"  IconFill="AliceBlue" />
+
+                    <!--상위메뉴 Prduct-->
+                    <ui:HeimdallrRadioButton Icon="ProductA"  IconFill="AliceBlue" />
+
+                    <!--상위메뉴 Employee-->
+                    <ui:HeimdallrRadioButton Icon="EmployeeA"  IconFill="AliceBlue" />
+
+                    <!--상위메뉴 Order-->
+                    <ui:HeimdallrRadioButton Icon="Order"  IconFill="AliceBlue" />
+
+                    <!--상위메뉴 Invoice-->
+                    <ui:HeimdallrRadioButton Icon="InvoiceA"  IconFill="AliceBlue" />
+
+                    <!--상위메뉴 Payment-->
+                    <ui:HeimdallrRadioButton Icon="Payment"  IconFill="AliceBlue" />
+
+                    <!--상위메뉴 Return-->
+                    <ui:HeimdallrRadioButton Icon="Return"  IconFill="AliceBlue" />
+
+                    <!--상위메뉴 Price-->
+                    <ui:HeimdallrRadioButton Icon="PriceA" IconFill="AliceBlue" />
+
+                    <!--상위메뉴 Vendor-->
+                    <ui:HeimdallrRadioButton Icon="Vendor"  IconFill="AliceBlue" />
+
+                    <!--상위메뉴 Inventory-->
+                    <ui:HeimdallrRadioButton Icon="InventoryA"  IconFill="AliceBlue" />
+
+                    <!--상위메뉴 User-->
+                    <ui:HeimdallrRadioButton Icon="User"  IconFill="AliceBlue"
+                                             />
+
+                    <!--상위메뉴 Setting-->
+                    <ui:HeimdallrRadioButton Icon="Setting"  IconFill="AliceBlue" />
+                  </StackPanel>
+                </ui:HeimdallrSlideContentPanel.Content>
+              </ui:HeimdallrSlideContentPanel>
+
+              <!-- 메뉴 열기 버튼 -->
+              <ui:HeimdallrSwitchCheckBox Grid.Column="1" Icon="Ghost1" Width="120" Margin="10 0 0 0"
+                                           OnLabel="슬라이드ON" OffLabel="슬라이드OFF" OnLebelForeground="#FFFFFFFF"
+                                           OffLebelForeground="#FF8C3061" IsChecked="{Binding IsOpen, Mode=TwoWay}"/>
+            </Grid>
           </Border>
         </ControlTemplate>
       </Setter.Value>

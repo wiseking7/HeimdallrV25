@@ -111,7 +111,7 @@
                 </Button.Style>
 
                 <Viewbox Width="{TemplateBinding RightIconSize}"  
-                         Height="{TemplateBinding RightIconSize}"  
+                         Height="{TemplateBinding RightIconSize}" 
                          Stretch="Uniform"
                          StretchDirection="Both"
                          VerticalAlignment="Center"
@@ -119,7 +119,7 @@
                   <ctrls:HeimdallrIcon Padding="2"
                                        Icon="{TemplateBinding RightIcon}"
                                        Fill="{TemplateBinding RightIconFill}" 
-                                       ToolTip="{TemplateBinding RightIconToolTipContent}"/>
+                                       ToolTip="{TemplateBinding RightIconToolTip}"/>
                 </Viewbox>
               </Button>
             </Grid>

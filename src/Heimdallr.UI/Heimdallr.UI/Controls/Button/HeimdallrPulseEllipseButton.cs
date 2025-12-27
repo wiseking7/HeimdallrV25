@@ -115,10 +115,61 @@ public class HeimdallrPulseEllipseButton : Button
           typeof(AspectMode), typeof(HeimdallrPulseEllipseButton), new PropertyMetadata(AspectMode.Free));
   #endregion
 
+  #region 생성자
   static HeimdallrPulseEllipseButton()
   {
     // DefaultStyleKey를 재정의하여 XAML에서 스타일을 사용할 수 있게 설정
     DefaultStyleKeyProperty.OverrideMetadata(typeof(HeimdallrPulseEllipseButton),
         new FrameworkPropertyMetadata(typeof(HeimdallrPulseEllipseButton)));
   }
+
+  public HeimdallrPulseEllipseButton()
+  {
+    ToolTipOpening += HeimdallrPulseEllipseButton_ToolTipOpening;
+  }
+  #endregion
+
+  #region HeimdallrPulseEllipseButton_ToolTipOpening 이벤트
+  private void HeimdallrPulseEllipseButton_ToolTipOpening(object sender, ToolTipEventArgs e)
+  {
+    // ToolTip 자체가 없으면 아예 열리지 않게
+    if (ToolTip == null)
+    {
+      e.Handled = true;
+      return;
+    }
+
+    // 이미 HeimdallrToolTip이면 그대로 사용
+    if (ToolTip is HeimdallrToolTip)
+      return;
+
+    // 문자열일 경우만 변환
+    if (ToolTip is string tooltipText && !string.IsNullOrWhiteSpace(tooltipText))
+    {
+      ToolTip = new HeimdallrToolTip
+      {
+        Content = tooltipText
+      };
+    }
+    else
+    {
+      // 빈 문자열 / 알 수 없는 타입 → 표시 안 함
+      e.Handled = true;
+    }
+  }
+  #endregion
+
+  #region OnRender 재정의 메서드
+  protected override void OnRender(DrawingContext drawingContext)
+  {
+    base.OnRender(drawingContext);
+
+    // ShapeMode가 Circle일 때 Width와 Height를 강제로 같게 설정
+    if (ShapeMode == AspectMode.Circle)
+    {
+      // Height와 Width를 동일하게 설정
+      this.Height = this.Width;
+    }
+  }
+  #endregion
 }

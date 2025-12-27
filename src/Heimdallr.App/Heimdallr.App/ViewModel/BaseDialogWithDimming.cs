@@ -1,6 +1,6 @@
 ﻿using Heimdallr.UI.Helpers;
 
-namespace Heimdallr.UI.Base;
+namespace Heimdallr.App.ViewModel;
 
 public abstract class BaseDialogWithDimming : ViewModelBase, IDialogAware
 {

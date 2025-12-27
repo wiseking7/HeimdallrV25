@@ -12,10 +12,10 @@
 	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	
 	<!-- 패키지 이름 -->
-	<PackageId>Heimdallr.WPF</PackageId>
+	<PackageId>Heimdallr.WPF.UI</PackageId>
 
 	<!-- 버전 -->
-	<Version>1.0.2</Version>
+	<Version>1.0.14</Version>
 
 	<!-- 작성자 -->
 	<Authors>Heimdallr</Authors>
@@ -45,20 +45,14 @@
     <None Remove="Controls\Assets\Images\images.yaml" />
   </ItemGroup>
 
-  <!--<ItemGroup>
-	<None Include="..\..\README.md">
-	  패키지 안에서 이름 
-	 <Link>README.md</Link>
-	  패키지에 포함 
+  <ItemGroup>
+	<None Include="..\..\..\README.md">
+	  <!--패키지에 포함--> 
 	 <Pack>true</Pack>
-	  루트 경로 
+	  <!--루트 경로--> 
 	 <PackagePath></PackagePath>
 	</None>
   </ItemGroup>
-
-  <PropertyGroup>
-	<PackageReadmeFile>README.md</PackageReadmeFile>
-  </PropertyGroup>-->
 	
   <!-- EmbeddedResource 설정-->
   <ItemGroup>

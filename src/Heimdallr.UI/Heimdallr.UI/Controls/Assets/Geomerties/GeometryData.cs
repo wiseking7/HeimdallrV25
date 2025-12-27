@@ -370,7 +370,7 @@ public class GeometryData
 
   public static string Customer => GeometryConverter.GetData();
   public static string CustomerA => GeometryConverter.GetData();
-
+  public static string CustomerB => GeometryConverter.GetData();
 
   public static string Dashboard => GeometryConverter.GetData();
   public static string DashboardA => GeometryConverter.GetData();

@@ -13,7 +13,7 @@ namespace Heimdallr.UI.Controls;
 ///
 /// 또는 View에 직접 적용:
 ///
-///     &lt;views:MainView xmlns:jangs="https://Heimdallr.WPF.MVVM.ToolKit/xaml" ...&gt;
+///     &lt;views:MainView xmlns:jangs="https://Heimdallr.WPF.UI" ...&gt;
 ///         &lt;jangs:HeimdallrRegion prism:RegionManager.RegionName="ContentRegion" /&gt;
 ///     &lt;/views:MainView&gt;
 ///
