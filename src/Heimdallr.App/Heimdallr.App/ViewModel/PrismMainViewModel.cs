@@ -1,7 +1,6 @@
 ﻿using Heimdallr.App.Enums;
 using Heimdallr.UI.Controls;
 using Heimdallr.UI.Enums;
-using Heimdallr.UI.Extensions;
 using Heimdallr.UI.Helpers;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -15,10 +14,30 @@ using System.Windows.Threading;
 
 namespace Heimdallr.App.ViewModel;
 
-public class PrismMainViewModel : ViewModelBase
+public class PrismMainViewModel : ViewModelBase, IBusyMessageHost
 {
   private readonly Lazy<ResourceManager> _resourceManager;
   private readonly Lazy<IDialogService> _dialogService;
+
+  #region IsEnable  (UI 표기)
+  private bool _isEditMode;
+  public bool IsEditMode
+  {
+    get => _isEditMode;
+    set
+    {
+      if (SetProperty(ref _isEditMode, value))
+      {
+        RaisePropertyChanged(nameof(IsEditMode));
+      }
+    }
+  }
+  public bool IsUIEnabled => !_isEditMode;
+
+  private bool _isVisible;
+  public bool IsVisible { get => _isEditMode; set => SetProperty(ref _isVisible, value); }
+
+  #endregion
 
   #region 생성자
   public PrismMainViewModel(IContainerProvider container) : base(container)
@@ -70,6 +89,25 @@ public class PrismMainViewModel : ViewModelBase
     set => SetProperty(ref _busyMessage, value);
   }
 
+  private string? _password;
+  public string? Password
+  {
+    get => _password;
+    set => SetProperty(ref _password, value);
+  }
+
+  private DateTime? _hireDay;
+  public DateTime? HireDay
+  {
+    get => _hireDay;
+    set
+    {
+      if (SetProperty(ref _hireDay, value))
+      {
+
+      }
+    }
+  }
   public async Task ResetAllPropertiesAsync()
   {
     // Name 초기화
@@ -93,6 +131,7 @@ public class PrismMainViewModel : ViewModelBase
         "CHECK",
         UI.Enums.HeimdallrMessageBoxButtonEnum.YesNo,
         IconType.Success_Flag,
+
         new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF810CA8"))
     );
 
@@ -1258,6 +1297,45 @@ public class PrismMainViewModel : ViewModelBase
 
   public DelegateCommand SliderContentPanelCommand => new DelegateCommand(() => { IsOpen = true; });
   #endregion
+
+  #region HeimdallrPlaceholderTextBox 입력값 확인
+  private string? _numeric;
+  public string? Numeric { get => _numeric; set => SetProperty(ref _numeric, value); }
+
+  private string? _numericWithThousands;
+  public string? NumericWithThousands { get => _numericWithThousands; set => SetProperty(ref _numericWithThousands, value); }
+
+  private string? _numericWithDecimal;
+  public string? NumericWithDecimal { get => _numericWithDecimal; set => SetProperty(ref _numericWithDecimal, value); }
+
+  private string? _mobilePhone;
+  public string? MobilePhone { get => _mobilePhone; set => SetProperty(ref _mobilePhone, value); }
+
+  private string? _phoneLandLine;
+  public string? PhoneLandLine { get => _phoneLandLine; set => SetProperty(ref _phoneLandLine, value); }
+
+  private string? _textTest;
+  public string? TextTest { get => _textTest; set => SetProperty(ref _textTest, value); }
+
+  public ICommand HeimdallrPlaceholderTextBoxCommand => new DelegateCommand(OnCheckSelectedValues);
+  private void OnCheckSelectedValues()
+  {
+    // 일반 속성
+    string nameValue =
+        $"Numeric              : {Numeric}\n" +
+        $"NumericWithThousands : {NumericWithThousands}\n" +
+        $"NumericWithDecimal   : {NumericWithDecimal}\n" +
+        $"MobilePhone          : {MobilePhone}\n" +
+        $"PhoneLandLine        : {PhoneLandLine}\n" +
+        $"TextTest             : {TextTest}\n";
+
+    // 메시지 합치기
+    string message = "===== Input Type Value =====\n" + nameValue;
+
+    HeimdallrMessageBox.Show(message, "Empoyee Create View");
+  }
+
+  #endregion
 }
 
 
@@ -1326,6 +1404,7 @@ public class TreeItemModel
 #region ListView Model
 public class ListViewModel
 {
+  public int RowNumber { get; set; } // 자동번호
   public string? Name { get; set; }
   public int Age { get; set; }
   public string? Department { get; set; }

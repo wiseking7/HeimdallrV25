@@ -101,6 +101,16 @@ public class HeimdallrRadioButton : RadioButton
         typeof(HeimdallrRadioButton), new PropertyMetadata(IconType.None));
   #endregion
 
+  #region IconMouseOverFill
+  public Brush IconMouseOverFill
+  {
+    get => (Brush)GetValue(IconMouseOverFillProperty);
+    set => SetValue(IconMouseOverFillProperty, value);
+  }
+  public static readonly DependencyProperty IconMouseOverFillProperty =
+      DependencyProperty.Register(nameof(IconMouseOverFill), typeof(Brush), typeof(HeimdallrRadioButton), new PropertyMetadata(Brushes.DeepSkyBlue));
+  #endregion
+
   #region RadioButton 선택시 Icon 색상 변경
   /// <summary>
   /// 
@@ -132,7 +142,7 @@ public class HeimdallrRadioButton : RadioButton
   /// </summary>
   public static readonly DependencyProperty MouseOverForegroundProperty =
       DependencyProperty.Register(nameof(MouseOverForeground), typeof(Brush), typeof(HeimdallrRadioButton),
-        new PropertyMetadata(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#EB5B00"))));
+        new PropertyMetadata(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFFCC00"))));
   #endregion
 
   #region IconSize

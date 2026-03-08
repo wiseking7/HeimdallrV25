@@ -1,39 +1,38 @@
 ﻿<ResourceDictionary
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:ctrls="clr-namespace:Heimdallr.UI.Controls"
   xmlns:fr="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
-  xmlns:sys="clr-namespace:System;assembly=mscorlib"
-  xmlns:ctrls="clr-namespace:Heimdallr.UI.Controls">
+  xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-  <!-- 기본 스케일 설정 -->
+  <!--  기본 스케일 설정  -->
   <sys:Double x:Key="IndicatorScaleX" fr:Freeze="True">1.0</sys:Double>
   <sys:Double x:Key="IndicatorScaleY" fr:Freeze="True">1.0</sys:Double>
 
-  <!-- 백그라운드-->
-  <SolidColorBrush x:Key="IndicatorBackground" fr:Freeze="True" Color="#DDDDDD" />
+  <!--  백그라운드  -->
+  <SolidColorBrush
+    x:Key="IndicatorBackground"
+    fr:Freeze="True"
+    Color="#DDDDDD" />
 
   <ControlTemplate x:Key="Pulse" TargetType="{x:Type ctrls:Indicator}">
     <Grid
-          x:Name="MainGrid"
-          HorizontalAlignment="Center"
-          VerticalAlignment="Center"
-          SnapsToDevicePixels="True"
-          UseLayoutRounding="True">
-      <Grid
-              RenderTransformOrigin="0.5 0.5">
+      x:Name="MainGrid"
+      HorizontalAlignment="Center"
+      VerticalAlignment="Center"
+      SnapsToDevicePixels="True"
+      UseLayoutRounding="True">
+      <Grid RenderTransformOrigin="0.5 0.5">
         <Grid.RenderTransform>
-          <ScaleTransform 
-                      ScaleX="{DynamicResource IndicatorScaleX}"
-                      ScaleY="{DynamicResource IndicatorScaleY}"/>
+          <ScaleTransform ScaleX="{DynamicResource IndicatorScaleX}" ScaleY="{DynamicResource IndicatorScaleY}" />
         </Grid.RenderTransform>
 
         <Ellipse
-                  x:Name="Ellipse"
-                  Width="20"
-                  Height="20"
-                  Fill="{TemplateBinding Foreground}"
-                  RenderTransformOrigin="0.5,0.5"
-                  >
+          x:Name="Ellipse"
+          Width="20"
+          Height="20"
+          Fill="{TemplateBinding Foreground}"
+          RenderTransformOrigin="0.5,0.5">
           <Ellipse.RenderTransform>
             <ScaleTransform />
           </Ellipse.RenderTransform>
@@ -55,12 +54,11 @@
               </DoubleAnimationUsingKeyFrames>
 
               <DoubleAnimation
-                              Storyboard.TargetName="Ellipse"
-                              Storyboard.TargetProperty="(UIElement.Opacity)"
-                              From="1"
-                              To="0"
-                              Duration="0:0:1.500"
-                              />
+                Storyboard.TargetName="Ellipse"
+                Storyboard.TargetProperty="(UIElement.Opacity)"
+                From="1"
+                To="0"
+                Duration="0:0:1.500" />
             </Storyboard>
           </VisualState>
           <VisualState x:Name="Inactive" />

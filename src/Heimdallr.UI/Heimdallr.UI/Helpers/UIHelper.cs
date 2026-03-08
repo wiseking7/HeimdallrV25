@@ -7,18 +7,43 @@ using System.Windows.Threading;
 namespace Heimdallr.UI.Helpers;
 
 /// <summary>
-/// Prism + WPF UIHelper 확장
-/// 백그라운드 작업, 비동기 작업, ViewModel에서 UI 조작 등 UI 스레드 접근이 필요한 모든 곳에서 사용합니다.
+/// ViewModel이 구현해야 하는 BusyMessage 계약
+/// ViewModelUIService 데체 삭제 바인딩 오류 없으면 
+/// </summary>
+public interface IBusyMessageHost
+{
+  string? BusyMessage { get; set; }
+}
+
+/// <summary>
+/// WPF UI Thread(Dispatcher) 접근을 중앙에서 관리하기 위한 Helper 클래스
+/// 
+/// 목적:
+/// 1. UI Thread 안전성 보장
+/// 2. ViewModel / Service 계층에서 UI 접근 단순화
+/// 3. Dispatcher 중복 코드 제거
+/// 4. BusyMessage, MessageBox, Command 생성 표준화
 /// </summary>
 public static class UIHelper
 {
   #region RunOnUIThread 기본 메서드
-
+  /// <summary>
+  /// UI Thread에서 Action을 실행한다.
+  /// 이미 UI Thread라면 바로 실행하고,
+  /// 아니라면 Dispatcher.Invoke를 사용한다.
+  /// </summary>
+  /// <param name="action">UI에서 실행할 코드</param>
+  /// <param name="priority">Dispatcher 우선순위</param>
   public static void RunOnUIThread(Action action,
                                    DispatcherPriority priority = DispatcherPriority.Normal)
   {
     var dispatcher = Application.Current?.Dispatcher;
-    if (dispatcher == null) return;
+    if (dispatcher == null)
+    {
+      // Application이 없는 경우 fallback
+      action();
+      return;
+    }
 
     if (dispatcher.CheckAccess())
       action();
@@ -26,56 +51,75 @@ public static class UIHelper
       dispatcher.Invoke(action, priority);
   }
 
-  public static async Task RunOnUIThreadAsync(Func<Task> asyncAction,
-                                              DispatcherPriority priority = DispatcherPriority.Normal)
+  /// <summary>
+  /// UI Thread에서 비동기 작업(Func<Task>)을 실행한다.
+  /// async/await 패턴을 안전하게 사용하기 위함
+  /// </summary>
+  public static Task RunOnUIThreadAsync(Func<Task> asyncAction, DispatcherPriority priority = DispatcherPriority.Normal)
   {
     var dispatcher = Application.Current?.Dispatcher;
-    if (dispatcher == null) return;
+
+    if (dispatcher == null)
+    {
+      return asyncAction(); // dispatcher 없으면 그냥 awaitable Task 반환
+    }
 
     if (dispatcher.CheckAccess())
-      await asyncAction();
+    {
+      return asyncAction();
+    }
     else
-      await dispatcher.InvokeAsync(asyncAction, priority);
+    {
+      return dispatcher.InvokeAsync(asyncAction, priority).Task;
+    }
   }
 
+  /// <summary>
+  /// UI Thread에서 값을 반환하는 함수 실행
+  /// </summary>
   public static T? RunOnUIThread<T>(Func<T> func,
                                     DispatcherPriority priority = DispatcherPriority.Normal)
   {
     var dispatcher = Application.Current?.Dispatcher;
     if (dispatcher == null) return default;
 
-    if (dispatcher.CheckAccess())
-      return func();
-    else
-      return dispatcher.Invoke(func, priority);
+    return dispatcher.CheckAccess() ? func() : dispatcher.Invoke(func, priority);
   }
 
   #endregion
 
   #region BusyMessage 통합
+  // race condition 방지 토큰
+  private static int _busyToken;
 
   /// <summary>
-  /// BusyMessage를 안전하게 UI 스레드에서 변경합니다.
-  /// ViewModel의 BusyMessage 바인딩 속성에 바로 적용 가능
+  /// ViewModel의 BusyMessage를 UI Thread에서 안전하게 설정
   /// </summary>
-  /// <param name="viewModel">ViewModel</param>
-  /// <param name="busyMessage">표시할 메시지</param>
-  public static void SetBusyMessage(dynamic viewModel, string busyMessage)
+  public static Task SetBusyMessageAsync(IBusyMessageHost vm, string? busyMessage)
   {
-    RunOnUIThread(() => viewModel.BusyMessage = busyMessage);
+    return RunOnUIThreadAsync(() =>
+    {
+      vm.BusyMessage = busyMessage;
+      return Task.CompletedTask;
+    });
   }
 
   /// <summary>
-  /// 일정 시간 동안 BusyMessage 표시
+  /// BusyMessage를 일정 시간 표시 후 제거 (race condition 방지)
   /// </summary>
-  /// <param name="viewModel">ViewModel</param>
-  /// <param name="busyMessage">메시지</param>
-  /// <param name="milliseconds">표시 시간</param>
-  public static async Task ShowBusyMessageAsync(dynamic viewModel, string busyMessage, int milliseconds = 2000)
+  public static async Task ShowBusyMessageAsync(IBusyMessageHost vm, string busyMessage, int milliseconds = 2000)
   {
-    SetBusyMessage(viewModel, busyMessage);
+    int token = Interlocked.Increment(ref _busyToken);
+
+    await SetBusyMessageAsync(vm, busyMessage);
+
     await Task.Delay(milliseconds);
-    SetBusyMessage(viewModel, string.Empty);
+
+    // 마지막 호출만 메시지 제거
+    if (token == _busyToken)
+    {
+      await SetBusyMessageAsync(vm, null);
+    }
   }
 
   #endregion
@@ -107,48 +151,26 @@ public static class UIHelper
         dlg.IconFill = iconFill;
       }
 
-      dlg.Owner = Application.Current.MainWindow;
+      dlg.Owner = Application.Current?.MainWindow;
       dlg.ShowDialog();
       result = dlg.Result;
     });
 
     return result;
   }
-
   #endregion
 
-  #region Prism DelegateCommand 통합
-
-  /// <summary>
-  /// DelegateCommand 생성, UI 스레드 + BusyMessage + MessageBox 통합
-  /// </summary>
-  /// <param name="execute">실행 액션</param>
-  /// <param name="canExecute">실행 가능 여부</param>
-  /// <returns>DelegateCommand</returns>
-  public static DelegateCommand CreateDelegateCommand(Action execute, Func<bool>? canExecute = null)
+  public static Task<bool> ShowConfirmAsync(string message, string caption = "확인", IconType icon = IconType.Question, Brush? iconFill = null)
   {
-    // canExecute가 null일 경우 기본값으로 true를 반환
-    canExecute ??= () => true;
+    bool result = RunOnUIThread(() =>
+    {
+      var r = ShowMessageBox(message, caption, HeimdallrMessageBoxButtonEnum.YesNo, icon, iconFill);
 
-    return new DelegateCommand(() => RunOnUIThread(execute), canExecute);
+      return r == MessageBoxResult.Yes;
+    });
+
+    return Task.FromResult(result);
   }
-
-  /// <summary>
-  /// DelegateCommand<T> 생성, UI 스레드 + BusyMessage + MessageBox 통합
-  /// </summary>
-  /// <typeparam name="T">파라미터 타입</typeparam>
-  /// <param name="execute">실행 액션</param>
-  /// <param name="canExecute">실행 가능 여부</param>
-  /// <returns>DelegateCommand&lt;T&gt;</returns>
-  public static DelegateCommand<T> CreateDelegateCommand<T>(Action<T> execute, Func<T, bool>? canExecute = null)
-  {
-    // canExecute가 null일 경우 기본값으로 항상 true를 반환
-    canExecute ??= param => true;
-
-    return new DelegateCommand<T>((param) => RunOnUIThread(() => execute(param)), canExecute);
-  }
-
-  #endregion
 }
 
 

@@ -1,9 +1,34 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
                     xmlns:ctrls="clr-namespace:Heimdallr.UI.Controls">
 
+  <!-- 테마 병합 -->
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Colors/DarkColors.xaml" />
+    <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Colors/LightColors.xaml" />
+  </ResourceDictionary.MergedDictionaries>
+
+  <!-- 로컬라이제이션 -->
+  <sys:String x:Key="MsgBox_OK">확인</sys:String>
+  <sys:String x:Key="MsgBox_Cancel">취소</sys:String>
+  <sys:String x:Key="MsgBox_Yes">예</sys:String>
+  <sys:String x:Key="MsgBox_No">아니오</sys:String>
+
+  <!-- 메시지박스 색상 -->
+  <SolidColorBrush x:Key="MessageBoxBackgroundBrush" Color="#FF2E3440"/>
+  <SolidColorBrush x:Key="MessageBoxHeaderBrush" Color="#FF3B4252" />
+  <SolidColorBrush x:Key="MessageBoxHeaderTextBrush" Color="#FFECEFF4"/>
+  <SolidColorBrush x:Key="MessageContentBackgroundBrush" Color="#80456882" />
+  <SolidColorBrush x:Key="MessageBoxButtonHoverBrush" Color="#FF5E81AC"/>
+  <SolidColorBrush x:Key="MessageBoxButtonPressedBrush" Color="#FF81A1C1"/>
+  <SolidColorBrush x:Key="MessageBoxIconFillBrush" Color="#FFD8DEE9"/>
+  <SolidColorBrush x:Key="MessageBoxIconMouseOverBrush" Color="#FF88C0D0"/>
+  <SolidColorBrush x:Key="MessageBoxTextBrush" Color="#FFECEFF4"/>
+
+  <!-- DragBar 스타일 -->
   <Style x:Key="BAR.DRAGGABLE" TargetType="{x:Type ctrls:DraggableBar}">
-    <Setter Property="Grid.ColumnSpan" Value="4" />
+    <Setter Property="Grid.ColumnSpan" Value="2" />
     <Setter Property="Background" Value="Transparent" />
   </Style>
 
@@ -11,59 +36,77 @@
   <Style TargetType="{x:Type ctrls:HeimdallrMessageBox}">
     <Setter Property="WindowStyle" Value="None"/>
     <Setter Property="ResizeMode" Value="NoResize"/>
+    <Setter Property="Foreground" Value="{DynamicResource MessageBoxTextBrush}" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="BorderBrush" Value="{DynamicResource MessageBoxHeaderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
     <Setter Property="SizeToContent" Value="WidthAndHeight"/>
-    <Setter Property="Background" Value="Transparent"/>
+    <Setter Property="Background" Value="{DynamicResource MessageBoxBackgroundBrush}"/>
+    <Setter Property="Padding" Value="10" />
     <Setter Property="AllowsTransparency" Value="True"/>
+    <Setter Property="MinWidth" Value="340" />
+    <Setter Property="MinHeight" Value="180" />
+    <Setter Property="MaxWidth" Value="640" />
+    <Setter Property="MaxHeight" Value="420" />
+
+    <!-- 커스텀 속성 -->
+    <Setter Property="HeaderBackground" Value="{DynamicResource MessageBoxHeaderBrush}" />
+    <Setter Property="HeaderForeground" Value="#FFFFFFFF" />
+    <Setter Property="ButtonHoverBackground" Value="{DynamicResource MessageBoxButtonHoverBrush}" />
+    <Setter Property="ButtonPressedBackground" Value="{DynamicResource MessageBoxButtonPressedBrush}" />
+    <Setter Property="IconMouseOverFill" Value="{DynamicResource MessageBoxIconMouseOverBrush}" />
+    <Setter Property="IconFill"  Value="{DynamicResource MessageBoxIconFillBrush}" />
+    <Setter Property="ContentBackground" Value="{DynamicResource MessageContentBackgroundBrush}" />
+    <Setter Property="YesText" Value="{DynamicResource MsgBox_Yes}" />
+    <Setter Property="NoText" Value="{DynamicResource MsgBox_No}" />
+    <Setter Property="CancelText" Value="{DynamicResource MsgBox_Cancel}" />
+    <Setter Property="IconSize" Value="64" />
+
+    <!-- 템플릿 -->
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ctrls:HeimdallrMessageBox}">
-          <Border SnapsToDevicePixels="True"
+          <Border x:Name="RootBorder"
+                  SnapsToDevicePixels="True"
                   UseLayoutRounding="True"
                   CornerRadius="8"
-                  Background="#FF577B8D">
+                  Background="{TemplateBinding Background}"
+                  RenderTransformOrigin="0.5,0.5">
+
+            <Border.RenderTransform>
+              <ScaleTransform ScaleX="0.9" ScaleY="0.9"/> <!-- 처음 표기시 100% 크기로 표기 -->
+            </Border.RenderTransform>
 
             <Grid>
-
-              <!-- 3개의 Row 정의 -->
               <Grid.RowDefinitions>
                 <RowDefinition Height="42"/>
-                <!-- 타이틀 -->
                 <RowDefinition Height="Auto"/>
-                <!-- 메시지 -->
-                <RowDefinition Height="Auto"/>
-                <!-- 버튼 -->
+                <RowDefinition Height="*"/>
               </Grid.RowDefinitions>
 
-              <!-- ★ 타이틀 영역 + CornerRadius 적용 ★ -->
-              <Border Grid.Row="0"
-                      Background="#FF4B70F5"
+              <!-- 타이틀 표기 영역 (타이틀 닫기 버튼) -->
+              <Border Grid.Row="0" Background="{TemplateBinding HeaderBackground}" 
                       CornerRadius="8,8,0,0">
-
                 <Grid>
                   <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition Width="42"/>
                   </Grid.ColumnDefinitions>
 
-                  <!--#region DragBar 영역 Row 0 전체 -->
-                  <ctrls:DraggableBar x:Name="PART_DragBar"
-                                      Grid.Column="0"
-                                      Grid.ColumnSpan="1"
+                  <ctrls:DraggableBar x:Name="PART_DragBar" Grid.Column="0" Grid.ColumnSpan="2"
                                       Style="{StaticResource BAR.DRAGGABLE}" />
-                  <!--#endregion-->
 
-                  <!-- Title -->
                   <TextBlock Text="{TemplateBinding Title}"
                              VerticalAlignment="Center"
                              HorizontalAlignment="Center"
-                             Foreground="White"
-                             Margin="10 0 0 0"
-                             FontSize="20"
-                             FontWeight="Bold"/>
+                             Foreground="{TemplateBinding HeaderForeground}"
+                             FontSize="18"
+                             Margin="20 0 0 0"
+                             Padding="10 0"
+                             FontWeight="ExtraLight"/>
 
-                  <!-- Close -->
                   <ctrls:HeimdallrCloseButton Grid.Column="1"
-                                              Fill="#FFFFCC00"
+                                              Fill="#80F97300"
                                               Margin="0 -5 0 0"
                                               BorderThickness="0"
                                               IconSize="30"
@@ -72,42 +115,114 @@
                 </Grid>
               </Border>
 
-              <!-- 내용 영역 -->
-              <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="Auto" />
-                  <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+              <!-- 메시지 표기 영역 (아이콘, 메시지) -->
+              <Border Grid.Row="1" Background="{TemplateBinding ContentBackground}"
+                      SnapsToDevicePixels="True"
+                      UseLayoutRounding="True">
+                <Grid >
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                  </Grid.ColumnDefinitions>
 
-                <!-- 아이콘 -->
-                <Viewbox Grid.Column="0" Width="48" Height="48" Margin="10"
-                         VerticalAlignment="Center"
-                         HorizontalAlignment="Center">
-                  <ctrls:HeimdallrIcon Icon="{TemplateBinding Icon}"
+                  <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                  </Grid.RowDefinitions>
+
+                  <ctrls:HeimdallrIcon Grid.Column="0"
+                                       Grid.RowSpan="2"
+                                       Padding="20"
+                                       Margin="20 0 0 0"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       Icon="{TemplateBinding MessageIcon}"
+                                       IconMouseOverFill="{TemplateBinding IconMouseOverFill}"
+                                       IconSize="{TemplateBinding IconSize}"
                                        Fill="{TemplateBinding IconFill}"/>
-                </Viewbox>
 
-                <TextBlock Grid.Column="1"
-                           VerticalAlignment="Center"
-                           TextWrapping="Wrap"
-                           Foreground="#FFE2DFD0"
-                           FontSize="16"
-                           Text="{TemplateBinding Message}"/>
-              </Grid>
+                  <ctrls:HeimdallrScrollViewer Grid.Column="1"
+                                               Grid.Row="1"
+                                               VerticalScrollBarVisibility="Auto"
+                                               HorizontalScrollBarVisibility="Disabled"
+                                               MaxHeight="200"
+                                               Margin="5" >
+                    <TextBlock VerticalAlignment="Top"
+                               HorizontalAlignment="Left"
+                               TextWrapping="Wrap"
+                               Foreground="{TemplateBinding Foreground}"
+                               FontSize="16"
+                               Margin="10 5 20 5"
+                               Text="{TemplateBinding Message}"/>
+                  </ctrls:HeimdallrScrollViewer>
+                </Grid>
+              </Border>
 
               <!-- 버튼 영역 -->
-              <StackPanel x:Name="PART_ButtonPanel"
-                          Grid.Row="2"
-                          Background="Transparent"
-                          Orientation="Horizontal"
-                          HorizontalAlignment="Center"
-                          Margin="10"/>
+              <Border Grid.Row="2"
+                      Padding="10"
+                      SnapsToDevicePixels="True"
+                      UseLayoutRounding="True"
+                      Background="{TemplateBinding ContentBackground}"
+                      CornerRadius="0 0 8 8">
 
+                <UniformGrid x:Name="PART_ButtonPanel"
+                             Rows="1"
+                             HorizontalAlignment="Right"
+                             Margin="10"
+                             UseLayoutRounding="True"
+                             KeyboardNavigation.TabNavigation="Local"/>
+              </Border>
             </Grid>
-
           </Border>
+          
+          <!-- 애니메이션 트리거는 ControlTemplate 내부에서 정의 -->
+          <ControlTemplate.Triggers>
+            <EventTrigger RoutedEvent="Loaded">
+              <BeginStoryboard>
+                <Storyboard>
+                  <!-- Opacity 애니메이션 -->
+                  <DoubleAnimation Storyboard.TargetName="RootBorder"
+                                   Storyboard.TargetProperty="Opacity"
+                                   From="0" To="1"
+                                   Duration="0:0:0.3"
+                                   FillBehavior="HoldEnd"/>
+                  <!-- Scale 애니메이션 -->
+                  <DoubleAnimation Storyboard.TargetName="RootBorder"
+                                   Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)"
+                                   From="0.8" To="1"
+                                   Duration="0:0:0.3"
+                                   FillBehavior="HoldEnd"/>
+                  <DoubleAnimation Storyboard.TargetName="RootBorder"
+                                   Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)"
+                                   From="0.8" To="1"
+                                   Duration="0:0:0.3"/>
+                </Storyboard>
+              </BeginStoryboard>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="Unloaded">
+              <BeginStoryboard>
+                <Storyboard>
+                  <DoubleAnimation Storyboard.TargetName="RootBorder"
+                                   Storyboard.TargetProperty="Opacity"
+                                   From="1" To="0"
+                                   Duration="0:0:0.3"/>
+                  <DoubleAnimation Storyboard.TargetName="RootBorder"
+                                   Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)"
+                                   From="1" To="0.8"
+                                   Duration="0:0:0.3"/>
+                  <DoubleAnimation Storyboard.TargetName="RootBorder"
+                                   Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)"
+                                   From="1" To="0.8"
+                                   Duration="0:0:0.3"/>
+                </Storyboard>
+              </BeginStoryboard>
+            </EventTrigger>
+          </ControlTemplate.Triggers>
         </ControlTemplate>
       </Setter.Value>
     </Setter>
   </Style>
 </ResourceDictionary>
+
+

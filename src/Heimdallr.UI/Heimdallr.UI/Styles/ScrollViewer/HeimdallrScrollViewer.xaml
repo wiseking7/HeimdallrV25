@@ -1,20 +1,20 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:ctrls="clr-namespace:Heimdallr.UI.Controls"
-                    xmlns:cnvts="clr-namespace:Heimdallr.UI.Converters">
+﻿<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:cnvts="clr-namespace:Heimdallr.UI.Converters"
+  xmlns:ctrls="clr-namespace:Heimdallr.UI.Controls">
 
   <cnvts:ScrollViewerCornerVisibilityConverter x:Key="ScrollViewerCornerVisibilityConverter" />
 
-  <Style TargetType="{x:Type ctrls:HeimdallrScrollViewer}" BasedOn="{StaticResource {x:Type ScrollViewer}}" >
-    <Setter Property="Background" Value="Transparent"/>
-    <Setter Property="Padding" Value="0"/>
-    <Setter Property="Focusable" Value="False"/>
-    
+  <Style BasedOn="{StaticResource {x:Type ScrollViewer}}" TargetType="{x:Type ctrls:HeimdallrScrollViewer}">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="Focusable" Value="False" />
+
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ctrls:HeimdallrScrollViewer}">
-          <Grid Background="{TemplateBinding Background}"
-                SnapsToDevicePixels="True" >
+          <Grid Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="*" />
               <ColumnDefinition Width="Auto" />
@@ -25,48 +25,51 @@
               <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-             <!--컨텐츠 영역--> 
-            <ScrollContentPresenter x:Name="PART_ScrollContentPresenter"
-                                    Grid.Row="0" 
-                                    Grid.Column="0"
-                                    Margin="{TemplateBinding Padding}"
-                                    Content="{TemplateBinding Content}"
-                                    ContentTemplate="{TemplateBinding ContentTemplate}"
-                                    CanContentScroll="{TemplateBinding CanContentScroll}"
-                                    ScrollViewer.IsDeferredScrollingEnabled="{Binding Path=(ScrollViewer.IsDeferredScrollingEnabled),
-                                                     RelativeSource={RelativeSource TemplatedParent}}"
-                                    KeyboardNavigation.DirectionalNavigation="Local" />
+            <!--  컨텐츠 영역  -->
+            <ScrollContentPresenter
+              x:Name="PART_ScrollContentPresenter"
+              Grid.Row="0"
+              Grid.Column="0"
+              Margin="{TemplateBinding Padding}"
+              CanContentScroll="{TemplateBinding CanContentScroll}"
+              Content="{TemplateBinding Content}"
+              ContentTemplate="{TemplateBinding ContentTemplate}"
+              KeyboardNavigation.DirectionalNavigation="Local"
+              ScrollViewer.IsDeferredScrollingEnabled="{Binding Path=(ScrollViewer.IsDeferredScrollingEnabled), RelativeSource={RelativeSource TemplatedParent}}" />
 
-             <!--Horizontal ScrollBar--> 
-            <ctrls:HeimdallrScrollBar x:Name="PART_HorizontalScrollBar"
-                                      Orientation="Horizontal"
-                                      Grid.Row="1" 
-                                      Grid.Column="0"
-                                      Maximum="{TemplateBinding ScrollableWidth}"
-                                      ViewportSize="{TemplateBinding ViewportWidth}"
-                                      Value="{TemplateBinding HorizontalOffset}"
-                                      Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" />
+            <!--  Horizontal ScrollBar  -->
+            <ctrls:HeimdallrScrollBar
+              x:Name="PART_HorizontalScrollBar"
+              Grid.Row="1"
+              Grid.Column="0"
+              IconMouseOverFill="{TemplateBinding IconMouseOverFill}"
+              Maximum="{TemplateBinding ScrollableWidth}"
+              Orientation="Horizontal"
+              ViewportSize="{TemplateBinding ViewportWidth}"
+              Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+              Value="{TemplateBinding HorizontalOffset}" />
 
-             <!--Vertical ScrollBar-->
-            <ctrls:HeimdallrScrollBar x:Name="PART_VerticalScrollBar"
-                                      Orientation="Vertical"
-                                      Grid.Row="0" 
-                                      Grid.Column="1"
-                                      Maximum="{TemplateBinding ScrollableHeight}"
-                                      ViewportSize="{TemplateBinding ViewportHeight}"
-                                      Value="{TemplateBinding VerticalOffset}"
-                                      Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" />
+            <!--  Vertical ScrollBar  -->
+            <ctrls:HeimdallrScrollBar
+              x:Name="PART_VerticalScrollBar"
+              Grid.Row="0"
+              Grid.Column="1"
+              IconMouseOverFill="{TemplateBinding IconMouseOverFill}"
+              Maximum="{TemplateBinding ScrollableHeight}"
+              Orientation="Vertical"
+              ViewportSize="{TemplateBinding ViewportHeight}"
+              Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+              Value="{TemplateBinding VerticalOffset}" />
 
-            <Border Grid.Row="1"
-                    Grid.Column="1"
-                    Background="{TemplateBinding Background}">
+            <Border
+              Grid.Row="1"
+              Grid.Column="1"
+              Background="{TemplateBinding Background}">
               <Border.Visibility>
                 <MultiBinding Converter="{StaticResource ScrollViewerCornerVisibilityConverter}">
-                  <!-- ★ 수정 ③ : Corner Visibility 계약 -->
-                  <Binding Path="ComputedVerticalScrollBarVisibility"
-                           RelativeSource="{RelativeSource TemplatedParent}" />
-                  <Binding Path="ComputedHorizontalScrollBarVisibility"
-                           RelativeSource="{RelativeSource TemplatedParent}" />
+                  <!--  ★ 수정 ③ : Corner Visibility 계약  -->
+                  <Binding Path="ComputedVerticalScrollBarVisibility" RelativeSource="{RelativeSource TemplatedParent}" />
+                  <Binding Path="ComputedHorizontalScrollBarVisibility" RelativeSource="{RelativeSource TemplatedParent}" />
                 </MultiBinding>
               </Border.Visibility>
             </Border>

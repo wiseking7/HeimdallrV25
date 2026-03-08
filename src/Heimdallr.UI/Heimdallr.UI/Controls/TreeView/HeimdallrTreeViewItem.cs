@@ -150,6 +150,16 @@ public class HeimdallrTreeViewItem : TreeViewItem
           typeof(HeimdallrTreeViewItem), new PropertyMetadata(null));
   #endregion
 
+  #region IconMouseOverFill
+  public Brush IconMouseOverFill
+  {
+    get => (Brush)GetValue(IconMouseOverFillProperty);
+    set => SetValue(IconMouseOverFillProperty, value);
+  }
+  public static readonly DependencyProperty IconMouseOverFillProperty =
+      DependencyProperty.Register(nameof(IconMouseOverFill), typeof(Brush), typeof(HeimdallrTreeViewItem), new PropertyMetadata(Brushes.DeepSkyBlue));
+  #endregion
+
   #region Text
   /// <summary>
   /// TreeViewItem에 표시할 텍스트 (타이틀 문자열)

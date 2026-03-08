@@ -36,6 +36,16 @@ public class HeimdallrRepeatButton : RepeatButton
   }
   #endregion
 
+  #region IconMouseOverFill
+  public Brush IconMouseOverFill
+  {
+    get => (Brush)GetValue(IconMouseOverFillProperty);
+    set => SetValue(IconMouseOverFillProperty, value);
+  }
+  public static readonly DependencyProperty IconMouseOverFillProperty =
+      DependencyProperty.Register(nameof(IconMouseOverFill), typeof(Brush), typeof(HeimdallrRepeatButton), new PropertyMetadata(Brushes.DeepSkyBlue));
+  #endregion
+
   #region MouserOverIconFill
   /// <summary>
   /// HeimdallrIcon 의 색상을 설정하는 속성

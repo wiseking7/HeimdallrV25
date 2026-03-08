@@ -27,13 +27,13 @@ public enum IconType
   AccountMultipleOutline,
 
   [Description("활성")]
-  Acitve,
+  Active,
 
   [Description("활성")]
-  AcitveA,
+  ActiveA,
 
   [Description("활성")]
-  AcitveB,
+  ActiveB,
 
   [Description("주소")]
   Address,
@@ -49,9 +49,6 @@ public enum IconType
 
   [Description("모든 화살표")]
   ArrowAll,
-
-  [Description("승인")]
-  Approval,
 
   [Description("화살표 아래 박스")]
   ArrowDownBox,
@@ -155,6 +152,9 @@ public enum IconType
   [Description("벨 아웃라인")]
   BellOutline,
 
+  [Description("청구서")]
+  Bill,
+
   [Description("생일")]
   Birthday,
 
@@ -164,8 +164,8 @@ public enum IconType
   [Description("브랜드 A")]
   BrandA,
 
-  [Description("브랜드 로고")]
-  BrandLogo,
+  [Description("브랜드 B")]
+  BrandB,
 
   [Description("방송")]
   Broadcast,
@@ -236,9 +236,6 @@ public enum IconType
   [Description("현금")]
   Cash,
 
-  [Description("현금 A")]
-  CashA,
-
   [Description("현금 100")]
   Cash100,
 
@@ -248,8 +245,14 @@ public enum IconType
   [Description("카테고리")]
   Category,
 
-  [Description("3D 카테고리")]
-  Category3D,
+  [Description("카테고리 A")]
+  CategoryA,
+
+  [Description("변경")]
+  Change,
+
+  [Description("변경")]
+  ChangeA,
 
   [Description("차트")]
   Chart,
@@ -265,9 +268,6 @@ public enum IconType
 
   [Description("파이 차트 A")]
   ChartPieA,
-
-  [Description("채팅")]
-  Chat,
 
   [Description("장바구니")]
   Cart,
@@ -292,6 +292,9 @@ public enum IconType
 
   [Description("도시")]
   City,
+
+  [Description("지우기")]
+  Clear,
 
   [Description("클라이언트 타원")]
   ClientEllipse,
@@ -362,6 +365,12 @@ public enum IconType
   [Description("쿠폰")]
   Coupon,
 
+  [Description("공통")]
+  Common,
+
+  [Description("공통함께")]
+  CommonA,
+
   [Description("생성")]
   Create,
 
@@ -376,9 +385,6 @@ public enum IconType
 
   [Description("생성 D")]
   CreateD,
-
-  [Description("사각형 생성 플러스")]
-  CreateSquarePlus,
 
   [Description("신용카드")]
   CreditCard,
@@ -395,8 +401,8 @@ public enum IconType
   [Description("자르기")]
   Crop,
 
-  [Description("원화")]
-  CurrencyWon,
+  [Description("통화")]
+  Currency,
 
   [Description("커서 포인터")]
   CursorPointer,
@@ -416,6 +422,9 @@ public enum IconType
   [Description("대시보드 A")]
   DashboardA,
 
+  [Description("대시보드 B")]
+  DashboardB,
+
   [Description("날짜")]
   Date,
 
@@ -430,6 +439,9 @@ public enum IconType
 
   [Description("데이터베이스 플러스")]
   DatabasePlus,
+
+  [Description("비활성화")]
+  Deactivation,
 
   [Description("삭제")]
   Delete,
@@ -479,6 +491,12 @@ public enum IconType
   [Description("상세 E")]
   DetailE,
 
+  [Description("상세 F")]
+  DetailF,
+
+  [Description("상세 F")]
+  DetailG,
+
   [Description("할인")]
   Discount,
 
@@ -487,6 +505,9 @@ public enum IconType
 
   [Description("할인 B")]
   DiscountB,
+
+  [Description("문서")]
+  Document,
 
   [Description("도메인")]
   Domain,
@@ -515,6 +536,9 @@ public enum IconType
   [Description("이메일 A")]
   EmailA,
 
+  [Description("메일보내기")]
+  EmailSender,
+
   [Description("이메일 아웃라인")]
   EmailOutline,
 
@@ -523,6 +547,9 @@ public enum IconType
 
   [Description("직원 A")]
   EmployeeA,
+
+  [Description("직원 A")]
+  EmployeeB,
 
   [Description("환경")]
   Environment,
@@ -641,6 +668,9 @@ public enum IconType
   [Description("Heimdallr 로고")]
   HeimdallrLogo,
 
+  [Description("Heimdallr String")]
+  HeimdallrString,
+
   [Description("히스토리")]
   History,
 
@@ -695,6 +725,18 @@ public enum IconType
   [Description("재고 A")]
   InventoryA,
 
+  [Description("재고 B")]
+  InventoryB,
+
+  [Description("창고")]
+  Inventory_Warehouse,
+
+  [Description("입고")]
+  Inventory_InBound,
+
+  [Description("출고")]
+  Inventory_OutBound,
+
   [Description("송장")]
   Invoice,
 
@@ -706,9 +748,6 @@ public enum IconType
 
   [Description("아이템")]
   Item,
-
-  [Description("아이템 사이트")]
-  ItemSite,
 
   [Description("키")]
   Key,
@@ -758,17 +797,11 @@ public enum IconType
   [Description("리스트 F")]
   ListF,
 
-  [Description("리스트 G")]
+  [Description("리스트 F")]
   ListG,
 
-  [Description("리스트 H")]
-  ListH,
-
-  [Description("리스트 I")]
-  ListI,
-
-  [Description("리스트 J")]
-  ListJ,
+  [Description("리스트 메뉴")]
+  List_Menu,
 
   [Description("잠금")]
   Lock,
@@ -812,6 +845,9 @@ public enum IconType
   [Description("매니저")]
   Manager,
 
+  [Description("매니저")]
+  ManagerA,
+
   [Description("맵 제작")]
   MapMaker,
 
@@ -821,14 +857,17 @@ public enum IconType
   [Description("최대화")]
   Maximize,
 
+  [Description("메모")]
+  Memo,
+
   [Description("메모리")]
   Memory,
 
   [Description("메뉴")]
   Menu,
 
-  [Description("메뉴 바")]
-  MenuBar,
+  [Description("메뉴A")]
+  MenuA,
 
   [Description("메뉴 아래")]
   MenuDown,
@@ -869,6 +908,9 @@ public enum IconType
   [Description("열기 재생 이동")]
   MoveOpenPlay,
 
+  [Description("이름")]
+  Name,
+
   [Description("내비게이션")]
   Navigation,
 
@@ -877,6 +919,15 @@ public enum IconType
 
   [Description("넷플릭스")]
   Netflix,
+
+  [Description("새로운")]
+  New,
+
+  [Description("새로운A")]
+  NewA,
+
+  [Description("새로운A")]
+  NewB,
 
   [Description("없음")]
   None,
@@ -889,6 +940,9 @@ public enum IconType
 
   [Description("주문")]
   Order,
+
+  [Description("주문 A")]
+  OrderA,
 
   [Description("소유자")]
   Owner,
@@ -905,6 +959,12 @@ public enum IconType
   [Description("팔레트")]
   Palette,
 
+  [Description("비밀번호")]
+  Password,
+
+  [Description("비밀번호보기")]
+  PasswordView,
+
   [Description("비밀번호 키")]
   PasswordKey,
 
@@ -913,6 +973,9 @@ public enum IconType
 
   [Description("결제")]
   Payment,
+
+  [Description("결제 A")]
+  PaymentA,
 
   [Description("PDF")]
   PDF,
@@ -960,10 +1023,7 @@ public enum IconType
   PositionB,
 
   [Description("우편")]
-  Postal,
-
-  [Description("우편 A")]
-  PostalA,
+  PostalCode,
 
   [Description("이전")]
   Previous,
@@ -980,8 +1040,14 @@ public enum IconType
   [Description("인쇄")]
   Print,
 
+  [Description("인쇄 A")]
+  PrintA,
+
   [Description("처리")]
   Processing,
+
+  [Description("처리")]
+  ProcessingA,
 
   [Description("제품")]
   Product,
@@ -994,6 +1060,9 @@ public enum IconType
 
   [Description("제품 C")]
   ProductC,
+
+  [Description("제품 C")]
+  ProductD,
 
   [Description("제품 공장")]
   ProductFactory,
@@ -1019,8 +1088,14 @@ public enum IconType
   [Description("구매")]
   Purchase,
 
-  [Description("구매/매입")]
-  Purchase_Buy,
+  [Description("구매 A")]
+  PurchaseA,
+
+  [Description("구매 B")]
+  PurchaseB,
+
+  [Description("밀다")]
+  Push,
 
   [Description("QR 코드")]
   QrCode,
@@ -1040,17 +1115,20 @@ public enum IconType
   [Description("읽기 A")]
   ReadA,
 
+  [Description("읽기 B")]
+  ReadB,
+
   [Description("텍스트 읽기")]
   ReadText,
-
-  [Description("눈 읽기")]
-  ReadEyes,
 
   [Description("영수증")]
   Receipt,
 
   [Description("기록")]
   Record,
+
+  [Description("복원")]
+  Recovery,
 
   [Description("환불")]
   Refund,
@@ -1061,6 +1139,12 @@ public enum IconType
   [Description("등록")]
   Registration,
 
+  [Description("삭제")]
+  Remove,
+
+  [Description("삭제")]
+  RemoveA,
+
   [Description("요청")]
   Request,
 
@@ -1070,11 +1154,11 @@ public enum IconType
   [Description("보고서 A")]
   ReportA,
 
-  [Description("크기 조정")]
-  Resize,
+  [Description("보고서 B")]
+  ReportB,
 
-  [Description("복원")]
-  Restore,
+  [Description("윈도우화면복원")]
+  WindowRestore,
 
   [Description("반환")]
   Return,
@@ -1088,6 +1172,9 @@ public enum IconType
   [Description("역할")]
   Role,
 
+  [Description("역할")]
+  RoleA,
+
   [Description("자")]
   Ruler,
 
@@ -1100,8 +1187,8 @@ public enum IconType
   [Description("판매 B")]
   SaleB,
 
-  [Description("판매 수익")]
-  SaleRevenue,
+  [Description("판매 C")]
+  SaleC,
 
   [Description("저장")]
   Save,
@@ -1112,6 +1199,9 @@ public enum IconType
   [Description("검색 A")]
   SearchA,
 
+  [Description("검색 B")]
+  SearchB,
+
   [Description("데이터베이스 검색")]
   SearchDatabase,
 
@@ -1121,14 +1211,17 @@ public enum IconType
   [Description("모두 선택")]
   SelectAll,
 
-  [Description("판매")]
+  [Description("판매 A")]
   Sell,
 
-  [Description("판매 A")]
-  SellA,
+  [Description("판매")]
+  Sell_Free,
 
   [Description("설정")]
   Setting,
+
+  [Description("설정A")]
+  SettingA,
 
   [Description("보호 잠금")]
   ShieldLock,
@@ -1139,11 +1232,19 @@ public enum IconType
   [Description("배송")]
   Shipping,
 
+  [Description("서명")]
+  Signature,
+
+  [Description("크기 조정")]
+  Size,
+
   [Description("다음 건너뛰기")]
   SkipNext,
 
   [Description("이전 건너뛰기")]
   SkipPrevious,
+
+  SMS,
 
   [Description("직원")]
   Staff,
@@ -1190,17 +1291,23 @@ public enum IconType
   [Description("합계")]
   Sum,
 
+  [Description("이름 성")]
+  Surname,
+
   [Description("수평 교환")]
   SwapHorizontal,
+
+  [Description("대상")]
+  Target,
 
   [Description("세금")]
   TAX,
 
   [Description("세금 계산서")]
-  TaxInvoice,
+  TAX_A,
 
   [Description("세금 계산서 A")]
-  TaxInvoiceA,
+  TAX_Invoice,
 
   [Description("텍스트박스")]
   TextBox,
@@ -1231,6 +1338,9 @@ public enum IconType
 
   [Description("단위 A")]
   UnitA,
+
+  [Description("잠금해제")]
+  UnLock,
 
   [Description("위")]
   Up,
@@ -1264,9 +1374,6 @@ public enum IconType
 
   [Description("뷰")]
   Views,
-
-  [Description("창고")]
-  Warehouse,
 
   [Description("야간 날씨")]
   WeatherNight,

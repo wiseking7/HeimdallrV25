@@ -125,7 +125,6 @@ public abstract class HeimdallrApplication : PrismApplication
     viewModelLocationScenario.Publish();
 
     return this;
-
   }
 
   /// <summary>
@@ -222,5 +221,21 @@ public abstract class HeimdallrApplication : PrismApplication
     }
 
     return null;
+  }
+
+  /// <summary> PrismApplication의 OnInitialized 메서드를 재정의한 부분입니다.
+  /// - Prism 기본 초기화(base.OnInitialized())가 끝난 뒤, - AddInversionModule<T>()로 등록해둔 모든 사용자 정의 모듈(_modules 리스트)을 순회하며
+  ///   각 모듈의 OnInitialized(Container)를 직접 호출합니다. 이렇게 해야 CommonBinder 같은 모듈의 OnInitialized 가 실제로 실행되어
+  ///   모듈 초기화 로직(예: BackgroundWorker 시작, Debug 로그 출력 등)이 정상적으로 동작합니다.
+  /// </summary>
+  protected override void OnInitialized()
+  {
+    base.OnInitialized();
+
+    // Prism이 준비한 ContainerProvider 사용
+    foreach (IModule module in _modules)
+    {
+      module.OnInitialized(Container);
+    }
   }
 }

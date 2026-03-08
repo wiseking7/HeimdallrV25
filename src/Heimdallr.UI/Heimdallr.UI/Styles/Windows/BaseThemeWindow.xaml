@@ -1,17 +1,20 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:ctrls="clr-namespace:Heimdallr.UI.Controls">
+﻿<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:ctrls="clr-namespace:Heimdallr.UI.Controls">
 
-  <!-- DraggableBar 스타일 -->
+  <PathGeometry x:Key="Heimdallr" Figures="M191.32227,442.12305L191.32227,457.43946L194.20508,457.43946L194.20508,450.77149L199.40821,450.77149L199.40821,457.43946L202.29102,457.43946L202.29102,442.12305L199.40821,442.12305L199.40821,448.2754L194.20508,448.2754L194.20508,442.12305L191.32227,442.12305zM205.56055,442.12305L205.56055,457.43946L214.78321,457.43946L214.78321,455.00196L208.49024,455.00196L208.49024,450.74805L214.49024,450.74805L214.49024,448.36915L208.49024,448.36915L208.49024,444.56055L214.78321,444.56055L214.78321,442.12305L205.56055,442.12305zM218.35742,442.12305L218.35742,444.47852L221.73242,444.47852L221.73242,455.06055L218.35742,455.06055L218.35742,457.43946L228.03711,457.43946L228.03711,455.06055L224.66211,455.06055L224.66211,444.47852L228.03711,444.47852L228.03711,442.12305L218.35742,442.12305zM231.07227,442.12305L230.32227,457.43946L232.77149,457.43946L233.0293,448.70899L233.11133,445.32227L233.75586,447.66602L235.29102,452.88087L237.09571,452.88087L238.79492,447.66602L239.53321,445.32227L239.63867,448.7793L239.91992,457.43946L242.46289,457.43946L241.70117,442.12305L238.38477,442.12305L236.9668,446.61133L236.32227,448.91993L235.67774,446.47071L234.33008,442.12305L231.07227,442.12305zM243.99805,442.12305L243.99805,457.43946L247.88867,457.43946C249.24024,457.43946,250.4004,457.25586,251.36914,456.88868C252.3379,456.51368,253.13086,455.98633,253.74805,455.30665C254.37305,454.61915,254.83008,453.79102,255.11914,452.82227C255.41602,451.85352,255.56446,450.7754,255.56446,449.5879C255.56446,448.29102,255.41602,447.17383,255.11914,446.23633C254.83008,445.29883,254.39258,444.52539,253.80664,443.91602C253.2207,443.30664,252.48632,442.85742,251.60352,442.56836C250.72852,442.27149,249.70509,442.12305,248.53321,442.12305L243.99805,442.12305zM260.76758,442.12305L256.23243,457.43946L259.0918,457.43946L259.95899,454.41602L265.30274,454.41602L266.14649,457.43946L269.33399,457.43946L264.79883,442.12305L260.76758,442.12305zM271.68946,442.12305L271.68946,457.43946L281.08789,457.43946L281.08789,454.9668L274.61914,454.9668L274.61914,442.12305L271.68946,442.12305zM284.88477,442.12305L284.88477,457.43946L294.28321,457.43946L294.28321,454.9668L287.81446,454.9668L287.81446,442.12305L284.88477,442.12305zM297.28321,442.12305L297.28321,457.43946L300.16602,457.43946L300.16602,451.09962L300.7168,451.09962C301.20899,451.09962,301.63477,451.22071,301.99414,451.4629C302.36133,451.69727,302.64649,452.04883,302.84961,452.51758L305.00586,457.43946L308.39258,457.43946L305.94336,452.30665C305.63086,451.6504,305.31836,451.1504,305.00586,450.80665C304.69336,450.45509,304.34961,450.24024,303.97461,450.16212C304.45899,450.08399,304.9043,449.94727,305.31055,449.75196C305.72461,449.55665,306.08008,449.30274,306.37696,448.99024C306.67384,448.66993,306.9043,448.29102,307.06836,447.85352C307.23242,447.41602,307.31446,446.91602,307.31446,446.35352C307.31446,445.57227,307.18164,444.91211,306.91602,444.37305C306.65821,443.83399,306.28712,443.39649,305.80274,443.06055C305.31837,442.72461,304.73243,442.48634,304.04493,442.34571C303.35743,442.19728,302.5918,442.12305,301.74805,442.12305L297.28321,442.12305zM300.16602,444.5254L301.43164,444.5254C302.38477,444.5254,303.09962,444.68946,303.57618,445.01758C304.05274,445.34571,304.29102,445.88477,304.29102,446.63477C304.29102,446.99414,304.22071,447.31446,304.08008,447.59571C303.93946,447.86915,303.74024,448.09962,303.48243,448.28712C303.22461,448.47461,302.91211,448.61524,302.54493,448.70899C302.18555,448.80274,301.78321,448.84962,301.33789,448.84962L300.16602,448.84962L300.16602,444.5254zM246.88086,444.53711L248.34571,444.53711C249.13477,444.53711,249.79493,444.6543,250.32618,444.88868C250.85743,445.12305,251.2793,445.4668,251.5918,445.91993C251.91211,446.36524,252.13868,446.91211,252.27149,447.56055C252.4043,448.20899,252.47071,448.94727,252.47071,449.7754C252.47071,451.58789,252.10352,452.91602,251.36914,453.75977C250.63477,454.60352,249.56055,455.0254,248.14649,455.0254L246.88086,455.0254L246.88086,444.53711zM262.66602,444.93555L264.65821,452.06055L260.65039,452.06055L262.66602,444.93555z" />
+  <PathGeometry x:Key="HeimdallrSystem" Figures="M -24.475823,74.559654 h -4.316465 V 60.009771 h -13.313143 v 14.549883 h -4.316465 V 42.865159 h 4.316465 v 13.410142 h 13.313143 V 42.865159 h 4.316465 z m 25.5592952,0 H -16.934133 V 42.865159 H 1.0834722 V 46.50263 H -12.617668 v 9.821171 H 0.54997645 v 3.637471 H -12.617668 V 70.873684 H 1.0834722 Z M 16.967095,46.50263 H 9.6679033 V 42.865159 H 28.631251 V 46.50263 H 21.33206 v 24.371054 h 7.299191 v 3.68597 H 9.6679033 v -3.68597 H 16.967095 Z M 58.919256,74.559654 H 54.69979 L 54.069295,54.796063 53.802547,47.205874 52.323309,51.619339 47.643096,64.229237 H 44.66037 l -4.461964,-12.124902 -1.479238,-4.898461 -0.097,7.929686 -0.557746,19.424094 h -4.073967 l 1.551988,-31.694495 h 5.116708 l 4.267966,11.930904 1.382239,4.025468 1.333739,-4.025468 4.486214,-11.930904 h 5.262208 z m 26.723287,-16.19887 q 0,2.279482 -0.363747,4.364965 -0.339497,2.085484 -1.115491,3.879969 -0.775994,1.794486 -2.012734,3.273724 -1.23674,1.454988 -3.031226,2.49773 -1.794485,1.042741 -4.170966,1.624737 -2.376481,0.557745 -5.407707,0.557745 H 62.750727 V 42.865159 h 8.172184 q 7.420441,0 11.057911,3.831469 3.661721,3.80722 3.661721,11.664156 z m -4.534714,0.315248 q 0,-3.370723 -0.630495,-5.698704 Q 79.84684,50.649346 78.5616,49.218608 77.27636,47.787869 75.336376,47.157374 73.396391,46.50263 70.777412,46.50263 h -3.71022 v 24.322554 h 3.225224 q 10.815413,0 10.815413,-12.149152 z m 33.367731,15.883622 h -4.70447 L 107.56436,67.64846 H 94.372467 l -2.230982,6.911194 H 87.655271 L 98.179687,42.865159 h 5.916953 z m -8.14794,-10.766913 -5.35921,-16.950614 -5.359203,16.950614 z m 32.27649,10.766913 H 120.36826 V 42.865159 h 4.38922 v 28.008525 h 13.84663 z m 27.30529,0 H 147.67354 V 42.865159 h 4.38922 v 28.008525 h 13.84664 z m 28.90577,0 h -4.87421 l -4.72872,-10.136418 q -0.53349,-1.163991 -1.09124,-1.915735 -0.55774,-0.775994 -1.21249,-1.21249 -0.63049,-0.460746 -1.40649,-0.654745 -0.75174,-0.193998 -1.69748,-0.193998 h -2.03699 v 14.113386 h -4.31646 V 42.865159 h 8.48743 q 2.76448,0 4.75296,0.606245 1.98849,0.606245 3.24948,1.697486 1.28523,1.091242 1.86723,2.643229 0.60625,1.527738 0.60625,3.394973 0,1.479238 -0.4365,2.812977 -0.4365,1.30949 -1.30949,2.400731 -0.84874,1.066991 -2.13398,1.867235 -1.26099,0.775994 -2.90998,1.163991 1.33374,0.460746 2.25523,1.624737 0.94574,1.13974 1.91574,3.055475 z m -6.9112,-22.988815 q 0,-2.54623 -1.60049,-3.807219 -1.57623,-1.26099 -4.46196,-1.26099 h -4.07397 v 10.475916 h 3.49198 q 1.52773,0 2.74022,-0.339498 1.23674,-0.363747 2.08549,-1.042741 0.87299,-0.703245 1.33374,-1.697487 0.48499,-1.018492 0.48499,-2.327981 z m 60.21226,14.404384 q 0,2.255232 -0.9215,3.952718 -0.92149,1.697487 -2.57048,2.837228 -1.64898,1.115491 -3.97696,1.673236 -2.30373,0.557746 -5.09246,0.557746 -1.26099,0 -2.52198,-0.097 -1.23674,-0.097 -2.40073,-0.242499 -1.13974,-0.145498 -2.15824,-0.339497 -1.01849,-0.193998 -1.84298,-0.412247 v -4.170966 q 1.81873,0.678995 4.07397,1.066991 2.27948,0.387997 5.1652,0.387997 2.08549,0 3.54048,-0.315247 1.47923,-0.339497 2.40073,-0.969992 0.94574,-0.654745 1.35799,-1.576238 0.43649,-0.921492 0.43649,-2.109733 0,-1.285239 -0.72749,-2.182482 -0.70325,-0.921493 -1.86724,-1.624737 -1.16399,-0.727494 -2.66747,-1.30949 -1.47924,-0.606245 -3.03123,-1.23674 -1.55199,-0.630495 -3.05548,-1.357989 -1.47923,-0.751744 -2.64322,-1.745986 -1.164,-1.018492 -1.89149,-2.376481 -0.70324,-1.357989 -0.70324,-3.225224 0,-1.624737 0.67899,-3.200974 0.679,-1.576237 2.10973,-2.788728 1.43074,-1.23674 3.66172,-1.988484 2.25524,-0.751744 5.35921,-0.751744 0.80024,0 1.72174,0.07275 0.94574,0.07275 1.89148,0.218248 0.96999,0.121249 1.89149,0.290998 0.94574,0.169748 1.74598,0.363747 v 3.879969 q -1.86723,-0.533496 -3.73447,-0.800244 -1.86723,-0.290998 -3.61322,-0.290998 -3.71022,0 -5.4562,1.23674 -1.74599,1.236741 -1.74599,3.322224 0,1.285239 0.70324,2.206732 0.7275,0.921493 1.89149,1.648987 1.16399,0.727494 2.64323,1.333739 1.50349,0.581995 3.05547,1.21249 1.55199,0.630495 3.03123,1.382239 1.50349,0.751744 2.66748,1.794486 1.16399,1.018492 1.86723,2.400731 0.7275,1.382238 0.7275,3.273724 z m 30.43352,-23.110064 -11.47016,20.369836 v 11.324659 h -4.36496 V 63.137996 L 251.24447,42.865159 h 5.21371 l 6.30495,11.591407 2.32798,4.655962 2.13398,-4.219466 6.3777,-12.027903 z m 24.17704,23.110064 q 0,2.255232 -0.92149,3.952718 -0.92149,1.697487 -2.57048,2.837228 -1.64899,1.115491 -3.97697,1.673236 -2.30373,0.557746 -5.09246,0.557746 -1.26099,0 -2.52198,-0.097 -1.23674,-0.097 -2.40073,-0.242499 -1.13974,-0.145498 -2.15823,-0.339497 -1.01849,-0.193998 -1.84299,-0.412247 v -4.170966 q 1.81874,0.678995 4.07397,1.066991 2.27948,0.387997 5.16521,0.387997 2.08548,0 3.54047,-0.315247 1.47924,-0.339497 2.40073,-0.969992 0.94574,-0.654745 1.35799,-1.576238 0.4365,-0.921492 0.4365,-2.109733 0,-1.285239 -0.7275,-2.182482 -0.70324,-0.921493 -1.86723,-1.624737 -1.16399,-0.727494 -2.66748,-1.30949 -1.47924,-0.606245 -3.03123,-1.23674 -1.55198,-0.630495 -3.05547,-1.357989 -1.47924,-0.751744 -2.64323,-1.745986 -1.16399,-1.018492 -1.89148,-2.376481 -0.70325,-1.357989 -0.70325,-3.225224 0,-1.624737 0.679,-3.200974 0.67899,-1.576237 2.10973,-2.788728 1.43074,-1.23674 3.66172,-1.988484 2.25523,-0.751744 5.35921,-0.751744 0.80024,0 1.72173,0.07275 0.94574,0.07275 1.89149,0.218248 0.96999,0.121249 1.89148,0.290998 0.94574,0.169748 1.74599,0.363747 v 3.879969 q -1.86724,-0.533496 -3.73447,-0.800244 -1.86724,-0.290998 -3.61322,-0.290998 -3.71022,0 -5.45621,1.23674 -1.74598,1.236741 -1.74598,3.322224 0,1.285239 0.70324,2.206732 0.72749,0.921493 1.89148,1.648987 1.16399,0.727494 2.64323,1.333739 1.50349,0.581995 3.05548,1.21249 1.55199,0.630495 3.03122,1.382239 1.50349,0.751744 2.66748,1.794486 1.16399,1.018492 1.86724,2.400731 0.72749,1.382238 0.72749,3.273724 z m 28.34804,-19.424094 h -9.38467 v 28.008525 h -4.36497 V 46.551129 h -9.38467 v -3.68597 h 23.13431 z m 24.97729,28.008525 H 338.03451 V 42.865159 h 18.01761 v 3.637471 h -13.70114 v 9.821171 h 13.16764 v 3.637471 h -13.16764 v 10.912412 h 13.70114 z m 30.53052,0 h -4.21947 l -0.63049,-19.763591 -0.26675,-7.590189 -1.47924,4.413465 -4.68021,12.609898 h -2.98273 l -4.46196,-12.124902 -1.47924,-4.898461 -0.097,7.929686 -0.55774,19.424094 h -4.07397 l 1.55199,-31.694495 h 5.11671 l 4.26796,11.930904 1.38224,4.025468 1.33374,-4.025468 4.48621,-11.930904 h 5.26221 z" />
+  <!--  DraggableBar 스타일  -->
   <Style x:Key="BAR.DRAGGABLE" TargetType="{x:Type ctrls:DraggableBar}">
     <Setter Property="Grid.ColumnSpan" Value="4" />
     <Setter Property="Background" Value="Transparent" />
   </Style>
 
-  <!-- DarkThemeWindow 스타일 -->
+  <!--  DarkThemeWindow 스타일  -->
   <Style TargetType="{x:Type ctrls:BaseThemeWindow}">
 
-    <!--#region 윈도우 기본속성 -->
+    <!--#region 윈도우 기본속성-->
     <Setter Property="Background" Value="#FF282C34" />
     <Setter Property="HeaderBackground" Value="#FF282C34" />
     <Setter Property="AllowsTransparency" Value="True" />
@@ -31,106 +34,167 @@
     <Setter Property="DimmingOpacity" Value="4" />
     <!--#endregion-->
 
-    <!-- WindowChrome -->
+    <!--  WindowChrome  -->
     <Setter Property="WindowChrome.WindowChrome">
       <Setter.Value>
-        <WindowChrome CaptionHeight="0"
-                      CornerRadius="9 9 0 0"
-                      GlassFrameThickness="0"
-                      NonClientFrameEdges="None"
-                      ResizeBorderThickness="5"
-                      UseAeroCaptionButtons="False" />
+        <WindowChrome
+          CaptionHeight="0"
+          CornerRadius="9 9 0 0"
+          GlassFrameThickness="0"
+          NonClientFrameEdges="None"
+          ResizeBorderThickness="5"
+          UseAeroCaptionButtons="False" />
       </Setter.Value>
     </Setter>
 
-    <!-- ControlTemplate -->
+    <!--  ControlTemplate  -->
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ctrls:BaseThemeWindow}">
-          <Border Padding="5"
-                  Background="{TemplateBinding Background}"
-                  BorderBrush="{TemplateBinding BorderBrush}"
-                  BorderThickness="{TemplateBinding BorderThickness}"
-                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                  CornerRadius="{TemplateBinding CornerRadius}"
-                  UseLayoutRounding="{TemplateBinding UseLayoutRounding}">
-            
+          <Border
+            Padding="5"
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="{TemplateBinding BorderThickness}"
+            CornerRadius="{TemplateBinding CornerRadius}"
+            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+            UseLayoutRounding="{TemplateBinding UseLayoutRounding}">
+
             <!--#region Row 2, Column 2-->
-            <ctrls:HeimdallrGrid Columns="*" Rows="Auto, *" >
+            <ctrls:HeimdallrGrid Columns="*" Rows="Auto, *">
 
-              <!--#region Row 0, Column 6 -->
-              <ctrls:HeimdallrGrid Grid.Row="0"
-                                   Background="{Binding HeaderBackground, RelativeSource={RelativeSource TemplatedParent}}"
-                                   Columns="Auto, Auto, *, Auto"
-                                   Margin="0 10 0 10"
-                                   Rows="Auto">
+              <!--#region Row 0, Column 6-->
+              <ctrls:HeimdallrGrid
+                Grid.Row="0"
+                Background="{Binding HeaderBackground, RelativeSource={RelativeSource TemplatedParent}}"
+                Columns="Auto, Auto, *, Auto"
+                Rows="Auto">
 
-                <!--#region DragBar 영역 Row 0 전체 -->
-                <ctrls:DraggableBar x:Name="PART_DragBar"
-                                    Grid.Column="0"
-                                    Grid.ColumnSpan="4"
-                                    Style="{StaticResource BAR.DRAGGABLE}" />
+                <!--#region DragBar 영역 Row 0 전체-->
+                <ctrls:DraggableBar
+                  x:Name="PART_DragBar"
+                  Grid.Column="0"
+                  Grid.ColumnSpan="4"
+                  Style="{StaticResource BAR.DRAGGABLE}" />
                 <!--#endregion-->
 
-                <!--#region Row 0, Column 0 Heimdallr 아이콘 -->
+                <!--#region Row 0, Column 0 Heimdallr 아이콘-->
                 <Viewbox Grid.Column="0">
-                  <ctrls:HeimdallrIcon x:Name="PART_Heimdallr"
-                                       Image="Heimdallr"
-                                       Margin="15 5 0 0 "
-                                       Cursor="Hand"/>
+                  <ctrls:HeimdallrIcon
+                    x:Name="PART_Heimdallr"
+                    Margin="15,0"
+                    Cursor="Hand"
+                    Image="Heimdallr" />
                 </Viewbox>
                 <!--#endregion-->
 
-                <!-- 타이틀 텍스트 -->
-                <TextBlock Grid.Column="1"
-                           Text="{TemplateBinding Title}"
-                           VerticalAlignment="Center"
-                           Foreground="White"
-                           Margin="10,0"/>
+                <!--#region StrokeDashArray="500" -> 점선 패턴 지정. 숫자가 크면 더 긴 “빈 공간”과 “선” 효과. 여기서는 애니메이션용 큰 값
+                    StrokeDashOffset="0" -> 점선 패턴 시작 위치. Storyboard에서 이 값 애니메이션
+                    StrokeEndLineCap="Triangle" -> 선 끝 모양 → 삼각형
+                    StrokeStartLineCap="Triangle" -> 선 시작 모양 → 삼각형 
+                    StrokeThickness="0.8" 선 두께, 1보다 얇음 → 가늘고 세밀한 선 ->-->
+                <Grid Grid.Column="1" Margin="5,0,0,0">
+                  <Path
+                    x:Name="HeimdallrPath"
+                    Width="225"
+                    Height="60"
+                    VerticalAlignment="Center"
+                    Data="{StaticResource HeimdallrSystem}"
+                    SnapsToDevicePixels="True"
+                    Stretch="Uniform"
+                    StrokeDashArray="500"
+                    StrokeDashOffset="0"
+                    StrokeEndLineCap="Triangle"
+                    StrokeLineJoin="Round"
+                    StrokeStartLineCap="Triangle"
+                    StrokeThickness="1.2">
+                    <Path.Stroke>
+                      <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <!--  시작위치 0,0(왼쪽위) 종료위치(오른족 아래)  -->
+                        <GradientStop x:Name="B1" Offset="0.0" Color="#FF00D1FF" />
+                        <GradientStop x:Name="B2" Offset="0.5" Color="#FF456882" />
+                        <GradientStop x:Name="B3" Offset="1.0" Color="#FF7CFFB2" />
+                      </LinearGradientBrush>
+                    </Path.Stroke>
 
+                    <Path.Triggers>
+                      <EventTrigger RoutedEvent="Path.Loaded">
+                        <BeginStoryboard>
+                          <Storyboard RepeatBehavior="Forever">
+                            <!--  선이 흘러가는 애니메이션  -->
+                            <DoubleAnimation
+                              BeginTime="0:0:0"
+                              Storyboard.TargetName="HeimdallrPath"
+                              Storyboard.TargetProperty="StrokeDashOffset"
+                              From="500"
+                              To="0"
+                              Duration="0:0:11" />
+                            <!--  그라디언트 이동  -->
+                            <DoubleAnimation
+                              BeginTime="0:0:0"
+                              Storyboard.TargetName="B1"
+                              Storyboard.TargetProperty="Offset"
+                              From="-0.2"
+                              To="1.1"
+                              Duration="0:0:08" />
+                          </Storyboard>
+                        </BeginStoryboard>
+                      </EventTrigger>
+                    </Path.Triggers>
+                  </Path>
+                </Grid>
 
-                <!-- 여기에 추가 UI 넣기용 ContentPresenter -->
-                <ContentPresenter Grid.Column="2"
-                                  x:Name="PART_HeaderContent"
-                                  Content="{TemplateBinding HeaderContent}" 
-                                  VerticalAlignment="Center"/>
+                <!--  여기에 추가 UI 넣기용 ContentPresenter  -->
+                <ContentPresenter
+                  x:Name="PART_HeaderContent"
+                  Grid.Column="2"
+                  VerticalAlignment="Center"
+                  Content="{TemplateBinding HeaderContent}" />
 
-                <!--#region 윈도우 버튼 영역(작게,크게,닫기) -->
+                <!--#region 윈도우 버튼 영역(작게,크게,닫기)-->
                 <Grid Grid.Column="3" Margin="5">
                   <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="40" />
+                    <!--  0 윈도우 작게  -->
                     <ColumnDefinition Width="40" />
+                    <!--  1 윈도우 크게  -->
                     <ColumnDefinition Width="40" />
+                    <!--  2 윈도우 닫기  -->
                   </Grid.ColumnDefinitions>
-                  <ctrls:HeimdallrMinimizeButton Grid.Column="0"
-                                                 x:Name="PART_MinButton" 
-                                                 ToolTip="MIN"/>
-                  <ctrls:HeimdallrMaximizeButton Grid.Column="1"
-                                                 x:Name="PART_MaxButton"
-                                                 ToolTip="MAX"/>
-                  <ctrls:HeimdallrCloseButton Grid.Column="2"
-                                              Margin="0 0 5 0"
-                                              x:Name="PART_CloseButton" 
-                                              ToolTip="CLOSE"/>
+                  <ctrls:HeimdallrMinimizeButton
+                    x:Name="PART_MinButton"
+                    Grid.Column="0"
+                    ToolTip="MIN" />
+                  <ctrls:HeimdallrMaximizeButton
+                    x:Name="PART_MaxButton"
+                    Grid.Column="1"
+                    ToolTip="MAX" />
+                  <ctrls:HeimdallrCloseButton
+                    x:Name="PART_CloseButton"
+                    Grid.Column="2"
+                    Margin="0,0,5,0"
+                    ToolTip="CLOSE" />
                 </Grid>
                 <!--#endregion-->
               </ctrls:HeimdallrGrid>
               <!--#endregion-->
 
-              <!--#region Content 영역 -->
-              <!-- ClipToBounds="False" 콘텐츠가 영역을 넘어도 잘리지 않음.  -->
+              <!--#region Content 영역-->
+              <!--  ClipToBounds="False" 콘텐츠가 영역을 넘어도 잘리지 않음.  -->
               <ContentPresenter
-                              x:Name="content"
-                              Grid.Row="1"
-                              ClipToBounds="False"
-                              ContentSource="Content"
-                              ContentTemplate="{TemplateBinding ContentTemplate}" />
+                x:Name="content"
+                Grid.Row="1"
+                Margin="0,5,0,0"
+                ClipToBounds="False"
+                ContentSource="Content"
+                ContentTemplate="{TemplateBinding ContentTemplate}" />
+
               <Grid
-                    x:Name="PART_Dimming"
-                    Grid.Row="1"
-                    Background="{TemplateBinding DimmingColor}"
-                    Opacity="{TemplateBinding DimmingOpacity}"
-                    Visibility="Collapsed" />
+                x:Name="PART_Dimming"
+                Grid.Row="1"
+                Background="{TemplateBinding DimmingColor}"
+                Opacity="{TemplateBinding DimmingOpacity}"
+                Visibility="Collapsed" />
               <!--#endregion-->
             </ctrls:HeimdallrGrid>
 

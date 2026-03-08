@@ -39,9 +39,28 @@ public class HeimdallrPulseButton : Button
   /// <summary>
   /// XAML에서 직접 등록된 PathGeometry 리소스를 사용하는 방식
   /// </summary>
-  public static readonly DependencyProperty IconProperty =
-      DependencyProperty.Register(nameof(Icon), typeof(IconType),
-        typeof(HeimdallrPulseButton), new PropertyMetadata(IconType.None));
+  public static readonly DependencyProperty IconProperty = DependencyProperty.Register(nameof(Icon), typeof(IconType), typeof(HeimdallrPulseButton),
+    new FrameworkPropertyMetadata(IconType.None, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange, OnIconChanged));
+
+  private static void OnIconChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+  {
+    var button = (HeimdallrPulseButton)d;
+    button.HasIcon = (IconType)e.NewValue != IconType.None;
+  }
+  #endregion
+
+  #region HasIcon
+  public bool HasIcon
+  {
+    get => (bool)GetValue(HasIconProperty);
+    private set => SetValue(HasIconPropertyKey, value);
+  }
+
+  public static readonly DependencyPropertyKey HasIconPropertyKey = DependencyProperty.RegisterReadOnly(nameof(HasIcon),
+    typeof(bool), typeof(HeimdallrPulseButton), new PropertyMetadata(false));
+
+  public static readonly DependencyProperty HasIconProperty =
+      HasIconPropertyKey.DependencyProperty;
   #endregion
 
   #region IconSize
@@ -181,10 +200,6 @@ public class HeimdallrPulseButton : Button
           typeof(HeimdallrPulseButton), new PropertyMetadata(new SolidColorBrush(Color.FromRgb(0x6E, 0xAC, 0xDA))));
   #endregion
 
-
-  /// <summary>
-  /// 포커스 보더 띠크니스 
-  /// </summary>
   #region FocusedBorderThickness
   public Thickness FocusedBorderThickness
   {
@@ -197,6 +212,23 @@ public class HeimdallrPulseButton : Button
   public static readonly DependencyProperty FocusedBorderThicknessProperty =
       DependencyProperty.Register(nameof(FocusedBorderThickness), typeof(Thickness),
           typeof(HeimdallrPulseButton), new PropertyMetadata(new Thickness(2)));
+  #endregion
+
+  #region IconMouseOverFill
+  /// <summary>
+  /// 마우스오버시 백그라운드 색상 지정 
+  /// </summary>
+  public Brush IconMouseOverFill
+  {
+    get => (Brush)GetValue(IconMouseOverFillProperty);
+    set => SetValue(IconMouseOverFillProperty, value);
+  }
+  /// <summary>
+  /// 종속성 속성
+  /// </summary>
+  public static readonly DependencyProperty IconMouseOverFillProperty =
+      DependencyProperty.Register(nameof(IconMouseOverFill), typeof(Brush),
+          typeof(HeimdallrPulseButton), new PropertyMetadata(new SolidColorBrush(Color.FromRgb(0x39, 0x3E, 0x46))));
   #endregion
 
   #region 생성자

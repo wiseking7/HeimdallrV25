@@ -1,27 +1,28 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:ctrls="clr-namespace:Heimdallr.UI.Controls">
+﻿<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:ctrls="clr-namespace:Heimdallr.UI.Controls">
 
-  <!-- 아이콘만 표시되는 버튼 템플릿 -->
+  <!--  아이콘만 표시되는 버튼 템플릿  -->
   <ControlTemplate x:Key="IconOnlyButtonTemplate" TargetType="{x:Type ctrls:HeimdallrRepeatButton}">
-    <ContentPresenter 
-       HorizontalAlignment="Center"
-       VerticalAlignment="Center"
-       RecognizesAccessKey="True"/>
+    <ContentPresenter
+      HorizontalAlignment="Center"
+      VerticalAlignment="Center"
+      RecognizesAccessKey="True" />
   </ControlTemplate>
 
   <Style TargetType="{x:Type ctrls:HeimdallrNumericButton}">
     <Setter Property="Cursor" Value="Hand" />
-    <Setter Property="Focusable" Value="True"/>
+    <Setter Property="Focusable" Value="True" />
     <Setter Property="Foreground" Value="#FF222831" />
     <Setter Property="Background" Value="#FFDCD7C9" />
-    <Setter Property="BorderBrush" Value="#FFCCCCCC"/>
-    <Setter Property="BorderThickness" Value="0"/>
+    <Setter Property="BorderBrush" Value="#FFCCCCCC" />
+    <Setter Property="BorderThickness" Value="0" />
     <Setter Property="FontSize" Value="20" />
-    <Setter Property="MinWidth" Value="120"/>
-    <Setter Property="Height" Value="35"/>
+    <Setter Property="MinWidth" Value="120" />
+    <Setter Property="Height" Value="35" />
 
-    <!-- 커스텀 속성-->
+    <!--  커스텀 속성  -->
     <Setter Property="IconSize" Value="30" />
     <Setter Property="Min" Value="0" />
     <Setter Property="Max" Value="100" />
@@ -32,77 +33,79 @@
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ctrls:HeimdallrNumericButton}">
 
-          <Border 
-               x:Name="border"
-               BorderBrush="{TemplateBinding BorderBrush}"
-               BorderThickness="{TemplateBinding BorderThickness}"
-               CornerRadius="5"
-               Background="{TemplateBinding Background}"
-               SnapsToDevicePixels="True"
-               UseLayoutRounding="True"
-               Padding="2">
+          <Border
+            x:Name="border"
+            Padding="2"
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="{TemplateBinding BorderThickness}"
+            CornerRadius="5"
+            SnapsToDevicePixels="True"
+            UseLayoutRounding="True">
             <Grid>
               <Grid.ColumnDefinitions>
-                <!-- 왼쪽 Down 버튼 -->
-                <ColumnDefinition Width="Auto"/>
-                <!-- 중앙 숫자 -->
-                <ColumnDefinition Width="*"/>
-                <!-- 오른쪽 Up 버튼 -->
-                <ColumnDefinition Width="Auto"/>
+                <!--  왼쪽 Down 버튼  -->
+                <ColumnDefinition Width="Auto" />
+                <!--  중앙 숫자  -->
+                <ColumnDefinition Width="*" />
+                <!--  오른쪽 Up 버튼  -->
+                <ColumnDefinition Width="Auto" />
               </Grid.ColumnDefinitions>
 
-              <!-- Down 버튼 (왼쪽) -->
-              <ctrls:HeimdallrRepeatButton x:Name="PART_DownButton"
-                                          Grid.Column="0"
-                                          Focusable="False"
-                                          Width="{TemplateBinding IconSize}" 
-                                          Height="{TemplateBinding IconSize}"
-                                          Background="Transparent"
-                                          BorderThickness="0"
-                                          Padding="2"
-                                          ToolTip="DOWN"
-                                          Icon="{TemplateBinding DownButtonIcon}"
-                                          IconFill="{TemplateBinding DownIconFill}"
-                                          MouserOverIconFill="{TemplateBinding DownIconMouseOverFill}" />
+              <!--  Down 버튼 (왼쪽)  -->
+              <ctrls:HeimdallrRepeatButton
+                x:Name="PART_DownButton"
+                Grid.Column="0"
+                Width="{TemplateBinding IconSize}"
+                Height="{TemplateBinding IconSize}"
+                Padding="2"
+                Background="Transparent"
+                BorderThickness="0"
+                Focusable="False"
+                Icon="{TemplateBinding DownButtonIcon}"
+                IconFill="{TemplateBinding DownIconFill}"
+                MouserOverIconFill="{TemplateBinding DownIconMouseOverFill}"
+                ToolTip="DOWN" />
 
-              <!-- TextBox (중앙) -->
-              <TextBox x:Name="PART_TextBox"
-                       Grid.Column="1"
-                       Background="{TemplateBinding Background}"
-                       BorderThickness ="{TemplateBinding BorderThickness}"
-                       BorderBrush="{TemplateBinding BorderBrush}"
-                       Margin="0 0 5 0"  
-                       FontWeight="Medium"
-                       FontSize="{TemplateBinding FontSize}"
-                       VerticalContentAlignment="Center"
-                       HorizontalContentAlignment="Center"
-                       Padding="2"
-                       IsEnabled="False"
-                       Text="{Binding Value, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                       Foreground="{TemplateBinding Foreground}">
-              </TextBox>
+              <!--  TextBox (중앙)  -->
+              <TextBox
+                x:Name="PART_TextBox"
+                Grid.Column="1"
+                Margin="0,0,5,0"
+                Padding="2"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                FontSize="{TemplateBinding FontSize}"
+                FontWeight="Medium"
+                Foreground="{TemplateBinding Foreground}"
+                IsEnabled="False"
+                Text="{Binding Value, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
 
-              <!-- Up 버튼 -->
-              <ctrls:HeimdallrRepeatButton x:Name="PART_UpButton"
-                                           Grid.Column="2"
-                                           Focusable="False"
-                                           Width="{TemplateBinding IconSize}" 
-                                           Height="{TemplateBinding IconSize}"
-                                           Background="Transparent"
-                                           BorderThickness="0"
-                                           Padding="2"
-                                           ToolTip="UP"
-                                           Icon="{TemplateBinding UpButtonIcon}"
-                                           IconFill="{TemplateBinding UpIconFill}"
-                                           MouserOverIconFill="{TemplateBinding UpIconMouseOverFill}" />
+              <!--  Up 버튼  -->
+              <ctrls:HeimdallrRepeatButton
+                x:Name="PART_UpButton"
+                Grid.Column="2"
+                Width="{TemplateBinding IconSize}"
+                Height="{TemplateBinding IconSize}"
+                Padding="2"
+                Background="Transparent"
+                BorderThickness="0"
+                Focusable="False"
+                Icon="{TemplateBinding UpButtonIcon}"
+                IconFill="{TemplateBinding UpIconFill}"
+                MouserOverIconFill="{TemplateBinding UpIconMouseOverFill}"
+                ToolTip="UP" />
             </Grid>
           </Border>
           <ControlTemplate.Triggers>
-            <!-- 비활성화 상태 -->
+            <!--  비활성화 상태  -->
             <Trigger Property="IsEnabled" Value="False">
-              <Setter TargetName="PART_TextBox" Property="Foreground" Value="Gray"/>
-              <Setter TargetName="PART_UpButton" Property="IconFill" Value="Gray"/>
-              <Setter TargetName="PART_DownButton" Property="IconFill" Value="Gray"/>
+              <Setter TargetName="PART_TextBox" Property="Foreground" Value="Gray" />
+              <Setter TargetName="PART_UpButton" Property="IconFill" Value="Gray" />
+              <Setter TargetName="PART_DownButton" Property="IconFill" Value="Gray" />
             </Trigger>
 
             <Trigger Property="IsMouseOver" Value="True">
@@ -111,16 +114,14 @@
               <Setter TargetName="PART_DownButton" Property="IconFill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DownIconPressedFill}" />
             </Trigger>
 
-            <!-- PressedUp 상태 -->
-            <Trigger  SourceName="PART_UpButton" Property="IsPressed" Value="True">
-              <Setter TargetName="PART_UpButton" Property="IconFill"
-                     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=UpIconPressedFill}" />
+            <!--  PressedUp 상태  -->
+            <Trigger SourceName="PART_UpButton" Property="IsPressed" Value="True">
+              <Setter TargetName="PART_UpButton" Property="IconFill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=UpIconPressedFill}" />
             </Trigger>
 
-            <!-- PressedDown 상태 -->
-            <Trigger  SourceName="PART_DownButton" Property="IsPressed" Value="True">
-              <Setter TargetName="PART_DownButton" Property="IconFill"
-                     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DownIconPressedFill}" />
+            <!--  PressedDown 상태  -->
+            <Trigger SourceName="PART_DownButton" Property="IsPressed" Value="True">
+              <Setter TargetName="PART_DownButton" Property="IconFill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DownIconPressedFill}" />
             </Trigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>

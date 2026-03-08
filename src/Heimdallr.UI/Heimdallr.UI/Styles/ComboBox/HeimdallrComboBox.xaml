@@ -1,40 +1,46 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:ctrls="clr-namespace:Heimdallr.UI.Controls"
-                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
-                    xmlns:cnvts="clr-namespace:Heimdallr.UI.Converters">
+﻿<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:cnvts="clr-namespace:Heimdallr.UI.Converters"
+  xmlns:ctrls="clr-namespace:Heimdallr.UI.Controls"
+  xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary Source="/Heimdallr.UI;component/Styles/Colors/Color.xaml" />
   </ResourceDictionary.MergedDictionaries>
 
+  <cnvts:HeimdallrComboBoxNullToVisibilityConverter x:Key="HeimdallrComboBoxNullToVisibilityConverter" />
+
   <Style TargetType="{x:Type ctrls:HeimdallrComboBox}">
-    <Setter Property="Width" Value="120"/>
-    <Setter Property="Height" Value="35"/>
+    <Setter Property="Width" Value="120" />
+    <Setter Property="Height" Value="35" />
     <Setter Property="FontSize" Value="16" />
+    <Setter Property="FontWeight" Value="ExtraLight" />
     <Setter Property="MaxDropDownHeight" Value="260" />
-    <Setter Property="DropDownBackground" Value="{StaticResource DarkPurple}"/>
-    <Setter Property="SelectedItemForeground" Value="{StaticResource DarkWhite}"/>
-    <Setter Property="Background" Value="{StaticResource DarkSeaGreen}"/>
-    <Setter Property="IconSize" Value="30"/>
-    <Setter Property="IconFill" Value="{StaticResource DarkWhite}"/>
-    <Setter Property="IconMouseOverFill" Value="{StaticResource DarkCharcoalGray}"/>
-    <Setter Property="CornerRadius" Value="7"/>
-    <Setter Property="UIElement.SnapsToDevicePixels" Value="True"/>
-    <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
-    <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
-    <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
-    <Setter Property="FrameworkElement.FocusVisualStyle" Value="{x:Null}"/>
-    <Setter Property="Cursor" Value="Hand"/>
+    <Setter Property="DropDownBackground" Value="#FF409AA8" />
+    <Setter Property="PlaceholderForeground" Value="#FFFFFFFF" />
+    <Setter Property="SelectedItemForeground" Value="{StaticResource DarkWhite}" />
+    <Setter Property="Background" Value="#FF124853" />
+    <Setter Property="IconSize" Value="24" />
+    <Setter Property="IconFill" Value="{StaticResource DarkWhite}" />
+    <Setter Property="IconMouseOverFill" Value="#FFFEC740" />
+    <Setter Property="CornerRadius" Value="7" />
+    <Setter Property="UIElement.SnapsToDevicePixels" Value="True" />
+    <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+    <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+    <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
+    <Setter Property="FrameworkElement.FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="PopupAnimation" Value="Fade" />
+    <Setter Property="Foreground" Value="#FF333333" />
+    <Setter Property="Cursor" Value="Hand" />
 
     <Setter Property="ItemContainerStyle">
       <Setter.Value>
         <Style TargetType="ComboBoxItem">
-          <Setter Property="Foreground" 
-                  Value="{Binding SelectedItemForeground, RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrComboBox}}"/>
-          <Setter Property="Background" Value="Transparent"/>
-          <Setter Property="HorizontalContentAlignment" Value="Left"/>
-          <Setter Property="VerticalContentAlignment" Value="Center"/>
+          <Setter Property="Foreground" Value="{Binding SelectedItemForeground, RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrComboBox}}" />
+          <Setter Property="Background" Value="Transparent" />
+          <Setter Property="HorizontalContentAlignment" Value="Left" />
+          <Setter Property="VerticalContentAlignment" Value="Center" />
         </Style>
       </Setter.Value>
     </Setter>
@@ -42,90 +48,100 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ctrls:HeimdallrComboBox}">
-          <Border x:Name="border"
-                  Background="{TemplateBinding Background}"
-                  CornerRadius="{TemplateBinding CornerRadius}"
-                  BorderBrush="{TemplateBinding BorderBrush}"
-                  BorderThickness="{TemplateBinding BorderThickness}"
-                  SnapsToDevicePixels="True"
-                  UseLayoutRounding="True">
+          <Border
+            x:Name="border"
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="{TemplateBinding BorderThickness}"
+            CornerRadius="{TemplateBinding CornerRadius}"
+            SnapsToDevicePixels="True"
+            UseLayoutRounding="True">
             <Grid ClipToBounds="True">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
               </Grid.ColumnDefinitions>
 
-              <!-- 선택 영역 -->
+              <!--  선택 영역  -->
               <Grid Grid.Column="0">
-                <!-- Selected Item -->
-                <ContentPresenter x:Name="ContentSite"
-                                  Margin="10,0,10,0"
-                                  IsHitTestVisible="False"
-                                  HorizontalAlignment="Left"
-                                  VerticalAlignment="Center"
-                                  Content="{TemplateBinding SelectedItem}"
-                                  ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
-                                  ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                  TextElement.Foreground="{Binding SelectedItemForeground, RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrComboBox}}"/>
+                <!--  Selected Item  -->
+                <ContentPresenter
+                  x:Name="ContentSite"
+                  Margin="10,0,10,0"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Center"
+                  Content="{TemplateBinding SelectedItem}"
+                  ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                  ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                  IsHitTestVisible="False"
+                  TextElement.Foreground="{Binding SelectedItemForeground, RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrComboBox}}" />
 
-                <!-- Non-Editable Placeholder -->
-                <TextBlock x:Name="NonEditablePlaceholder"
-                           Text="{Binding PlaceholderText, RelativeSource={RelativeSource TemplatedParent}}"
-                           Foreground="{Binding PlaceholderForeground, RelativeSource={RelativeSource TemplatedParent}}"
-                           Margin="10,0,10,0"
-                           VerticalAlignment="Center"
-                           IsHitTestVisible="False"
-                           Visibility="{Binding SelectedItem, RelativeSource={RelativeSource TemplatedParent}, Converter={cnvts:HeimdallrComboBoxNullToVisibilityConverter}}"/>
+                <!--  Non-Editable Placeholder  -->
+                <TextBlock
+                  x:Name="NonEditablePlaceholder"
+                  Margin="10,0,10,0"
+                  VerticalAlignment="Center"
+                  Foreground="{Binding PlaceholderForeground, RelativeSource={RelativeSource TemplatedParent}}"
+                  IsHitTestVisible="False"
+                  Text="{Binding PlaceholderText, RelativeSource={RelativeSource TemplatedParent}}"
+                  Visibility="{Binding SelectedItem, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource HeimdallrComboBoxNullToVisibilityConverter}}" />
 
-                <!-- Editable TextBox -->
-                <TextBox x:Name="PART_EditableTextBox"
-                         Margin="7,0,10,0"
-                         IsReadOnly="{TemplateBinding IsReadOnly}"
-                         Visibility="Hidden"
-                         Background="Transparent"
-                         HorizontalAlignment="Left"
-                         VerticalAlignment="Center"
-                         CaretBrush="{Binding CaretBrush, RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrComboBox}}"
-                         IsEnabled="{TemplateBinding IsEditable}"
-                         Foreground="{Binding SelectedItemForeground, RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrComboBox}}"
-                         Focusable="True"
-                         Text="{TemplateBinding Text}">
+                <!--  Editable TextBox  -->
+                <TextBox
+                  x:Name="PART_EditableTextBox"
+                  Margin="7,0,10,0"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Center"
+                  Background="Transparent"
+                  CaretBrush="{Binding CaretBrush, RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrComboBox}}"
+                  Focusable="True"
+                  Foreground="{Binding SelectedItemForeground, RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrComboBox}}"
+                  IsEnabled="{TemplateBinding IsEditable}"
+                  IsReadOnly="{TemplateBinding IsReadOnly}"
+                  Text="{TemplateBinding Text}"
+                  Visibility="Hidden">
                   <TextBox.Template>
                     <ControlTemplate TargetType="TextBox">
                       <Grid>
-                        <ScrollViewer x:Name="PART_ContentHost" Background="{TemplateBinding Background}" Focusable="False"/>
-                        <!-- Editable Placeholder -->
-                        <TextBlock x:Name="PlaceholderTextBlock"
-                                   Text="{Binding PlaceholderText, RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrComboBox}}"
-                                   Foreground="{Binding PlaceholderForeground, RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrComboBox}}"
-                                   Margin="4,0,0,0"
-                                   VerticalAlignment="Center"
-                                   IsHitTestVisible="False"
-                                   Opacity="1"/>
+                        <ScrollViewer
+                          x:Name="PART_ContentHost"
+                          Background="{TemplateBinding Background}"
+                          Focusable="False" />
+                        <!--  Editable Placeholder  -->
+                        <TextBlock
+                          x:Name="PlaceholderTextBlock"
+                          Margin="4,0,0,0"
+                          VerticalAlignment="Center"
+                          Foreground="{Binding PlaceholderForeground, RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrComboBox}}"
+                          IsHitTestVisible="False"
+                          Opacity="1"
+                          Text="{Binding PlaceholderText, RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrComboBox}}" />
                       </Grid>
                       <ControlTemplate.Triggers>
                         <MultiDataTrigger>
                           <MultiDataTrigger.Conditions>
-                            <Condition Binding="{Binding Text, RelativeSource={RelativeSource TemplatedParent}}" Value=""/>
-                            <Condition Binding="{Binding SelectedItem, RelativeSource={RelativeSource TemplatedParent}}" Value="{x:Null}"/>
+                            <Condition Binding="{Binding Text, RelativeSource={RelativeSource TemplatedParent}}" Value="" />
+                            <Condition Binding="{Binding SelectedItem, RelativeSource={RelativeSource TemplatedParent}}" Value="{x:Null}" />
                           </MultiDataTrigger.Conditions>
                           <MultiDataTrigger.EnterActions>
                             <BeginStoryboard>
                               <Storyboard>
-                                <DoubleAnimation Storyboard.TargetName="PlaceholderTextBlock"
-                                                 Storyboard.TargetProperty="Opacity"
-                                                 To="1"
-                                                 Duration="0:0:0.2"/>
+                                <DoubleAnimation
+                                  Storyboard.TargetName="PlaceholderTextBlock"
+                                  Storyboard.TargetProperty="Opacity"
+                                  To="1"
+                                  Duration="0:0:0.2" />
                               </Storyboard>
                             </BeginStoryboard>
                           </MultiDataTrigger.EnterActions>
                           <MultiDataTrigger.ExitActions>
                             <BeginStoryboard>
                               <Storyboard>
-                                <DoubleAnimation Storyboard.TargetName="PlaceholderTextBlock"
-                                                 Storyboard.TargetProperty="Opacity"
-                                                 To="0"
-                                                  Duration="0:0:0.2"/>
+                                <DoubleAnimation
+                                  Storyboard.TargetName="PlaceholderTextBlock"
+                                  Storyboard.TargetProperty="Opacity"
+                                  To="0"
+                                  Duration="0:0:0.2" />
                               </Storyboard>
                             </BeginStoryboard>
                           </MultiDataTrigger.ExitActions>
@@ -136,61 +152,64 @@
                 </TextBox>
               </Grid>
 
-              <!-- 드롭다운 버튼 -->
-              <ctrls:HeimdallrIconToggleButton x:Name="ToggleButton"
-                                               Grid.Column="1"
-                                               VerticalContentAlignment="Center"
-                                               HorizontalContentAlignment="Center"
-                                               CornerRadius="{TemplateBinding CornerRadius}"
-                                               IconMouseOverFill="{TemplateBinding IconMouseOverFill}"
-                                               Icon="{TemplateBinding Icon}"
-                                               IconSize="{TemplateBinding IconSize}"
-                                               IconFill="{TemplateBinding IconFill}"
-                                               IconCheckedFill="{TemplateBinding IconCheckedFill}"
-                                               IconDisabledFill="{TemplateBinding IconDisabledFill}"
-                                               ClickMode="Press"
-                                               Focusable="False"
-                                               IsEnabled="{Binding IsEnabled, RelativeSource={RelativeSource TemplatedParent}}"
-                                               IsChecked="{Binding Path=IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
+              <!--  드롭다운 버튼  -->
+              <ctrls:HeimdallrIconToggleButton
+                x:Name="ToggleButton"
+                Grid.Column="1"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                ClickMode="Press"
+                CornerRadius="{TemplateBinding CornerRadius}"
+                Focusable="False"
+                Icon="{TemplateBinding Icon}"
+                IconCheckedFill="{TemplateBinding IconCheckedFill}"
+                IconDisabledFill="{TemplateBinding IconDisabledFill}"
+                IconFill="{TemplateBinding IconFill}"
+                IconMouseOverFill="{TemplateBinding IconMouseOverFill}"
+                IconSize="{TemplateBinding IconSize}"
+                IsChecked="{Binding Path=IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                IsEnabled="{Binding IsEnabled, RelativeSource={RelativeSource TemplatedParent}}" />
 
-              <!-- 드롭다운 Popup -->
-              <Popup Grid.Column="0"
-                     Name="Popup"
-                     Placement="Bottom"
-                     Focusable="False"
-                     AllowsTransparency="True"
-                     IsOpen="{TemplateBinding ComboBox.IsDropDownOpen}"
-                     PopupAnimation="Slide">
-                <Border Name="DropDownBorder"
-                        Margin="-1,1.5,3,0"
-                        MinWidth="{TemplateBinding Width}"
-                        MaxHeight="{TemplateBinding MaxDropDownHeight}"
-                        Background="{TemplateBinding DropDownBackground}"
-                        CornerRadius="0"
-                        BorderThickness="{TemplateBinding PopupBorderThickness}"
-                        SnapsToDevicePixels="True"
-                        UseLayoutRounding="True"
-                        BorderBrush="{TemplateBinding BorderBrush}">
-                  <ScrollViewer Margin="4"
-                                SnapsToDevicePixels="True"
-                                CanContentScroll="True"
-                                VerticalScrollBarVisibility="Auto"
-                                HorizontalScrollBarVisibility="Disabled">
-                    <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained">
-                    </ItemsPresenter>
+              <!--  드롭다운 Popup  -->
+              <Popup
+                Name="Popup"
+                Grid.Column="0"
+                AllowsTransparency="True"
+                Focusable="False"
+                IsOpen="{TemplateBinding ComboBox.IsDropDownOpen}"
+                Placement="Bottom"
+                PopupAnimation="{TemplateBinding PopupAnimation}">
+                <Border
+                  Name="DropDownBorder"
+                  MinWidth="{TemplateBinding Width}"
+                  MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                  Margin="-1,1.5,3,0"
+                  Background="{TemplateBinding DropDownBackground}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding PopupBorderThickness}"
+                  CornerRadius="0"
+                  SnapsToDevicePixels="True"
+                  UseLayoutRounding="True">
+                  <ScrollViewer
+                    Margin="4"
+                    CanContentScroll="True"
+                    HorizontalScrollBarVisibility="Disabled"
+                    SnapsToDevicePixels="True"
+                    VerticalScrollBarVisibility="Auto">
+                    <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained" />
                   </ScrollViewer>
                 </Border>
               </Popup>
             </Grid>
           </Border>
 
-          <!-- ControlTemplate 트리거 -->
+          <!--  ControlTemplate 트리거  -->
           <ControlTemplate.Triggers>
-            <!-- Editable 모드 -->
+            <!--  Editable 모드  -->
             <Trigger Property="ComboBox.IsEditable" Value="True">
-              <Setter Property="UIElement.Visibility" TargetName="PART_EditableTextBox" Value="Visible"/>
-              <Setter Property="UIElement.Visibility" TargetName="ContentSite" Value="Hidden"/>
-              <Setter Property="UIElement.Visibility" TargetName="NonEditablePlaceholder" Value="Hidden"/>
+              <Setter TargetName="PART_EditableTextBox" Property="UIElement.Visibility" Value="Visible" />
+              <Setter TargetName="ContentSite" Property="UIElement.Visibility" Value="Hidden" />
+              <Setter TargetName="NonEditablePlaceholder" Property="UIElement.Visibility" Value="Hidden" />
             </Trigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>

@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Heimdallr.UI.Controls;
 
@@ -16,6 +17,16 @@ public class HeimdallrScrollViewer : ScrollViewer
     DefaultStyleKeyProperty.OverrideMetadata(typeof(HeimdallrScrollViewer),
       new FrameworkPropertyMetadata(typeof(HeimdallrScrollViewer)));
   }
+  #endregion
+
+  #region IconMouseOverFill
+  public Brush IconMouseOverFill
+  {
+    get => (Brush)GetValue(IconMouseOverFillProperty);
+    set => SetValue(IconMouseOverFillProperty, value);
+  }
+  public static readonly DependencyProperty IconMouseOverFillProperty =
+      DependencyProperty.Register(nameof(IconMouseOverFill), typeof(Brush), typeof(HeimdallrScrollViewer), new PropertyMetadata(Brushes.DeepSkyBlue));
   #endregion
 
   #region OnApplyTemplate 메서드

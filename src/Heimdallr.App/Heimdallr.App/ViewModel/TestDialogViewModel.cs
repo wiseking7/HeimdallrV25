@@ -14,6 +14,9 @@ public class TestDialogViewModel : BaseDialogWithDimming
   private bool _isOpen;
   public bool IsOpen { get => _isOpen; set => SetProperty(ref _isOpen, value); }
 
+  private bool _showPassword;
+  public bool ShowPassword { get => _showPassword; set => SetProperty(ref _showPassword, value); }
+
 
   public DelegateCommand? NavigateCommand { get; }
   public string Message { get; set; } = "테스트 다이얼로그";

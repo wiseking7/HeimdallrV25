@@ -52,7 +52,8 @@ public class HeimdallrDropdownContentMenu : ContentControl
   /// </summary>
   public static readonly DependencyProperty IsOpenProperty =
       DependencyProperty.Register(nameof(IsOpen), typeof(bool), typeof(HeimdallrDropdownContentMenu),
-          new PropertyMetadata(false));
+          new FrameworkPropertyMetadata(false,
+            FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
   #endregion
 
   #region IconType
@@ -108,6 +109,16 @@ public class HeimdallrDropdownContentMenu : ContentControl
   public static readonly DependencyProperty IconSizeProperty =
       DependencyProperty.Register(nameof(IconSize), typeof(double),
           typeof(HeimdallrDropdownContentMenu), new PropertyMetadata(24.0));
+  #endregion
+
+  #region IconMouseOverFill
+  public Brush IconMouseOverFill
+  {
+    get => (Brush)GetValue(IconMouseOverFillProperty);
+    set => SetValue(IconMouseOverFillProperty, value);
+  }
+  public static readonly DependencyProperty IconMouseOverFillProperty =
+      DependencyProperty.Register(nameof(IconMouseOverFill), typeof(Brush), typeof(HeimdallrDropdownContentMenu), new PropertyMetadata(Brushes.DeepSkyBlue));
   #endregion
 
   #region Placement
@@ -196,11 +207,98 @@ public class HeimdallrDropdownContentMenu : ContentControl
           new PropertyMetadata(Brushes.Transparent));
   #endregion
 
+  #region AutoCloseOnClick 메뉴클릭시 팝업창 자동 닫힘
+  public bool AutoCloseOnClick
+  {
+    get => (bool)GetValue(AutoCloseOnClickProperty);
+    set => SetValue(AutoCloseOnClickProperty, value);
+  }
+
+  public static readonly DependencyProperty AutoCloseOnClickProperty =
+      DependencyProperty.Register(nameof(AutoCloseOnClick),
+          typeof(bool),
+          typeof(HeimdallrDropdownContentMenu),
+          new PropertyMetadata(true));
+  #endregion
+
+  #region CloseOnOutsideClick
+  /// <summary>
+  /// Popup 외부를 클릭하면 자동으로 닫힐지 여부
+  /// </summary>
+  public bool CloseOnOutsideClick
+  {
+    get => (bool)GetValue(CloseOnOutsideClickProperty);
+    set => SetValue(CloseOnOutsideClickProperty, value);
+  }
+
+  public static readonly DependencyProperty CloseOnOutsideClickProperty =
+      DependencyProperty.Register(nameof(CloseOnOutsideClick),
+          typeof(bool),
+          typeof(HeimdallrDropdownContentMenu),
+          new PropertyMetadata(true));
+  #endregion
+
+  #region PopupAnimation
+  public PopupAnimation PopupAnimation
+  {
+    get => (PopupAnimation)GetValue(PopupAnimationProperty);
+    set => SetValue(PopupAnimationProperty, value);
+  }
+
+  public static readonly DependencyProperty PopupAnimationProperty =
+      DependencyProperty.Register(nameof(PopupAnimation),
+          typeof(PopupAnimation),
+          typeof(HeimdallrDropdownContentMenu),
+          new PropertyMetadata(PopupAnimation.Fade));
+  #endregion
+
+  #region VerticalOffset 팝업창 위/아래 이동
+  public double VerticalOffset
+  {
+    get => (double)GetValue(VerticalOffsetProperty);
+    set => SetValue(VerticalOffsetProperty, value);
+  }
+
+  public static readonly DependencyProperty VerticalOffsetProperty =
+      DependencyProperty.Register(nameof(VerticalOffset),
+          typeof(double),
+          typeof(HeimdallrDropdownContentMenu),
+          new PropertyMetadata(0.0));
+  #endregion
+
+  #region HorizontalOffset 팝업창 좌/우 이동
+  /// <summary>
+  /// Popup의 좌우 위치 보정
+  /// </summary>
+  public double HorizontalOffset
+  {
+    get => (double)GetValue(HorizontalOffsetProperty);
+    set => SetValue(HorizontalOffsetProperty, value);
+  }
+
+  public static readonly DependencyProperty HorizontalOffsetProperty =
+      DependencyProperty.Register(
+          nameof(HorizontalOffset),
+          typeof(double),
+          typeof(HeimdallrDropdownContentMenu),
+          new PropertyMetadata(0.0, OnHorizontalOffsetChanged));
+
+  private static void OnHorizontalOffsetChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+  {
+    if (d is HeimdallrDropdownContentMenu menu && menu._popup != null)
+    {
+      menu._popup.HorizontalOffset = (double)e.NewValue;
+    }
+  }
+  #endregion
+
   #region OnApplyTemplate 재정의 메서드
   /// <summary>
   /// 템플릿이 적용된 후 호출됩니다.
   /// Popup과 Toggle(CheckBox)을 템플릿에서 가져와 초기화하고, 이벤트를 설정합니다.
   /// </summary>
+
+  private Window? _window;
   public override void OnApplyTemplate()
   {
     base.OnApplyTemplate();
@@ -216,10 +314,104 @@ public class HeimdallrDropdownContentMenu : ContentControl
 
       // 바인딩된 Placement 초기 적용
       _popup.Placement = Placement;
+
+      // ⭐ Offset 적용
+      _popup.HorizontalOffset = HorizontalOffset;
+      _popup.VerticalOffset = VerticalOffset;
     }
 
     // 토글 버튼 (CheckBox) 참조
     _toggle = Template.FindName(PART_TOGGLE_NAME, this) as CheckBox;
+
+    // ⭐ 메뉴 클릭 감지 추가
+    AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(OnMenuItemClicked), true);
+
+    // ⭐ Outside Click 감지
+    _window = Window.GetWindow(this);
+
+    if (_window != null)
+    {
+      _window.PreviewMouseDown -= Window_PreviewMouseDown;
+      _window.PreviewMouseDown += Window_PreviewMouseDown;
+    }
+  }
+  #endregion
+
+  #region
+  private void Window_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+  {
+    if (!CloseOnOutsideClick)
+      return;
+
+    if (!IsOpen)
+      return;
+
+    if (e.OriginalSource is DependencyObject dep)
+    {
+      if (IsDescendantOf(dep, this))
+        return;
+
+      if (_popup != null && IsDescendantOf(dep, _popup))
+        return;
+    }
+
+    IsOpen = false;
+  }
+  #endregion
+
+  #region Menu Click Close
+  private void OnMenuItemClicked(object sender, RoutedEventArgs e)
+  {
+    if (!AutoCloseOnClick)
+      return;
+
+    if (!IsOpen)
+      return;
+
+    // Toggle 클릭이면 무시
+    if (_toggle != null && _toggle.IsMouseOver)
+      return;
+
+    // 실제 메뉴 버튼만 처리
+    if (e.OriginalSource is DependencyObject dep)
+    {
+      var button = FindParent<ButtonBase>(dep);
+
+      if (button == null)
+        return;
+    }
+
+    IsOpen = false;
+  }
+  #endregion
+
+  #region Helper Method
+  private static T? FindParent<T>(DependencyObject child) where T : DependencyObject
+  {
+    DependencyObject parent = VisualTreeHelper.GetParent(child);
+
+    while (parent != null)
+    {
+      if (parent is T typed)
+        return typed;
+
+      parent = VisualTreeHelper.GetParent(parent);
+    }
+
+    return null;
+  }
+
+  private static bool IsDescendantOf(DependencyObject child, DependencyObject parent)
+  {
+    while (child != null)
+    {
+      if (child == parent)
+        return true;
+
+      child = VisualTreeHelper.GetParent(child);
+    }
+
+    return false;
   }
   #endregion
 
@@ -279,6 +471,19 @@ public class HeimdallrDropdownContentMenu : ContentControl
     }
 
     base.OnKeyDown(e);
+  }
+  #endregion
+
+  #region OnPreviewKeyDown ESC 키로 Popup 닫기
+  protected override void OnPreviewKeyDown(KeyEventArgs e)
+  {
+    base.OnPreviewKeyDown(e);
+
+    if (e.Key == Key.Escape && IsOpen)
+    {
+      IsOpen = false;
+      e.Handled = true;
+    }
   }
   #endregion
 }

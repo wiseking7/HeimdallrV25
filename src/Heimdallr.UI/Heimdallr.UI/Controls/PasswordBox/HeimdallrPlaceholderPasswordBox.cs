@@ -13,8 +13,8 @@ public class HeimdallrPlaceholderPasswordBox : Control
 
   #region Template Parts
   // 템플릿에서 찾을 컨트롤들
-  private PasswordBox? _passwordBox; // ● 문자로 표시되는 실제 입력용
-  private TextBox? _textBox;         // 비밀번호 보기 상태일 때 사용하는 일반 텍스트 박스
+  private PasswordBox? _passwordBox;   // 실제 비밀번호 입력용 박스 (● 문자로 표시)
+  private TextBox? _textBox;           // 비밀번호 보기 상태일 때 사용되는 일반 TextBox
   #endregion
 
   #region 생성자 (정적 생성자, CommandManage 바인딩 등록)
@@ -26,21 +26,28 @@ public class HeimdallrPlaceholderPasswordBox : Control
   }
 
   /// <summary>
-  /// 생성자: Toggle 커맨드 바인딩 등록
+  /// 인스턴스 생성자: 커맨드 바인딩 등록 및 이벤트 처리
   /// </summary>
   public HeimdallrPlaceholderPasswordBox()
   {
-    CommandManager.RegisterClassCommandBinding(typeof(HeimdallrPlaceholderPasswordBox),
-        new CommandBinding(ToggleShowPasswordCommand, OnToggleShowPassword));
+    // 비밀번호 보이기 아이콘을 클릭하면 비밀번호가 보이기 ToggleShowPasswordCommand 실행 시 OnToggleShowPassword 메서드 호출
+    CommandBindings.Add(new CommandBinding(ToggleShowPasswordCommand, OnToggleShowPassword));
 
+    // ToolTip이 열릴 때 커스텀 HeimdallrToolTip으로 변환
     ToolTipOpening += HeimdallrPlaceholderPasswordBox_ToolTipOpening;
+
+    // Unloaded 이벤트 시 이벤트 해제 (메모리 누수 방지)
+    Unloaded += (s, e) =>
+    {
+      ToolTipOpening -= HeimdallrPlaceholderPasswordBox_ToolTipOpening;
+    };
   }
   #endregion
 
   #region HeimdallrPlaceholderPasswordBox_ToolTipOpening 이벤트
   private void HeimdallrPlaceholderPasswordBox_ToolTipOpening(object sender, ToolTipEventArgs e)
   {
-    // ToolTip 자체가 없으면 아예 열리지 않게
+    // ToolTip이 없으면 열리지 않게 처리
     if (ToolTip == null)
     {
       e.Handled = true;
@@ -51,7 +58,7 @@ public class HeimdallrPlaceholderPasswordBox : Control
     if (ToolTip is HeimdallrToolTip)
       return;
 
-    // 문자열일 경우만 변환
+    // 문자열이면 HeimdallrToolTip로 변환
     if (ToolTip is string tooltipText && !string.IsNullOrWhiteSpace(tooltipText))
     {
       ToolTip = new HeimdallrToolTip
@@ -61,20 +68,157 @@ public class HeimdallrPlaceholderPasswordBox : Control
     }
     else
     {
-      // 빈 문자열 / 알 수 없는 타입 → 표시 안 함
+      // 빈 문자열이거나 알 수 없는 타입이면 표시 안 함
       e.Handled = true;
     }
   }
   #endregion
 
-  #region 커맨드 처리기
-  // 커맨드 실행 시 ShowPassword 토글 처리
+  #region 커맨드 처리기 ToggleShowPasswordCommand 실행 시 ShowPassword 속성 토글
   private void OnToggleShowPassword(object sender, ExecutedRoutedEventArgs e)
   {
-    if (sender is HeimdallrPlaceholderPasswordBox control)
+    // ShowPassword 값을 인스턴스 별로 토글
+    ShowPassword = !ShowPassword;
+
+    TogglePasswordVisibility();
+  }
+  #endregion
+
+  #region TogglePasswordVisibility
+  /// <summary>
+  /// _passwordBox와 _textBox의 Visibility를 설정하는 코드를 중복을 피하도록 리팩토링합니다. 
+  /// 상태 변경에 대한 로직을 메서드로 추출
+  /// </summary>
+  private void TogglePasswordVisibility()
+  {
+    if (_passwordBox == null || _textBox == null) return;
+
+    if (ShowPassword)
     {
-      control.ShowPassword = !control.ShowPassword;
+      _textBox.Text = _passwordBox.Password;
+      _textBox.Visibility = Visibility.Visible;
+      _passwordBox.Visibility = Visibility.Collapsed;
     }
+    else
+    {
+      _passwordBox.Password = _textBox.Text;
+      _passwordBox.Visibility = Visibility.Visible;
+      _textBox.Visibility = Visibility.Collapsed;
+    }
+
+    UpdateHasPassword();
+  }
+  #endregion
+
+  #region UpdateHasPassword 메서드
+  /// <summary>
+  /// HasPassword 속성의 값은 Password 속성의 값과 동기화
+  /// </summary>
+  private void UpdateHasPassword()
+  {
+    HasPassword = !string.IsNullOrEmpty(Password);
+  }
+  #endregion
+
+  #region ShowPassword
+  /// <summary>
+  /// 눈 아이콘을 누르면 비밀번호 보기 상태 여부 (true일 경우 일반 텍스트로 표시)
+  /// </summary>
+  public bool ShowPassword
+  {
+    get => (bool)GetValue(ShowPasswordProperty);
+    set => SetValue(ShowPasswordProperty, value);
+  }
+  /// <summary>
+  /// 종속성주입
+  /// </summary>
+  public static readonly DependencyProperty ShowPasswordProperty =
+      DependencyProperty.Register(nameof(ShowPassword), typeof(bool), typeof(HeimdallrPlaceholderPasswordBox),
+          new PropertyMetadata(false, OnShowPasswordChanged));
+  #endregion
+
+  #region OnShowPasswordChanged 메서드
+  private static void OnShowPasswordChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+  {
+    var control = (HeimdallrPlaceholderPasswordBox)d;
+    control.TogglePasswordVisibility();
+  }
+  #endregion
+
+  #region OnPasswordChanged 콜백 메서드 ViewModel에서 Password 속성 변경 시 내부 PasswordBox/TextBox 동기화
+  // ViewModel → Password 속성 변경 시 내부 PasswordBox/TextBox 값도 업데이트
+  private static void OnPasswordChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+  {
+    var control = (HeimdallrPlaceholderPasswordBox)d;
+    var newPassword = e.NewValue as string ?? string.Empty;
+
+    if (control._passwordBox != null && control._passwordBox.Password != newPassword)
+    {
+      control._passwordBox.Password = newPassword;
+    }
+
+    if (control._textBox != null && control._textBox.Text != newPassword)
+    {
+      control._textBox.Text = newPassword;
+    }
+
+    control.UpdateHasPassword();
+  }
+  #endregion
+
+  #region OnApplyTemplate 재정의
+  /// <summary>
+  /// 템플릿 적용 시 내부 PasswordBox, TextBox 참조 및 이벤트 연결
+  /// </summary>
+  public override void OnApplyTemplate()
+  {
+    base.OnApplyTemplate();
+
+    // 이전 연결된 이벤트 해제
+    if (_passwordBox != null)
+      _passwordBox.PasswordChanged -= PasswordBox_PasswordChanged;
+
+    if (_textBox != null)
+      _textBox.TextChanged -= TextBox_TextChanged;
+
+    // 템플릿에서 PasswordBox 와 TextBox 찾아서 컨트롤 가져오기
+    _passwordBox = GetTemplateChild("PART_PasswordBox") as PasswordBox;
+    _textBox = GetTemplateChild("PART_TextBox") as TextBox;
+
+    // 초기 값 설정 및 이벤트 연결
+    if (_passwordBox != null)
+    {
+      _passwordBox.Password = Password;
+      _passwordBox.PasswordChanged += PasswordBox_PasswordChanged;
+    }
+
+    if (_textBox != null)
+    {
+      _textBox.Text = Password;
+      _textBox.TextChanged += TextBox_TextChanged;
+    }
+
+    TogglePasswordVisibility();
+  }
+  #endregion
+
+  #region PasswordBox_PasswordChanged 이벤트
+  private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+  {
+    if (_passwordBox == null) return;
+
+    if (Password != _passwordBox.Password)
+      Password = _passwordBox.Password; // ViewModel 속성과 동기화
+  }
+  #endregion
+
+  #region TextBox_TextChanged 이벤트
+  private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+  {
+    if (_textBox == null) return;
+
+    if (Password != _textBox.Text)
+      Password = _textBox.Text; // ViewModel 속성과 동기화
   }
   #endregion
 
@@ -97,33 +241,23 @@ public class HeimdallrPlaceholderPasswordBox : Control
          new FrameworkPropertyMetadata(new CornerRadius(0)));
   #endregion
 
-  #region PlaceholderText
+  #region PlaceholderText 입력란에 표시될 워터마크 문자열
   public string PlaceholderText
   {
     get => (string)GetValue(PlaceholderTextProperty);
     set => SetValue(PlaceholderTextProperty, value);
   }
-
-  /// <summary>
-  /// 종속성주입
-  /// </summary>
   public static readonly DependencyProperty PlaceholderTextProperty =
       DependencyProperty.Register(nameof(PlaceholderText), typeof(string), typeof(HeimdallrPlaceholderPasswordBox),
           new PropertyMetadata(string.Empty));
   #endregion
 
-  #region PlaceholderForeground
-  /// <summary>
-  /// WaterMark 문자열 색상
-  /// </summary>
+  #region PlaceholderForeground 워터마크 텍스트 색상
   public Brush PlaceholderForeground
   {
     get => (Brush)GetValue(PlaceholderForegroundProperty);
     set => SetValue(PlaceholderForegroundProperty, value);
   }
-  /// <summary>
-  /// 종속성주입
-  /// </summary>
   public static readonly DependencyProperty PlaceholderForegroundProperty =
       DependencyProperty.Register(nameof(PlaceholderForeground), typeof(Brush), typeof(HeimdallrPlaceholderPasswordBox),
           new PropertyMetadata(Brushes.Gray));
@@ -131,13 +265,14 @@ public class HeimdallrPlaceholderPasswordBox : Control
 
   #region HasPassword
   /// <summary>
-  /// 현재 입력된 비밀번호가 있는지 여부 (워터마크 표시 조건으로 사용됨)
-  /// 현재 비밀번호가 비어있지 않으면 true, 비어있으면 false.
+  /// 비밀번호 입력 여부 확인
+  /// true → 입력됨, false → 비어 있음
+  /// 워터마크 표시 Trigger 용
   /// </summary>
   public bool HasPassword
   {
     get => (bool)GetValue(HasPasswordProperty);
-    private set => SetValue(HasPasswordPropertyKey, value);
+    private set => SetValue(HasPasswordPropertyKey, value);  // 읽기 전용
   }
 
   // 읽기 전용 의존 속성 정의
@@ -169,76 +304,6 @@ public class HeimdallrPlaceholderPasswordBox : Control
           new PropertyMetadata(IconType.None));
   #endregion
 
-  #region IconFill
-  /// <summary>
-  /// 아이콘 색상 (HeimdallrIcon의 Fill과 바인딩됨)
-  /// </summary>
-  public Brush IconFill
-  {
-    get => (Brush)GetValue(IconFillProperty);
-    set => SetValue(IconFillProperty, value);
-  }
-  /// <summary>
-  /// 종속성주입
-  /// </summary>
-  public static readonly DependencyProperty IconFillProperty =
-      DependencyProperty.Register(nameof(IconFill), typeof(Brush), typeof(HeimdallrPlaceholderPasswordBox),
-        new PropertyMetadata(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFA5D7E8"))));
-  #endregion
-
-  #region Password
-  /// <summary>
-  /// MVVM 바인딩을 지원하는 Password 속성 (실제 PasswordBox.Password와 동기화)
-  /// </summary>
-  public string Password
-  {
-    get => (string)GetValue(PasswordProperty);
-    set => SetValue(PasswordProperty, value);
-  }
-  /// <summary>
-  /// 종속성주입
-  /// </summary>
-  public static readonly DependencyProperty PasswordProperty =
-      DependencyProperty.Register(nameof(Password), typeof(string), typeof(HeimdallrPlaceholderPasswordBox),
-          new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnPasswordChanged));
-  #endregion
-
-  #region OnPasswordChanged
-  // ViewModel → Password 속성 변경 시 내부 PasswordBox/TextBox 값도 업데이트
-  private static void OnPasswordChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-  {
-    var control = (HeimdallrPlaceholderPasswordBox)d;
-    var newPassword = e.NewValue as string ?? string.Empty;
-
-    if (control._passwordBox != null && control._passwordBox.Password != newPassword)
-    {
-      control._passwordBox.Password = newPassword;
-    }
-
-    if (control._textBox != null && control._textBox.Text != newPassword)
-    {
-      control._textBox.Text = newPassword;
-    }
-  }
-  #endregion
-
-  #region ShowPassword
-  /// <summary>
-  /// 눈 아이콘을 누르면 비밀번호 보기 상태 여부 (true일 경우 일반 텍스트로 표시)
-  /// </summary>
-  public bool ShowPassword
-  {
-    get => (bool)GetValue(ShowPasswordProperty);
-    set => SetValue(ShowPasswordProperty, value);
-  }
-  /// <summary>
-  /// 종속성주입
-  /// </summary>
-  public static readonly DependencyProperty ShowPasswordProperty =
-      DependencyProperty.Register(nameof(ShowPassword), typeof(bool), typeof(HeimdallrPlaceholderPasswordBox),
-          new PropertyMetadata(false));
-  #endregion
-
   #region IconSize
   /// <summary>
   /// 이이콘 사이즈 너비,높이
@@ -257,44 +322,49 @@ public class HeimdallrPlaceholderPasswordBox : Control
           typeof(HeimdallrPlaceholderPasswordBox), new PropertyMetadata(25.0));
   #endregion
 
-  #region OnApplyTemplate 재정의
+  #region IconFill
   /// <summary>
-  /// 템플릿 적용 시 내부 PasswordBox, TextBox와 바인딩 설정
+  /// 아이콘 색상 (HeimdallrIcon의 Fill과 바인딩됨)
   /// </summary>
-  public override void OnApplyTemplate()
+  public Brush IconFill
   {
-    base.OnApplyTemplate();
-
-    // ControlTemplate에 정의된 이름을 기준으로 내부 요소를 가져옴
-    _passwordBox = GetTemplateChild("PART_PasswordBox") as PasswordBox;
-    _textBox = GetTemplateChild("PART_TextBox") as TextBox;
-
-    if (_passwordBox != null)
-    {
-      // 사용자가 PasswordBox에 입력할 때마다 속성 동기화
-      _passwordBox.PasswordChanged += (s, e) =>
-      {
-        if (Password != _passwordBox.Password)
-          Password = _passwordBox.Password;
-
-        HasPassword = !string.IsNullOrEmpty(_passwordBox.Password);
-      };
-    }
-
-    if (_textBox != null)
-    {
-      // TextBox는 ShowPassword=true일 때만 보여짐
-      _textBox.Text = Password;
-
-      _textBox.TextChanged += (s, e) =>
-      {
-        if (Password != _textBox.Text)
-          Password = _textBox.Text;
-
-        HasPassword = !string.IsNullOrEmpty(_textBox.Text);
-      };
-    }
+    get => (Brush)GetValue(IconFillProperty);
+    set => SetValue(IconFillProperty, value);
   }
+  /// <summary>
+  /// 종속성주입
+  /// </summary>
+  public static readonly DependencyProperty IconFillProperty =
+      DependencyProperty.Register(nameof(IconFill), typeof(Brush), typeof(HeimdallrPlaceholderPasswordBox),
+        new PropertyMetadata(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFA5D7E8"))));
+  #endregion
+
+  #region IconMouseOverFill
+  public Brush IconMouseOverFill
+  {
+    get => (Brush)GetValue(IconMouseOverFillProperty);
+    set => SetValue(IconMouseOverFillProperty, value);
+  }
+  public static readonly DependencyProperty IconMouseOverFillProperty =
+      DependencyProperty.Register(nameof(IconMouseOverFill), typeof(Brush), typeof(HeimdallrPlaceholderPasswordBox), new PropertyMetadata(Brushes.DeepSkyBlue));
+  #endregion
+
+  #region Password
+  /// <summary>
+  /// MVVM 바인딩용 Password 속성
+  /// 실제 PasswordBox.Password와 동기화됨
+  /// </summary>
+  public string Password
+  {
+    get => (string)GetValue(PasswordProperty);
+    set => SetValue(PasswordProperty, value);
+  }
+  /// <summary>
+  /// 종속성주입
+  /// </summary>
+  public static readonly DependencyProperty PasswordProperty =
+      DependencyProperty.Register(nameof(Password), typeof(string), typeof(HeimdallrPlaceholderPasswordBox),
+          new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnPasswordChanged));  // 값 변경 시 이벤트 호출
   #endregion
 
   #region CaretBrush
@@ -386,4 +456,5 @@ public class HeimdallrPlaceholderPasswordBox : Control
       DependencyProperty.Register(nameof(RightIconToolTip), typeof(string), typeof(HeimdallrPlaceholderPasswordBox), new PropertyMetadata(string.Empty));
   #endregion
 }
+
 

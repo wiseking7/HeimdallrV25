@@ -1,76 +1,76 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
-    <ImplicitUsings>enable</ImplicitUsings>
+	<PropertyGroup>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+		<ImplicitUsings>enable</ImplicitUsings>
 
-	<!-- NuGet 패키지 메타데이터 추가 -->
-    
-	<!-- 자동으로 nupkg 확장자 생성  -->
-	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-	
-	<!-- 패키지 이름 -->
-	<PackageId>Heimdallr.WPF.UI</PackageId>
+		<!-- NuGet 패키지 메타데이터 추가 -->
 
-	<!-- 버전 -->
-	<Version>1.0.14</Version>
+		<!-- 자동으로 nupkg 확장자 생성  -->
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 
-	<!-- 작성자 -->
-	<Authors>Heimdallr</Authors>
+		<!-- 패키지 이름 -->
+		<PackageId>Heimdallr.WPF.UI</PackageId>
 
-	<!-- 회사 이름 -->
-	<Company>Heimdallr.Company</Company>
+		<!-- 버전 -->
+		<Version>1.0.59</Version>
 
-	<!-- 패키지 설명 -->
-	<Description>Heimdallr.WPF</Description>
+		<!-- 작성자 -->
+		<Authors>Heimdallr</Authors>
 
-	<!-- 태그 -->
-	<PackageTags>NuGet, Example, WPF</PackageTags>
+		<!-- 회사 이름 -->
+		<Company>Heimdallr.Company</Company>
 
-	<!-- GitHub 저장소 URL -->
-	<RepositoryUrl>https://github.com/wiseking7/HeimdallrV25</RepositoryUrl>
-	  
-	  <!-- 선택적, 권장 사항 -->
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/wiseking7/HeimdallrV25</PackageProjectUrl>
-    <PackageReleaseNotes>Heimdallr.Utility에 대한 종속성이 제거되었습니다. 버전 1.0.2로 업데이트되었습니다.</PackageReleaseNotes>
-    <RepositoryType>git</RepositoryType>
-	  
-  </PropertyGroup>
+		<!-- 패키지 설명 -->
+		<Description>Heimdallr.WPF</Description>
 
-  <ItemGroup>
-    <None Remove="Controls\Assets\Geomerties\geometries.json" />
-    <None Remove="Controls\Assets\Images\images.yaml" />
-  </ItemGroup>
+		<!-- 태그 -->
+		<PackageTags>NuGet, Example, WPF</PackageTags>
 
-  <ItemGroup>
-	<None Include="..\..\..\README.md">
-	  <!--패키지에 포함--> 
-	 <Pack>true</Pack>
-	  <!--루트 경로--> 
-	 <PackagePath></PackagePath>
-	</None>
-  </ItemGroup>
-	
-  <!-- EmbeddedResource 설정-->
-  <ItemGroup>
-    <EmbeddedResource Include="Controls\Assets\Geomerties\geometries.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Assets\Images\images.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-  </ItemGroup>
+		<!-- GitHub 저장소 URL -->
+		<RepositoryUrl>https://github.com/wiseking7/HeimdallrV25</RepositoryUrl>
 
- <!-- NuGet 패키지 참조-->
-  <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Prism.DryIoc" Version="9.0.537" />
-    <PackageReference Include="WpfAutoGrid.Core" Version="1.5.1" />
-    <PackageReference Include="YamlDotNet.NetCore" Version="1.0.0" />
-  </ItemGroup>
+		<!-- 선택적, 권장 사항 -->
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/wiseking7/HeimdallrV25</PackageProjectUrl>
+		<PackageReleaseNotes>Heimdallr.Utility에 대한 종속성이 제거되었습니다. 버전 1.0.2로 업데이트되었습니다.</PackageReleaseNotes>
+		<RepositoryType>git</RepositoryType>
 
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Remove="Controls\Assets\Geomerties\geometries.json" />
+		<None Remove="Controls\Assets\Images\images.yaml" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\..\..\README.md">
+			<!--패키지에 포함-->
+			<Pack>true</Pack>
+			<!--루트 경로-->
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+
+	<!-- EmbeddedResource 설정-->
+	<ItemGroup>
+		<EmbeddedResource Include="Controls\Assets\Geomerties\geometries.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Controls\Assets\Images\images.yaml">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</EmbeddedResource>
+	</ItemGroup>
+
+	<!-- NuGet 패키지 참조-->
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="Prism.DryIoc" Version="9.0.537" />
+		<PackageReference Include="WpfAutoGrid.Core" Version="1.5.1" />
+		<PackageReference Include="YamlDotNet.NetCore" Version="1.0.0" />
+	</ItemGroup>
 </Project>
+

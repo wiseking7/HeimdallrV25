@@ -1,86 +1,110 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:ctrls="clr-namespace:Heimdallr.UI.Controls"
-                    xmlns:cnvts="clr-namespace:Heimdallr.UI.Converters">
+﻿<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:cnvts="clr-namespace:Heimdallr.UI.Converters"
+  xmlns:ctrls="clr-namespace:Heimdallr.UI.Controls">
+
+  <cnvts:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
 
   <Style TargetType="{x:Type ctrls:HeimdallrDropdownContentMenu}">
-    <!-- 기본 속성 -->
+    <!--  기본 속성  -->
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="BorderBrush" Value="Transparent" />
     <Setter Property="BorderThickness" Value="0" />
     <Setter Property="Cursor" Value="Hand" />
-    <Setter Property="FontSize" Value="18" />
+    <Setter Property="FontSize" Value="16" />
     <Setter Property="Foreground" Value="#FF818FB4" />
-    
-    <!-- 커스텀 속성 -->
-    <Setter Property="IconSize" Value="30" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+
+    <!--  커스텀 속성  -->
+    <Setter Property="IconSize" Value="26" />
     <Setter Property="IconFill" Value="#FFB9B4C7" />
     <Setter Property="StaysOpenWhenMouseOver" Value="False" />
     <Setter Property="Placement" Value="Bottom" />
     <Setter Property="ToggleBackground" Value="Transparent" />
+    <Setter Property="VerticalOffset" Value="0" />
+    <Setter Property="HorizontalOffset" Value="0" />
+    <Setter Property="PopupAnimation" Value="Fade" />
 
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ctrls:HeimdallrDropdownContentMenu}">
           <Grid>
-            <CheckBox x:Name="PART_Toggle"
-                      Focusable="True"
-                      IsTabStop="True"
-                      Style="{x:Null}"
-                      IsChecked="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
-              <CheckBox.Template>
-                <ControlTemplate TargetType="CheckBox">
-                  <!-- ▶ 아이콘 + 텍스트 -->
-                  <Border Background="{Binding ToggleBackground, RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrDropdownContentMenu}}"
-                          Padding="6">
+            <!--  기준이 되는 Root Border  -->
+            <Border
+              x:Name="PART_RootBorder"
+              Padding="6"
+              Background="{TemplateBinding ToggleBackground}"
+              BorderBrush="{TemplateBinding BorderBrush}"
+              BorderThickness="{TemplateBinding BorderThickness}"
+              SnapsToDevicePixels="True"
+              UseLayoutRounding="True">
 
-                    <Grid VerticalAlignment="Center">
-                      <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*" />
-                      </Grid.ColumnDefinitions>
-                      
-                      <!-- 왼쪽: 메인 아이콘 -->
-                      <ctrls:HeimdallrIcon Grid.Column="0"
-                                           Width="{Binding IconSize, RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrDropdownContentMenu}}"
-                                           Height="{Binding IconSize, RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrDropdownContentMenu}}"
-                                           Icon="{Binding Icon, RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrDropdownContentMenu}}"
-                                           Fill="{Binding IconFill, RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrDropdownContentMenu}}" 
-                                           VerticalAlignment="Center"/>
-                    
-                      <!-- 가운데: 텍스트 -->
-                      <TextBlock Grid.Column="1"
-                                 Text="{Binding Label, RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrDropdownContentMenu}}" 
-                                 Margin="5,-2,0,0"
-                                 VerticalAlignment="Center"
-                                 FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrDropdownContentMenu}}" 
-                                 Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrDropdownContentMenu}}" 
-                                 Visibility="{Binding Label, RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrDropdownContentMenu}, Converter={cnvts:StringToVisibilityConverter}}" />
-                    </Grid>
-                  </Border>
-                </ControlTemplate>
-              </CheckBox.Template>
-            </CheckBox>
+              <CheckBox
+                x:Name="PART_Toggle"
+                Focusable="True"
+                IsChecked="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                IsTabStop="True"
+                Style="{x:Null}">
+                <CheckBox.Template>
+                  <ControlTemplate TargetType="CheckBox">
+                    <!--  ▶ 아이콘 + 텍스트  -->
+                    <Border Padding="6" Background="{Binding ToggleBackground, RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrDropdownContentMenu}}">
 
-            <Popup x:Name="PART_Popup"
-                   AllowsTransparency="True"
-                   IsOpen="{TemplateBinding IsOpen}"
-                   PlacementTarget="{Binding ElementName=PART_Toggle}"
-                   Placement="{TemplateBinding Placement}"
-                   StaysOpen="False">
+                      <Grid VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="Auto" />
+                          <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
-              <Border Background="{TemplateBinding Background}"
-                      BorderBrush="{TemplateBinding BorderBrush}"
-                      BorderThickness="{TemplateBinding BorderThickness}"
-                      Padding="4"
-                      MaxHeight="300"
-                      MinWidth="160">
-                <ctrls:HeimdallrScrollViewer VerticalScrollBarVisibility="Auto"
-                                             MaxHeight="300">
-                  <!-- 핵심: ContentTemplate 바인딩 추가 -->
-                  <ContentPresenter
-                      Content="{TemplateBinding Content}"
-                      ContentTemplate="{TemplateBinding ContentTemplate}" />
+                        <!--  왼쪽: 메인 아이콘  -->
+                        <ctrls:HeimdallrIcon
+                          Grid.Column="0"
+                          VerticalAlignment="Center"
+                          Fill="{Binding IconFill, RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrDropdownContentMenu}}"
+                          Icon="{Binding Icon, RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrDropdownContentMenu}}"
+                          IconMouseOverFill="{Binding IconMouseOverFill, RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrDropdownContentMenu}}"
+                          IconSize="{Binding IconSize, RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrDropdownContentMenu}}" />
+
+                        <!--  가운데: 텍스트  -->
+                        <TextBlock
+                          Grid.Column="1"
+                          Margin="5,-2,0,0"
+                          VerticalAlignment="Center"
+                          FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrDropdownContentMenu}}"
+                          Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrDropdownContentMenu}}"
+                          Text="{Binding Label, RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrDropdownContentMenu}}"
+                          Visibility="{Binding Label, RelativeSource={RelativeSource AncestorType=ctrls:HeimdallrDropdownContentMenu}, Converter={StaticResource StringToVisibilityConverter}}" />
+                      </Grid>
+                    </Border>
+                  </ControlTemplate>
+                </CheckBox.Template>
+              </CheckBox>
+            </Border>
+
+            <Popup
+              x:Name="PART_Popup"
+              AllowsTransparency="True"
+              HorizontalOffset="{TemplateBinding HorizontalOffset}"
+              IsOpen="{TemplateBinding IsOpen}"
+              Placement="{TemplateBinding Placement}"
+              PlacementTarget="{Binding ElementName=PART_RootBorder}"
+              PopupAnimation="{TemplateBinding PopupAnimation}"
+              StaysOpen="False"
+              VerticalOffset="{TemplateBinding VerticalOffset}">
+
+              <Border
+                MinWidth="160"
+                MaxHeight="300"
+                Padding="4"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                SnapsToDevicePixels="True"
+                UseLayoutRounding="True">
+                <ctrls:HeimdallrScrollViewer MaxHeight="300" VerticalScrollBarVisibility="Auto">
+                  <!--  핵심: ContentTemplate 바인딩 추가  -->
+                  <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" />
                 </ctrls:HeimdallrScrollViewer>
               </Border>
             </Popup>

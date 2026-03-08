@@ -1,4 +1,5 @@
 ﻿using Heimdallr.UI.Enums;
+using Heimdallr.UI.Extensions;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -192,6 +193,16 @@ public class HeimdallrHoldButton : Button
           new PropertyMetadata(Brushes.Green));
   #endregion
 
+  #region IconMouseOverFill
+  public Brush IconMouseOverFill
+  {
+    get => (Brush)GetValue(IconMouseOverFillProperty);
+    set => SetValue(IconMouseOverFillProperty, value);
+  }
+  public static readonly DependencyProperty IconMouseOverFillProperty =
+      DependencyProperty.Register(nameof(IconMouseOverFill), typeof(Brush), typeof(HeimdallrHoldButton), new PropertyMetadata(Brushes.DeepSkyBlue));
+  #endregion
+
   #region MouseOver 배경색
   /// <summary>
   /// 마우스 오버 시 배경
@@ -336,17 +347,6 @@ public class HeimdallrHoldButton : Button
   {
     CancelHold();
     base.OnMouseLeftButtonUp(e);
-  }
-  #endregion
-
-  #region 마우스가 벗어나면 Hold 취소 메서드
-  /// <summary>
-  /// 마우스가 버튼을 벗어나면 Hold 취소
-  /// </summary>
-  protected override void OnMouseLeave(MouseEventArgs e)
-  {
-    CancelHold();
-    base.OnMouseLeave(e);
   }
   #endregion
 
@@ -564,6 +564,44 @@ public class HeimdallrHoldButton : Button
     {
       // 빈 문자열 / 알 수 없는 타입 → 표시 안 함
       e.Handled = true;
+    }
+  }
+  #endregion
+
+  #region 마우스 오버시 색상변경
+  protected override void OnMouseEnter(MouseEventArgs e)
+  {
+    base.OnMouseEnter(e);
+
+    if (_bgRect != null)
+    {
+      // 기존 브러시 재사용
+      if (!(_bgRect.Background is SolidColorBrush))
+        _bgRect.Background = BackgroundRectangleFill.Clone();
+
+      AnimationExtensions.SetAnimatedBackground(_bgRect, MouseOverBackground);
+      AnimationExtensions.SetAnimatedFillDuration(_bgRect, AnimatedFillDuration);
+    }
+  }
+  #endregion
+
+  #region 마우스가 벗어나면 Hold 취소 메서드
+  /// <summary>
+  /// 마우스가 버튼을 벗어나면 Hold 취소
+  /// </summary>
+  protected override void OnMouseLeave(MouseEventArgs e)
+  {
+    CancelHold();
+    base.OnMouseLeave(e);
+
+    if (_bgRect != null)
+    {
+      if (!(_bgRect.Background is SolidColorBrush))
+        _bgRect.Background = BackgroundRectangleFill.Clone();
+
+      // 원래 배경색으로 복원
+      AnimationExtensions.SetAnimatedBackground(_bgRect, BackgroundRectangleFill);
+      AnimationExtensions.SetAnimatedFillDuration(_bgRect, AnimatedFillDuration);
     }
   }
   #endregion

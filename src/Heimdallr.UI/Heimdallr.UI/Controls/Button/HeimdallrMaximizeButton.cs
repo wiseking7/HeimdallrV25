@@ -96,7 +96,7 @@ public class HeimdallrMaximizeButton : Button
     // 템플릿 내부의 아이콘 컨트롤이 존재할 경우 아이콘을 갱신
     if (btn.icon != null)
     {
-      btn.icon.Icon = btn.IsMaximize ? IconType.Restore : IconType.Maximize;
+      btn.icon.Icon = btn.IsMaximize ? IconType.WindowRestore : IconType.Maximize;
     }
   }
   #endregion
@@ -117,7 +117,7 @@ public class HeimdallrMaximizeButton : Button
       icon = maxbtn;
 
       // 초기 상태에서도 아이콘을 반영
-      icon.Icon = IsMaximize ? IconType.Restore : IconType.Maximize;
+      icon.Icon = IsMaximize ? IconType.WindowRestore : IconType.Maximize;
     }
   }
 

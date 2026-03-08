@@ -1,8 +1,9 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:ctrls="clr-namespace:Heimdallr.UI.Controls">
+﻿<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:ctrls="clr-namespace:Heimdallr.UI.Controls">
 
-  <Style TargetType="{x:Type ctrls:HeimdallrMaximizeButton }" >
+  <Style TargetType="{x:Type ctrls:HeimdallrMaximizeButton}">
     <Setter Property="MouseOverBackground" Value="#FFC8ACD6" />
     <Setter Property="PressedBackground" Value="#FF576CBC" />
     <Setter Property="Fill" Value="#FF576CBC" />
@@ -13,16 +14,17 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ctrls:HeimdallrMaximizeButton}">
-          <Border Background="{TemplateBinding Background}"  >
+          <Border Background="{TemplateBinding Background}">
 
-            <!-- OnApplyTemplate 에서 Icon 을 초기화 여기서 Icon 코딩 필요 없음-->
-            <ctrls:HeimdallrIcon x:Name="PART_Icon"
-                                 Fill="{TemplateBinding Fill}"       
-                                 Padding="{TemplateBinding Margin}"
-                                 Stretch="Uniform"
-                                 SnapsToDevicePixels="True"
-                                 UseLayoutRounding="True"
-                                 RenderOptions.EdgeMode="Aliased"/>
+            <!--  OnApplyTemplate 에서 Icon 을 초기화 여기서 Icon 코딩 필요 없음  -->
+            <ctrls:HeimdallrIcon
+              x:Name="PART_Icon"
+              Padding="{TemplateBinding Margin}"
+              Fill="{TemplateBinding Fill}"
+              RenderOptions.EdgeMode="Aliased"
+              SnapsToDevicePixels="True"
+              Stretch="Uniform"
+              UseLayoutRounding="True" />
 
           </Border>
           <ControlTemplate.Triggers>

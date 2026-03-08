@@ -33,7 +33,6 @@ public class HelperModules : IModule
 {
   public void OnInitialized(IContainerProvider containerProvider)
   {
-    throw new NotImplementedException();
   }
 
   public void RegisterTypes(IContainerRegistry containerRegistry)

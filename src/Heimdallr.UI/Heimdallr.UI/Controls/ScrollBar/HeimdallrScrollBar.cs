@@ -99,6 +99,16 @@ public class HeimdallrScrollBar : ScrollBar
           typeof(HeimdallrScrollBar), new PropertyMetadata(8.0));
   #endregion
 
+  #region IconMouseOverFill
+  public Brush IconMouseOverFill
+  {
+    get => (Brush)GetValue(IconMouseOverFillProperty);
+    set => SetValue(IconMouseOverFillProperty, value);
+  }
+  public static readonly DependencyProperty IconMouseOverFillProperty =
+      DependencyProperty.Register(nameof(IconMouseOverFill), typeof(Brush), typeof(HeimdallrScrollBar), new PropertyMetadata(Brushes.DeepSkyBlue));
+  #endregion
+
   #region VerticalThumbWidth
   public double VerticalThumbWidth
   {

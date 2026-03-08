@@ -70,23 +70,28 @@ public class HeimdallrIcon : ContentControl
   {
     HeimdallrIcon heimdallrIcon = (HeimdallrIcon)d;
 
-    // ToolKit에서 아이콘 이름에 해당하는 Path 데이터 문자열 가져오기
-    string geometryData = GeometryConverter.GetData(heimdallrIcon.Icon.ToString());
-
-    if (!string.IsNullOrEmpty(geometryData))
+    try
     {
-      // // 문자열을 Geometry로 파싱하여 Data 속성에 할당
-      heimdallrIcon.Data = Geometry.Parse(geometryData);
-      heimdallrIcon.Mode = IconMode.Icon;
+      Geometry geometry = GeometryConverter.GetGeometry(heimdallrIcon.Icon.ToString());
+      if (geometry != null)
+      {
+        heimdallrIcon.Data = geometry;
+        heimdallrIcon.Mode = IconMode.Icon;
+      }
+      else
+      {
+        heimdallrIcon.Data = Geometry.Parse("M0,0"); // 빈 PathFallback
+        heimdallrIcon.Mode = IconMode.None;
+      }
     }
-    else
+    catch (Exception ex)
     {
-      heimdallrIcon.Data = Geometry.Parse("M0,0"); // 빈 PathFallback
-
-      // 현재 모드를 Icon으로 설정
+      Debug.WriteLine($"[{nameof(HeimdallrIcon)}.IconPropertyChanged] 오류 발생: {ex.Message}");
+      heimdallrIcon.Data = Geometry.Parse("M0,0");
       heimdallrIcon.Mode = IconMode.None;
     }
   }
+
   #endregion
 
   #region Image
@@ -311,15 +316,39 @@ public class HeimdallrIcon : ContentControl
   {
     base.OnApplyTemplate();
 
-    if (Data != null)
-    {
-      Debug.WriteLine($"[{nameof(HeimdallrIcon)}.{MethodBase.GetCurrentMethod()?.Name}] Data -> 속성(Property) 설정 입니다");
-    }
-    else
-    {
-      Debug.WriteLine($"[{nameof(HeimdallrIcon)}.{MethodBase.GetCurrentMethod()?.Name}] Data -> null 입니다");
-    }
+    //// 템플릿에서 Path 가져오기
+    //if (GetTemplateChild("iconPath") is System.Windows.Shapes.Path path)
+    //{
+    //  // Path의 Fill을 현재 Fill 값으로 초기화
+    //  path.Fill = this.Fill;
+
+    //  // Fill 속성 변경 시 Path.Fill을 자동 갱신하도록 Binding
+    //  var binding = new Binding(nameof(Fill))
+    //  {
+    //    Source = this
+    //  };
+    //  path.SetBinding(System.Windows.Shapes.Path.FillProperty, binding);
+    //}
+
+    //if (Data != null)
+    //{
+    //  Debug.WriteLine($"[{nameof(HeimdallrIcon)}.{MethodBase.GetCurrentMethod()?.Name}] Data -> 속성(Property) 설정 입니다");
+    //}
+    //else
+    //{
+    //  Debug.WriteLine($"[{nameof(HeimdallrIcon)}.{MethodBase.GetCurrentMethod()?.Name}] Data -> null 입니다");
+    //}
   }
+  #endregion
+
+  #region IconMouseOverFill
+  public Brush IconMouseOverFill
+  {
+    get => (Brush)GetValue(IconMouseOverFillProperty);
+    set => SetValue(IconMouseOverFillProperty, value);
+  }
+  public static readonly DependencyProperty IconMouseOverFillProperty =
+      DependencyProperty.Register(nameof(IconMouseOverFill), typeof(Brush), typeof(HeimdallrIcon), new PropertyMetadata(Brushes.DeepSkyBlue));
   #endregion
 }
 

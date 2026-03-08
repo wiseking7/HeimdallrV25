@@ -1,6 +1,7 @@
 ﻿using Heimdallr.UI.Enums;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 
 namespace Heimdallr.UI.Controls;
@@ -284,4 +285,19 @@ public class HeimdallrComboBox : ComboBox
           new PropertyMetadata(new SolidColorBrush(Color.FromRgb(160, 160, 160)))); // 기본 #A0A0A0
 
   #endregion
+
+  #region PopupAnimation
+  public PopupAnimation PopupAnimation
+  {
+    get => (PopupAnimation)GetValue(PopupAnimationProperty);
+    set => SetValue(PopupAnimationProperty, value);
+  }
+
+  public static readonly DependencyProperty PopupAnimationProperty =
+      DependencyProperty.Register(nameof(PopupAnimation),
+          typeof(PopupAnimation),
+          typeof(HeimdallrComboBox),
+          new PropertyMetadata(PopupAnimation.Fade));
+  #endregion
+
 }

@@ -85,7 +85,16 @@ public class HeimdallrPulseEllipseButton : Button
   /// </summary>
   public static readonly DependencyProperty IconProperty =
         DependencyProperty.Register(nameof(Icon), typeof(IconType), typeof(HeimdallrPulseEllipseButton), new PropertyMetadata(IconType.None));
+  #endregion
 
+  #region IconMouseOverFill
+  public Brush IconMouseOverFill
+  {
+    get => (Brush)GetValue(IconMouseOverFillProperty);
+    set => SetValue(IconMouseOverFillProperty, value);
+  }
+  public static readonly DependencyProperty IconMouseOverFillProperty =
+      DependencyProperty.Register(nameof(IconMouseOverFill), typeof(Brush), typeof(HeimdallrPulseEllipseButton), new PropertyMetadata(Brushes.DeepSkyBlue));
   #endregion
 
   #region Icon Size 지정

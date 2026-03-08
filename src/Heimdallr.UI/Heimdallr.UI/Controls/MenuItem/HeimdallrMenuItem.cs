@@ -110,6 +110,16 @@ public class HeimdallrMenuItem : MenuItem
     DependencyProperty.Register(nameof(IconSize), typeof(double), typeof(HeimdallrMenuItem), new PropertyMetadata(24.0));
   #endregion
 
+  #region IconMouseOverFill
+  public Brush IconMouseOverFill
+  {
+    get => (Brush)GetValue(IconMouseOverFillProperty);
+    set => SetValue(IconMouseOverFillProperty, value);
+  }
+  public static readonly DependencyProperty IconMouseOverFillProperty =
+      DependencyProperty.Register(nameof(IconMouseOverFill), typeof(Brush), typeof(HeimdallrMenuItem), new PropertyMetadata(Brushes.DeepSkyBlue));
+  #endregion
+
   #region SubHeaderText
   /// ShortcutKeyText (단축키 텍스트)
   public string SubHeaderText

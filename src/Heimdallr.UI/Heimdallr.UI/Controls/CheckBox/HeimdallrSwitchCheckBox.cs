@@ -186,18 +186,45 @@ public class HeimdallrSwitchCheckBox : CheckBox
   /// <summary>
   /// 아이콘의 색상 (Icon의 Fill 브러시)
   /// </summary>
-  public Brush Fill
+  public Brush IconFill
   {
-    get => (Brush)GetValue(FillProperty);
-    set => SetValue(FillProperty, value);
+    get => (Brush)GetValue(IconFillProperty);
+    set => SetValue(IconFillProperty, value);
   }
 
   /// <summary>
   /// Fill 속성의 DependencyProperty 정의
   /// </summary>
-  public static readonly DependencyProperty FillProperty =
-      DependencyProperty.Register(nameof(Fill), typeof(Brush), typeof(HeimdallrSwitchCheckBox),
+  public static readonly DependencyProperty IconFillProperty =
+      DependencyProperty.Register(nameof(IconFill), typeof(Brush), typeof(HeimdallrSwitchCheckBox),
           new PropertyMetadata(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#AAAAAA"))));
+  #endregion
+
+  #region IconSize
+  /// <summary>
+  /// Icon, Image 사이즈 너비,높이
+  /// </summary>
+  public double IconSize
+  {
+    get => (double)GetValue(IconSizeProperty);
+    set => SetValue(IconSizeProperty, value);
+  }
+
+  /// <summary>
+  /// 아이콘사이즈 기본값
+  /// </summary>
+  public static readonly DependencyProperty IconSizeProperty = DependencyProperty.Register(nameof(IconSize), typeof(double),
+          typeof(HeimdallrSwitchCheckBox), new PropertyMetadata(16.0));
+  #endregion
+
+  #region IconMouseOverFill
+  public Brush IconMouseOverFill
+  {
+    get => (Brush)GetValue(IconMouseOverFillProperty);
+    set => SetValue(IconMouseOverFillProperty, value);
+  }
+  public static readonly DependencyProperty IconMouseOverFillProperty =
+      DependencyProperty.Register(nameof(IconMouseOverFill), typeof(Brush), typeof(HeimdallrSwitchCheckBox), new PropertyMetadata(Brushes.DeepSkyBlue));
   #endregion
 
   #region ON, OFF Label
